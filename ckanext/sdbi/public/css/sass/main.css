@@ -11145,7 +11145,7 @@ iframe {
   font-size: 26px;
   font-weight: bold;
   position: absolute;
-  background-color: #20c3c4;
+  background-color: #044085;
   z-index: 300;
   padding: 5px 10px;
   color: #fff;
@@ -11154,7 +11154,7 @@ iframe {
 
 .vizcarousel-desc {
   text-align: center;
-  background-color: #20c3c4;
+  background-color: #044085;
   position: absolute;
   opacity: 0;
   transition: opacity 400ms;
@@ -11221,7 +11221,7 @@ h5 {
 }
 
 a {
-  color: #20c3c4;
+  color: #044085;
 }
 
 .resource-item .heading {
@@ -11312,7 +11312,7 @@ input, textarea, select {
 }
 
 .account-masthead .account ul li a:hover {
-  background-color: #20c3c4;
+  background-color: #044085;
 }
 
 .nav-item.active > a,
@@ -11335,7 +11335,7 @@ h2.module-heading > i {
 }
 
 .btn-primary, .btn-success, .btn-success:hover, .btn-success:active {
-  background: #20c3c4 none;
+  background: #044085 none;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -11373,7 +11373,7 @@ h2.module-heading > i {
 
 .masthead .navigation .nav-pills li a:hover,
 .masthead .navigation .nav-pills li.active a {
-  background-color: #20c3c4;
+  background-color: #044085;
 }
 
 .search-form .filter-list .pill {
