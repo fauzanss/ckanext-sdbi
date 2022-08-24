@@ -14,8 +14,20 @@ dropdown in the settings page and rename this file layout4.html.
       <div class="row row1">
         <div class="col-md-6 col1">
           <div class="module-content">
-            <h1 class="hero-text-heading hero-text">Your source for open data in the Philadelphia region</h1>
-            <p class="hero-text-description hero-text">OpenDataPhilly is a catalog of open data in the Philadelphia region. In addition to being the official open data repository for the City, it includes data sets from many organizations in the region.</p>
+            <h1 class="hero-text-heading hero-text">Lorem ipsum dolor sit amets</h1>
+            <p class="hero-text-description hero-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row row1">
+            <div class="col-md-6 col1">
+              {% block search %}
+                {% snippet 'home/snippets/search.html' %}
+              {% endblock %}
+              {% block stats %}
+                {% snippet 'home/snippets/stats.html' %}
+              {% endblock %}
+            </div>
           </div>
         </div>
         <div class="col-md-5 col1">
@@ -44,56 +56,10 @@ dropdown in the settings page and rename this file layout4.html.
 <div role="main" class="main-search">
   <div class="container">
     <div class="row row1">
-      <div class="col-md-6 col1">
+      <!-- <div class="col-md-6 col1">
         {% snippet 'home/snippets/search.html' %}
-      </div>
-      <div class="col-md-5 col-md-offset-1">
-        <div class="module-content box getstarted">
-          <p>
-            Get started by searching from
-            <b>{{ h.odp_theme_dataset_count() }}</b>
-            datasets that cover all dimensions of Philadelphia,
-            from city council districts to park locations.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div role="main" class="main-browse">
-  <div class="container">
-    <div class="row row2">
-      <div class="col-md-12 col1">
-        <div class="module-content box">
-          <h1 class="browse-heading">Browse by Topic</h1>
-          <div>
-              {% for topic in h.odp_theme_groups() %}
-                <a href="/group/{{ topic.name }}" class="browse-topic">
-                    <img class="browse-topic-image" src="{{ topic.image_display_url or '/img/icons-document.svg' }}">
-                  <div class="browse-topic-title">
-                    {{ topic.display_name }}
-                  </div>
-                </a>
-              {% endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div role="main" class="main-updates">
-  <div class="container">
-    <div class="row row2">
-      <div class="col-md-6 col1">
-        {% snippet 'home/snippets/latest_datasets.html' %}
-      </div>
-      <div class="col-md-6 col2">
-        <div class="module-content box">
-          <h2 class="secondary-heading">Tweets</h2>
-          <a class="twitter-timeline"  height="420" data-chrome="nofooter noscrollbar  noheader transparent" href="https://twitter.com/opendataphilly" data-widget-id="547080711753449472">Tweets by @opendataphilly</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        </div>
-      </div>
+      </div> -->
+      
     </div>
   </div>
 </div>
