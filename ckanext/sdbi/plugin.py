@@ -2,13 +2,35 @@ from collections import OrderedDict
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
+def most_recent_datasets(num=3):
+        datasets = tk.get_action('package_search')({}, {'sort': 'metadata_modified desc',
+                                                        'fq': 'private:false',
+                                                        'rows': num})
+        return datasets.get('results', [])
+
+def dataset_count():
+    """Return a count of all datasets"""
+
+    result = tk.get_action('package_search')({}, {'rows': 1})
+    return result['count']
+
+def groups():
+    """Return a list of groups"""
+
+    return tk.get_action('group_list')({}, {'all_fields': True})
+
+def package_showcase_list(context):
+    return tk.get_action('ckanext_package_showcase_list')({}, {'package_id': context.pkg_dict['id']})
+
+def ckan_site_url():
+    return config.get('ckan.site_url', '').rstrip('/')
 
 class SDBIPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IFacets, inherit=True)
+    plugins.implements(plugins.ITemplateHelpers)
 
     # IConfigurer
-
     def update_config(self, config_):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
@@ -69,3 +91,12 @@ class SDBIPlugin(plugins.SingletonPlugin):
                                 ])
         else:
             return facets_dict
+
+    def get_helpers(self):
+        """Register sdbi_theme_* helper functions"""
+
+        return {'sdbi_theme_most_recent_datasets': most_recent_datasets,
+                'sdbi_theme_dataset_count': dataset_count,
+                'sdbi_theme_groups': groups,
+                'ckan_site_url': ckan_site_url,
+                'package_showcase_list': package_showcase_list}
