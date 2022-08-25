@@ -3,7 +3,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
 def most_recent_datasets(num=3):
-        datasets = tk.get_action('package_search')({}, {'sort': 'metadata_modified desc',
+        datasets = toolkit.get_action('package_search')({}, {'sort': 'metadata_modified desc',
                                                         'fq': 'private:false',
                                                         'rows': num})
         return datasets.get('results', [])
@@ -11,16 +11,16 @@ def most_recent_datasets(num=3):
 def dataset_count():
     """Return a count of all datasets"""
 
-    result = tk.get_action('package_search')({}, {'rows': 1})
+    result = toolkit.get_action('package_search')({}, {'rows': 1})
     return result['count']
 
 def groups():
     """Return a list of groups"""
 
-    return tk.get_action('group_list')({}, {'all_fields': True})
+    return toolkit.get_action('group_list')({}, {'all_fields': True})
 
 def package_showcase_list(context):
-    return tk.get_action('ckanext_package_showcase_list')({}, {'package_id': context.pkg_dict['id']})
+    return toolkit.get_action('ckanext_package_showcase_list')({}, {'package_id': context.pkg_dict['id']})
 
 def ckan_site_url():
     return config.get('ckan.site_url', '').rstrip('/')
