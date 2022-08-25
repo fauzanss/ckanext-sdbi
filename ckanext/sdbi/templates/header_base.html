@@ -86,10 +86,10 @@
     
     <hgroup class="{{ g.header_class }} navbar-left">
       {% block header_logo %} {% if g.site_logo %}
-      <a class="logo" href="http://10.2.131.11:5000/"><img src="{{ h.url_for_static_or_external(g.site_logo) }}" alt="{{ g.site_title }}" title="{{ g.site_title }}" width="200"/></a>
+      <a class="logo" href="http://192.168.0.103:5000/"><img src="{{ h.url_for_static_or_external(g.site_logo) }}" alt="{{ g.site_title }}" title="{{ g.site_title }}" width="200"/></a>
       {% else %}
       <h1>
-        <a href="https://10.2.131.11:5000/">{{ g.site_title }}</a>
+        <a href="https://192.168.0.103:5000/">{{ g.site_title }}</a>
       </h1>
       {% if g.site_description %}
       <h2>{{ g.site_description }}</h2>{% endif %} {% endif %} {% endblock %}
