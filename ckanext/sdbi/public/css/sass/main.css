@@ -10803,7 +10803,7 @@ br.line-height2 {
   z-index: 0;
 }
 body {
-  background: #005d7a url("../../../base/images/bg.png");
+  background: #eeeeee url("../../../base/images/bg.png");
 }
 [hidden] {
   display: none;
@@ -11105,4 +11105,15 @@ iframe {
 
 .main-updates .module-content {
   background-color: transparent;
+}
+
+.box, .wrapper, .btn, .label, .media-view:hover, .media-view.hovered, .media-view {
+  border: none;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  text-shadow: none;
+  box-shadow: none;
 }
