@@ -8,47 +8,34 @@ dropdown in the settings page and rename this file layout4.html.
 
 -->
 
-<div class="outer">
-  <div role="main" class="hero inner">
-    <div class="container">
-      <div class="row row1">
-        <div class="col-md-6 col1">
-          <div class="module-content">
-            <h1 class="hero-text-heading hero-text">Lorem ipsum dolor sit ametg</h1>
-            <p class="hero-text-description hero-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row row1">
-            <div class="col-md-6 col1">
-              {% block search %}
-                {% snippet 'home/snippets/search.html' %}
-              {% endblock %}
-              {% block stats %}
-                {% snippet 'home/snippets/stats.html' %}
-              {% endblock %}
-            </div>
-          </div>
-        </div>
-        <div class="col-md-5 col1">
-          <div class="carousel-controls">
-            <a class="carousel-control left" href="#vizcarousel" data-slide="prev"><img src="/img/larrow.svg"></a>
-            <a class="carousel-control right" href="#vizcarousel" data-slide="next"><img src="/img/rarrow.svg"></a>
-          </div>
-          <div id="vizcarousel" class="carousel">
-            <div class="spinner"></div>
-            <div class="carousel-inner">
-              <div class="active item in" data-url="/render/viz-partial-efficiency" data-slide-number="0"></div>
-              <div class="item" data-url="/render/viz-partial-crime"></div>
-              <div class="item" data-url="/render/viz-partial-landinventory"></div>
-              <div class="item" data-url="/render/viz-partial-generalfund"></div>
-              <div class="item" data-url="/render/viz-partial-burglaries"></div>
-              <div class="item" data-url="/render/viz-partial-schoolbudget"></div>
-              <div class="item" data-url="/render/viz-partial-grounded"></div>
-              <div class="item" data-url="/render/viz-partial-science"></div>
-            </div>
-          </div>
-        </div>
+<div class="container-fluid main">
+
+  <div id="myCarousel" class="carousel carousel-fade slide" data-ride="carousel" data-interval="3000">
+    <div class="carousel-inner" role="listbox">
+      <div class="item active background a"></div>
+      <div class="item background b"></div>
+      <div class="item background c"></div>
+    </div>
+  </div>
+  
+  <div class="covertext">
+    <div class="col-lg-10" style="float:none; margin:0 auto;">
+      <h1 class="title">Portal Satu Data Bencana Indonesia</h1>
+      <!-- <h3 class="subtitle">Temukan Data Bencana Dengan Mudah</h3> -->
+    </div>
+    <div class="col-xs-12 explore">
+      <a href="#"><button type="button" class="btn btn-lg explorebtn">EXPLORE</button></a>
+    </div>
+  </div>
+
+</div>
+
+
+<div role="main" class="main-search">
+  <div class="container">
+    <div class="row row2">
+      <div class="col-md-12 col1">
+        {% snippet 'home/snippets/search.html' %}
       </div>
     </div>
   </div>
@@ -56,9 +43,9 @@ dropdown in the settings page and rename this file layout4.html.
 
 <div role="main" class="main-search">
   <div class="container">
-    <div class="row row1">
-      <div class="col-md-6 col1">
-        {% snippet 'home/snippets/search.html' %}
+    <div class="row row2">
+      <div class="col-md-12 col1">
+        {% snippet 'home/snippets/stats.html' %}
       </div>
     </div>
   </div>
@@ -86,6 +73,7 @@ dropdown in the settings page and rename this file layout4.html.
   </div>
 </div>
 
+
 <div role="main" class="main-updates">
   <div class="container">
     <div class="row row2">
@@ -95,7 +83,7 @@ dropdown in the settings page and rename this file layout4.html.
       <div class="col-md-6 col2">
         <div class="module-content box">
           <h2 class="secondary-heading">Tweets</h2>
-          <a class="twitter-timeline"  height="420" data-chrome="nofooter noscrollbar  noheader transparent" href="https://twitter.com/BNPB_Indonesia" data-widget-id="547080711753449472">Tweets by @opendataphilly</a>
+          <a class="twitter-timeline"  height="420" data-chrome="nofooter noscrollbar  noheader transparent" href="https://twitter.com/BNPB_Indonesia" data-widget-id="547080711753449472">Tweets by @BNPB_Indonesia</a>
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
       </div>
