@@ -7148,7 +7148,7 @@ a.tag:hover {
   right: -35px;
   width: 80px;
   color: #fff;
-  background-color: #005d7a;
+  background-color: #044085;
   padding: 1px 20px;
   font-size: 11px;
   text-align: center;
@@ -7225,13 +7225,13 @@ a.tag:hover {
 }
 .media-view:hover,
 .media-view.hovered {
-  border-color: #005d7a;
+  border-color: #044085;
   -webkit-box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
 }
 .media-view:hover .banner,
 .media-view.hovered .banner {
-  background-color: #005d7a;
+  background-color: #044085;
 }
 .media-view span {
   display: none;
@@ -9462,7 +9462,7 @@ h4 small {
 @media (min-width: 768px) {
   .main {
     padding-top: 10px;
-    background: #eee url("../../../base/images/bg.png");
+    background: #044085 url("../../../base/images/bg.png");
   }
 }
 [role=main],
@@ -9558,7 +9558,7 @@ h4 small {
 }
 @media (min-width: 768px) {
   .hero {
-    background: url("../../../base/images/background-tile.png");
+    background: transparent;
   }
 }
 .hero:after {
@@ -9708,7 +9708,7 @@ h4 small {
 }
 .homepage .module-search .module-content {
   border-radius: 3px 3px 0 0;
-  background-color: #005d7a;
+  background-color: #044085;
   border-bottom: none;
 }
 .homepage .module-search .module-content .heading {
@@ -10071,7 +10071,7 @@ h4 small {
   margin-bottom: initial;
   padding: 10px 0;
   color: #fff;
-  background: #005d7a url("../../../base/images/bg.png");
+  background: #044085 url("../../../base/images/bg.png");
   padding: 20px 0;
 }
 .site-footer:before,
@@ -10803,7 +10803,7 @@ br.line-height2 {
   z-index: 0;
 }
 body {
-  background: #eeeeee url("../../../base/images/bg.png");
+  background: #044085 url("../../../base/images/bg.png");
 }
 [hidden] {
   display: none;
@@ -11116,4 +11116,213 @@ iframe {
   -moz-box-shadow: none;
   text-shadow: none;
   box-shadow: none;
+}
+
+.homepage .module-search .module-content .heading {
+  font-size: 27px;
+}
+
+.homepage .module-search .module-content {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  background-color: transparent;
+  border-bottom: none;
+  color: #31383c;
+}
+
+.homepage .module-search .module-content .heading {
+  margin-bottom: 18px;
+}
+
+.main-featured .module-content, .main-featured .media-grid {
+  background-color: transparent;
+  border: 0;
+}
+
+.module-content-about img {
+  margin: 40px 0 10px 0;
+  display: block;
+}
+
+.module-content.page-header {
+  margin-top: 0px;
+}
+
+/** **/
+
+.container-fluid.main{
+  position: relative; /* To make the navbar positions relative to this container */
+  padding: 0;
+}
+
+.navbar-default {
+  background-image: none;
+  background-color: transparent; /* Make the menu become transparent */
+  border-radius: 0px;
+  border: 0;
+  box-shadow: none;
+  padding: 10px;
+  position: absolute; /* Make the menu out of the document flow so it can placed anywhere without disturbing other widgets */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10; /* If you delete this line, your menu link won't be clicked because it is behind the background. Applying this code bring the menu in front of the background */
+}
+
+.navbar-default .navbar-brand {
+  font-family: Verdana;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ffffff;
+  background-color: transparent;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+  background-color: transparent;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: transparent;
+}
+
+.navbar-default .navbar-toggle:hover {
+  background-color: transparent;
+}
+
+.navbar-default .navbar-toggle:focus {
+  background-color: transparent;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+
+.carousel .background {
+  background-position: center center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  height: 700px;
+}
+
+@media (max-width:991px) {
+  .carousel .background {
+    background-size: cover; /* To make the background image looks good */
+  }
+}
+
+.carousel .background.a {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://static01.nyt.com/images/2018/11/07/world/07indonesia-promo/07indonesia-promo-videoSixteenByNineJumbo1600.jpg");
+}
+
+.carousel .background.b {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://cdn.i-scmp.com/sites/default/files/d8/video/thumbnail/2021/02/23/indonesia_flood_thumbnail_clean.jpg");
+}
+
+.carousel .background.c {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://grist.org/wp-content/uploads/2020/01/jakarta3.jpg");
+}
+
+.carousel-fade .carousel-inner .item {
+  opacity: 0;
+  transition: opacity 0.5s; /* The 0.5s describes the duration to make the opacity from 0 to 1 */
+}
+
+.carousel-fade .carousel-inner .active {
+  opacity: 1;
+}
+
+/* CSS Hack to trigger GPU for smooth transition */
+@media all and (transform-3d),
+(-webkit-transform-3d) {
+  .carousel-fade .carousel-inner > .item.next,
+  .carousel-fade .carousel-inner > .item.active.right {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  .carousel-fade .carousel-inner > .item.prev,
+  .carousel-fade .carousel-inner > .item.active.left {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  .carousel-fade .carousel-inner > .item.next.left,
+  .carousel-fade .carousel-inner > .item.prev.right,
+  .carousel-fade .carousel-inner > .item.active {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+/* CSS Hack to trigger GPU for smooth transition */
+
+.covertext {
+  position: absolute; /* To make the div to be place anywhere. It is out of the document flow */
+  top: 200px; /* The distance between the div with the top of document */
+  left: 0px; /* Make the div full width */
+  right: 0px; /* Make the div full width */
+}
+
+.title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 50px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 23px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.explore {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.explore .btn-lg,
+.explore .btn-lg:hover {
+  border-radius: 30px;
+  padding: 15px 25px;
+  font-size: 22px;
+  background-image: none;
+  background-color: #EF8300;
+  border-color: #EF8300;
+  color: #ffffff;
+}
+
+.btn,
+.btn:hover {
+  border-radius: 0px;
+  background-image: none;
+  background-color: #EF8300;
+  border-color: #EF8300;
+  color: #ffffff;
+  margin-bottom: 20px;
+  box-shadow: none;
+  outline: none;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  color: #ffffff;
+  outline: none;
 }
