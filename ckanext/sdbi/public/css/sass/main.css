@@ -11093,3 +11093,16 @@ iframe {
   font-weight: 300;
 }
 /*** ENDING AUTHEAD ***/
+
+.main-search {
+  padding-top: 34px !important;
+  min-height: auto;
+}
+
+.main-browse {
+  background-color: #fff;
+}
+
+.main-updates .module-content {
+  background-color: transparent;
+}
