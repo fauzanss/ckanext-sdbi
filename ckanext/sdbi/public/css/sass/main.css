@@ -9462,7 +9462,7 @@ h4 small {
 @media (min-width: 768px) {
   .main {
     padding-top: 10px;
-    background: #044085 url("../../../base/images/bg.png");
+    background: #eeeeee url("../../../base/images/bg.png");
   }
 }
 [role=main],
@@ -9815,8 +9815,8 @@ h4 small {
 }
 .account-masthead {
   min-height: 30px;
-  color: #fff;
-  background: #003647 url("../../../base/images/bg.png");
+  color: #aa76ce;
+  background: #044085 url("../../../base/images/bg.png");
 }
 .account-masthead:before,
 .account-masthead:after {
@@ -10014,7 +10014,7 @@ h4 small {
 .masthead .btn-navbar-btn.active,
 .masthead .btn-navbar-btn.disabled,
 .masthead .btn-navbar-btn[disabled] {
-  background-color: #003647;
+  background-color: #044085;
   background-image: none;
   border: none;
   -webkit-box-shadow: none;
@@ -10803,7 +10803,7 @@ br.line-height2 {
   z-index: 0;
 }
 body {
-  background: #044085 url("../../../base/images/bg.png");
+  background: #FFFFFF url("../../../base/images/bg.png");
 }
 [hidden] {
   display: none;
@@ -11089,7 +11089,7 @@ iframe {
   margin-right: 20px;
 }
 .account.authed a {
-  color: #fff;
+  color: #044085;
   font-weight: 300;
 }
 /*** ENDING AUTHEAD ***/
@@ -11104,7 +11104,7 @@ iframe {
 }
 
 .main-updates .module-content {
-  background-color: transparent;
+  background-color: #FFFFFF;
 }
 
 .box, .wrapper, .btn, .label, .media-view:hover, .media-view.hovered, .media-view {
@@ -11231,6 +11231,14 @@ iframe {
 
 .carousel .background.c {
   background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://grist.org/wp-content/uploads/2020/01/jakarta3.jpg");
+}
+
+.carousel .background.d {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://media.newyorker.com/photos/5bb50e6272a78f2d0fa6140d/master/w_2560%2Cc_limit/Bock-Clark-Sulawesi.jpg");
+}
+
+.carousel .background.e {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://www.worldvision.org/wp-content/uploads/2018/09/Damage-in-Silae-district_WVVolunteer3.jpeg");
 }
 
 .carousel-fade .carousel-inner .item {
