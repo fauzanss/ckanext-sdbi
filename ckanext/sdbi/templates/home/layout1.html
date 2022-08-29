@@ -41,26 +41,25 @@ dropdown in the settings page and rename this file layout4.html.
   </div>
 </div>
 
-<div role="main" class="main-browse">
-  <div class="container">
-    <div class="row row2">
-      <div class="col-md-12 col1">
-        <div class="module-content box">
-          <h1 class="browse-heading">Fase Penanggulangan Bencana</h1>
-          <div>
-              {% for topic in h.sdbi_theme_groups() %}
-                <a href="/group/{{ topic.name }}" class="browse-topic">
-                    <img class="browse-topic-image" src="{{ topic.image_display_url or '/img/icons-document.svg' }}">
-                  <div class="browse-topic-title">
-                    {{ topic.display_name }}
-                  </div>
-                </a>
-              {% endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="itemsss">
+     <div class="itemss">
+       <div class="itemss-content">
+         <h55 class="itemss-category">Pra Bencana</h55>
+         <p class="item-sdescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor pretium cursus...</p>
+       </div>
+     </div>
+     <div class="itemss">
+       <div class="itemss-content">
+         <h55 class="itemss-category">Saat Bencana</h55>
+         <p class="itemss-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor pretium cursus...</p>
+       </div>
+     </div>
+     <div class="itemss">
+       <div class="itemss-content">
+         <h55 class="itemss-category">Paska Bencana</h55>
+         <p class="itemss-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor pretium cursus...</p>
+       </div>
+     </div>
 </div>
 
 <div role="main" class="main-search">
