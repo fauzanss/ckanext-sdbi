@@ -11423,3 +11423,83 @@ input[type="submit"] {
   padding: 0.625rem 0.9375rem;
   margin-top: 0.3125rem;
 }
+
+/** FASE CARD HOMEPAGE **/
+.wrapperr {max-width:90em;
+  margin:0 auto;
+   display: -webkit-box;
+display: -webkit-flex;
+display: flex;
+justify-content: center;
+align-items: center; }
+
+.itemsss {
+display: -webkit-box;
+display: -webkit-flex;
+display: flex;
+flex-flow: wrap;
+justify-content: center;
+padding: 0px 50px 40px 50px;
+width: 100%;
+transition: all 0.2s;
+position: relative;
+
+}
+
+
+
+.itemss-image {
+display: block;
+width: 100%;
+height: 40vh;
+object-fit: cover;
+}
+
+.itemss {
+background: #fff;
+box-shadow: 0 0 0 1px rgba(0,0,0,0.01),0 1px 2px rgba(0,0,0,0.07),0 5px 15px rgba(0,0,0,0.03);
+margin-right: 10px;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+margin:0 1em 2em 1em;
+}
+
+.itemss-content {
+display: -webkit-box;
+display: -webkit-flex;
+display: flex;
+-webkit-box-flex: 1;
+flex: 1 0 auto;
+-webkit-box-orient: vertical;
+-webkit-box-direction: normal;
+flex-direction: column;
+margin-top: 0;
+padding: 1.2rem;
+width: 340px;
+}
+
+h44.itemss-title {
+font-size: 14px;
+font-weight: bold;
+color: #343538;
+margin: 0.5rem 0 0.5rem;
+}
+
+.itemss-description {
+font-size: 14px;
+line-height: 1.5;
+color: #8a8a8a;
+margin: 0 0 1rem;
+}
+
+h55.itemss-category {
+display: inline-block;
+color: #339999;
+font-size: 14px;
+font-weight: 700;
+letter-spacing: 1px;
+text-transform: uppercase;
+text-decoration: none;
+margin: 0.5rem 0 0rem;
+} 
