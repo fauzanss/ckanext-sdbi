@@ -43,8 +43,9 @@ class SDBIPlugin(plugins.SingletonPlugin):
             return facets_dict
 
         return OrderedDict([('kategori', 'Kategori'),
+                            ('fase', 'Fase'),
                             #('groups', 'Grup'),
-                            ('organization', 'Walidata'),
+                            ('organization', 'Organisasi'),
                             #('vocab_category_all', 'Topic Categories'),
                             #('metadata_type', 'Dataset Type'),
                             #('tags', 'Tagging'),
@@ -57,8 +58,9 @@ class SDBIPlugin(plugins.SingletonPlugin):
     def organization_facets(self, facets_dict, organization_type, package_type):
 
         if not package_type:
-            return OrderedDict([('organization', 'Walidata'),
+            return OrderedDict([('organization', 'Organisasi'),
                                 ('kategori', 'Kategori'),
+                                ('fase', 'Fase'),
                                 #('groups', 'Grup'),
                                 #('organization', 'Instansi'),
                                 #('vocab_category_all', 'Topic Categories'),
@@ -80,8 +82,9 @@ class SDBIPlugin(plugins.SingletonPlugin):
         key = 'vocab___category_tag_%s' % group_id
         if not package_type:
             return OrderedDict([('kategori', 'Kategori'),
+                                ('fase', 'Fase'),
                                 #('groups', 'Grup'),
-                                ('organization', 'Walidata'),
+                                ('organization', 'Organisasi'),
                                 #('metadata_type', 'Dataset Type'),
                                 #('organization_type', 'Organization Types'),
                                 #('tags', 'Tagging'),
