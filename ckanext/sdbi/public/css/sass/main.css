@@ -11229,23 +11229,19 @@ iframe {
 }
 
 .carousel .background.a {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://static01.nyt.com/images/2018/11/07/world/07indonesia-promo/07indonesia-promo-videoSixteenByNineJumbo1600.jpg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://182.16.247.5:5000/base/images/semeru1.jpeg");
 }
 
 .carousel .background.b {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://cdn.i-scmp.com/sites/default/files/d8/video/thumbnail/2021/02/23/indonesia_flood_thumbnail_clean.jpg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://182.16.247.5:5000/base/images/semeru2.jpeg");
 }
 
 .carousel .background.c {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://grist.org/wp-content/uploads/2020/01/jakarta3.jpg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://182.16.247.5:5000/base/images/semeru3.jpeg");
 }
 
 .carousel .background.d {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://media.newyorker.com/photos/5bb50e6272a78f2d0fa6140d/master/w_2560%2Cc_limit/Bock-Clark-Sulawesi.jpg");
-}
-
-.carousel .background.e {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://www.worldvision.org/wp-content/uploads/2018/09/Damage-in-Silae-district_WVVolunteer3.jpeg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://182.16.247.5:5000/base/images/pengungsidesa01.jpeg");
 }
 
 .carousel-fade .carousel-inner .item {
@@ -11443,10 +11439,7 @@ padding: 0px 50px 40px 50px;
 width: 100%;
 transition: all 0.2s;
 position: relative;
-
 }
-
-
 
 .itemss-image {
 display: block;
