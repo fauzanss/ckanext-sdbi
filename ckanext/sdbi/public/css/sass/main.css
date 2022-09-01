@@ -11229,19 +11229,19 @@ iframe {
 }
 
 .carousel .background.a {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://182.16.247.5:5000/base/images/semeru1.jpeg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/semeru1.jpeg");
 }
 
 .carousel .background.b {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://182.16.247.5:5000/base/images/semeru2.jpeg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/semeru2.jpeg");
 }
 
 .carousel .background.c {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://182.16.247.5:5000/base/images/semeru3.jpeg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/semeru3.jpeg");
 }
 
 .carousel .background.d {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://182.16.247.5:5000/base/images/pengungsidesa01.jpeg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/pengungsidesa01.png");
 }
 
 .carousel-fade .carousel-inner .item {
