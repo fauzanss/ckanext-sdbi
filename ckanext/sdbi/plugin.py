@@ -42,7 +42,7 @@ class SDBIPlugin(plugins.SingletonPlugin):
         if package_type != 'dataset':
             return facets_dict
 
-        return OrderedDict([('kategori', 'Kategori'),
+        return OrderedDict([('jenis', 'Jenis Bencana'),
                             ('fase', 'Fase'),
                             #('groups', 'Grup'),
                             ('organization', 'Organisasi'),
@@ -59,7 +59,7 @@ class SDBIPlugin(plugins.SingletonPlugin):
 
         if not package_type:
             return OrderedDict([('organization', 'Organisasi'),
-                                ('kategori', 'Kategori'),
+                                ('jenis', 'Jenis Bencana'),
                                 ('fase', 'Fase'),
                                 #('groups', 'Grup'),
                                 #('organization', 'Instansi'),
@@ -81,7 +81,7 @@ class SDBIPlugin(plugins.SingletonPlugin):
         group_id = plugins.toolkit.c.group_dict['id']
         key = 'vocab___category_tag_%s' % group_id
         if not package_type:
-            return OrderedDict([('kategori', 'Kategori'),
+            return OrderedDict([('jenis', 'Jenis Bencana'),
                                 ('fase', 'Fase'),
                                 #('groups', 'Grup'),
                                 ('organization', 'Organisasi'),
