@@ -11,23 +11,46 @@ dropdown in the settings page and rename this file layout4.html.
 <div class="container-fluid main">
 
   <div id="myCarousel" class="carousel carousel-fade slide" data-ride="carousel" data-interval="3000">
-    <div class="carousel-inner" role="listbox">
-      <div class="item active background a"></div>
-      <div class="item background b"></div>
-      <div class="item background c"></div>
-      <div class="item background d"></div>
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" data-slide-to="3"></li>
+    </ol>
+
+
+    <div class="carousel-inner">
+      <div class="carousel-caption item active background a">
+          <h1>Pendataan Pengungsi</h1>
+          <p>Pendataan titik pengungsian terpilah dilakukan dengan tujuan mengumpulkan data jumlah pengungsi per titik pengungsian</p>
+          <p><a class="btn btn-lg btn-primary" href="https://gis.bnpb.go.id/arcgis/apps/sites/?fromEdit=true#/public/pages/dashboard-tanggap-darurat" target="_blank" role="button">Selengkapnya</a></p>
+      </div>
+      <div class="carousel-caption text-left item background b">
+        <h1>Data Geospasial dan Drone</h1>
+        <p>Halaman ini berisikan beberapa video, foto, maupun pemetaan yang dilakukan oleh beberapa pihak dalam mendukung penanganan bencana Awan Panas Guguran Gunung Semeru</p>
+        <p><a class="btn btn-lg btn-primary" href="https://bit.ly/DokumentasiDroneSemeru" target="_blank" role="button">Selengkapnya</a></p>
+      </div>
+      <div class="carousel-caption text-left item background c">
+        <h1>Galeri Peta</h1>
+        <p>Halaman ini berisikan beberapa oeta yang dihasilkan oleh Bidang Pengelolaan Data dan Sistem Informasi BNPB terkait dengan penanganan bencana Awan Panas Guguran Gunung Semeru</p>
+        <p><a class="btn btn-lg btn-primary" href="https://gis.bnpb.go.id/arcgis/apps/sites/?fromEdit=true#/public/pages/galeri-peta-tanggap-darurat" target="_blank" role="button">Selengkapnya</a></p>
+      </div>
+      <div class="carousel-caption text-left item background d">
+        <h1>Jumlah Total Pengungsi Bencana Erupsi G. Semeru 2021</h1>
+        <p>Update 12 Desember 2021, sumber: Posko TD Semeru dan Dinas Sosial Kab. Lumajang</p>
+        <p><a class="btn btn-lg btn-primary" href="https://gis.bnpb.go.id/peta/Pengungsi%20Desa_13122021.pdf" target="_blank" role="button">Selengkapnya</a></p>
+      </div>
     </div>
   </div>
-  
-  <div class="covertext">
-    <div class="col-lg-10" style="float:none; margin:0 auto;">
-      <h1 class="title">Portal Satu Data Bencana Indonesia</h1>
-      <!-- <h3 class="subtitle">Temukan Data Bencana Dengan Mudah</h3> -->
-    </div>
-    <div class="col-xs-12 explore">
-      <a href="https://data.bnpb.go.id/dataset"><button type="button" class="btn btn-lg explorebtn">Mulai Eksplor</button></a>
-    </div>
-  </div>
+
+  <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
 
 </div>
 
@@ -44,7 +67,7 @@ dropdown in the settings page and rename this file layout4.html.
 
 <div class="itemsss">
      <div class="itemss">
-      <a href="https://data.bnpb.go.id/dataset/?fase=Pra+Bencana" target="_blank">
+      <a href="https://data.bnpb.go.id/dataset/?fase=prabencana" target="_blank">
        <div class="itemss-content">
          <h55 class="itemss-category">Pra Bencana</h55>
          <p class="itemss-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor pretium cursus...</p>
@@ -52,7 +75,7 @@ dropdown in the settings page and rename this file layout4.html.
       </a>
      </div>
      <div class="itemss">
-      <a href="https://data.bnpb.go.id/dataset/?fase=Saat+Bencana" target="_blank">
+      <a href="https://data.bnpb.go.id/dataset/?fase=saatbencana" target="_blank">
        <div class="itemss-content">
          <h55 class="itemss-category">Saat Bencana</h55>
          <p class="itemss-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor pretium cursus...</p>
@@ -60,7 +83,7 @@ dropdown in the settings page and rename this file layout4.html.
       </a>
      </div>
      <div class="itemss">
-      <a href="https://data.bnpb.go.id/dataset/?fase=Pascabencana" target="_blank">
+      <a href="https://data.bnpb.go.id/dataset/?fase=pascabencana" target="_blank">
        <div class="itemss-content">
          <h55 class="itemss-category">Pascabencana</h55>
          <p class="itemss-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor pretium cursus...</p>
