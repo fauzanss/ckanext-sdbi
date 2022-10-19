@@ -11229,19 +11229,27 @@ iframe {
 }
 
 .carousel .background.a {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://data.bnpb.go.id/base/images/images/semeru1.jpeg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("http://data.bnpb.go.id/base/images/semeru1.jpeg");
 }
 
 .carousel .background.b {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/images/semeru2.jpeg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/semeru2.jpeg");
 }
 
 .carousel .background.c {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/images/semeru3.jpeg");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/semeru3.jpeg");
 }
 
 .carousel .background.d {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/images/pengungsidesa01.png");
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/base/images/pengungsidesa01.png");
+}
+
+.carousel .background.e {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/uploads/page_images/2022-09-26-040229.975098Forum-SDB-DIY.jpeg");
+}
+
+.carousel .background.f {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://data.bnpb.go.id/uploads/page_images/2022-09-26-043934.15700520220913015353IMG8543-1.jpg");
 }
 
 .carousel-fade .carousel-inner .item {
