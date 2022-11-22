@@ -25,7 +25,7 @@ def package_showcase_list(context):
 def ckan_site_url():
     return config.get('ckan.site_url', '').rstrip('/')
 
-class polkamPlugin(plugins.SingletonPlugin):
+class SDBIPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IFacets, inherit=True)
     plugins.implements(plugins.ITemplateHelpers)
@@ -34,7 +34,7 @@ class polkamPlugin(plugins.SingletonPlugin):
     def update_config(self, config_):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'polkam')
+        toolkit.add_resource('fanstatic', 'sdbi')
 
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
@@ -96,10 +96,10 @@ class polkamPlugin(plugins.SingletonPlugin):
             return facets_dict
 
     def get_helpers(self):
-        """Register polkam_theme_* helper functions"""
+        """Register sdbi_theme_* helper functions"""
 
-        return {'polkam_theme_most_recent_datasets': most_recent_datasets,
-                'polkam_theme_dataset_count': dataset_count,
-                'polkam_theme_groups': groups,
+        return {'sdbi_theme_most_recent_datasets': most_recent_datasets,
+                'sdbi_theme_dataset_count': dataset_count,
+                'sdbi_theme_groups': groups,
                 'ckan_site_url': ckan_site_url,
                 'package_showcase_list': package_showcase_list}

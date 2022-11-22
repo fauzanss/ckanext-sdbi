@@ -1,5 +1,5 @@
 =============
-ckanext-polkam
+ckanext-sdbi
 =============
 
 .. Put a description of your extension here:
@@ -23,17 +23,17 @@ Installation
    For example installing any non-Python dependencies or adding any required
    config settings.
 
-To install ckanext-polkam:
+To install ckanext-sdbi:
 
 1. Activate your CKAN virtual environment, for example::
 
      . /usr/lib/ckan/default/bin/activate
 
-2. Install the ckanext-polkam Python package into your virtual environment::
+2. Install the ckanext-sdbi Python package into your virtual environment::
 
-     pip install ckanext-polkam
+     pip install ckanext-sdbi
 
-3. Add ``polkam`` to the ``ckan.plugins`` setting in your CKAN
+3. Add ``sdbi`` to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
    ``/etc/ckan/default/production.ini``).
 
@@ -50,18 +50,18 @@ Document any optional config settings here. For example::
 
     # The minimum number of hours to wait before re-checking a resource
     # (optional, default: 24).
-    ckanext.polkam.some_setting = some_default_value
+    ckanext.sdbi.some_setting = some_default_value
 
 
 ------------------------
 Development Installation
 ------------------------
 
-To install ckanext-polkam for development, activate your CKAN virtualenv and
+To install ckanext-sdbi for development, activate your CKAN virtualenv and
 do::
 
-    git clone https://github.com/apteksdi/ckanext-polkam.git
-    cd ckanext-polkam
+    git clone https://github.com/apteksdi/ckanext-sdbi.git
+    cd ckanext-sdbi
     python setup.py develop
     pip install -r dev-requirements.txt
 
@@ -77,21 +77,21 @@ To run the tests, do::
 To run the tests and produce a coverage report, first make sure you have
 coverage installed in your virtualenv (``pip install coverage``) then run::
 
-    nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.polkam --cover-inclusive --cover-erase --cover-tests
+    nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.sdbi --cover-inclusive --cover-erase --cover-tests
 
 
 ---------------------------------
-Registering ckanext-polkam on PyPI
+Registering ckanext-sdbi on PyPI
 ---------------------------------
 
-ckanext-polkam should be availabe on PyPI as
-https://pypi.python.org/pypi/ckanext-polkam. If that link doesn't work, then
+ckanext-sdbi should be availabe on PyPI as
+https://pypi.python.org/pypi/ckanext-sdbi. If that link doesn't work, then
 you can register the project on PyPI for the first time by following these
 steps:
 
 1. Create a source distribution of the project::
 
-     python setup.py polkamst
+     python setup.py sdbist
 
 2. Register the project::
 
@@ -99,7 +99,7 @@ steps:
 
 3. Upload the source distribution to PyPI::
 
-     python setup.py polkamst upload
+     python setup.py sdbist upload
 
 4. Tag the first release of the project on GitHub with the version number from
    the ``setup.py`` file. For example if the version number in ``setup.py`` is
@@ -110,10 +110,10 @@ steps:
 
 
 ----------------------------------------
-Releasing a New Version of ckanext-polkam
+Releasing a New Version of ckanext-sdbi
 ----------------------------------------
 
-ckanext-polkam is availabe on PyPI as https://pypi.python.org/pypi/ckanext-polkam.
+ckanext-sdbi is availabe on PyPI as https://pypi.python.org/pypi/ckanext-sdbi.
 To publish a new version to PyPI follow these steps:
 
 1. Update the version number in the ``setup.py`` file.
@@ -122,11 +122,11 @@ To publish a new version to PyPI follow these steps:
 
 2. Create a source distribution of the new version::
 
-     python setup.py polkamst
+     python setup.py sdbist
 
 3. Upload the source distribution to PyPI::
 
-     python setup.py polkamst upload
+     python setup.py sdbist upload
 
 4. Tag the new release of the project on GitHub with the version number from
    the ``setup.py`` file. For example if the version number in ``setup.py`` is
