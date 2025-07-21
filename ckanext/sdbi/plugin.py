@@ -119,6 +119,66 @@ def get_dataset_views_by_name(dataset_name):
         # Return fallback data
         return {'total_views': 0, 'recent_views': 0, 'today_views': 0}
 
+def get_total_visitors():
+    """Get total number of unique visitors from tracking_raw table"""
+    try:
+        from sqlalchemy import text
+        
+        # Get total unique visitors (unique user_key)
+        result = model.Session.execute(text("""
+            SELECT COUNT(DISTINCT user_key) as count FROM tracking_raw 
+            WHERE user_key != 'anonymous'
+        """))
+        unique_visitors = result.fetchone()[0]
+        
+        # Get total page views
+        result = model.Session.execute(text("""
+            SELECT COUNT(*) as count FROM tracking_raw
+        """))
+        total_views = result.fetchone()[0]
+        
+        # Get today's visitors
+        from datetime import datetime, timedelta
+        today = datetime.utcnow().date()
+        
+        result = model.Session.execute(text("""
+            SELECT COUNT(DISTINCT user_key) as count FROM tracking_raw 
+            WHERE DATE(access_timestamp) = :today AND user_key != 'anonymous'
+        """), {'today': today})
+        today_visitors = result.fetchone()[0]
+        
+        # Get yesterday's visitors
+        yesterday = today - timedelta(days=1)
+        result = model.Session.execute(text("""
+            SELECT COUNT(DISTINCT user_key) as count FROM tracking_raw 
+            WHERE DATE(access_timestamp) = :yesterday AND user_key != 'anonymous'
+        """), {'yesterday': yesterday})
+        yesterday_visitors = result.fetchone()[0]
+        
+        # Get online visitors (active in last 5 minutes)
+        five_minutes_ago = datetime.utcnow() - timedelta(minutes=5)
+        result = model.Session.execute(text("""
+            SELECT COUNT(DISTINCT user_key) as count FROM tracking_raw 
+            WHERE access_timestamp >= :five_minutes_ago AND user_key != 'anonymous'
+        """), {'five_minutes_ago': five_minutes_ago})
+        online_visitors = result.fetchone()[0]
+        
+        return {
+            'unique_visitors': unique_visitors,
+            'total_views': total_views,
+            'today_visitors': today_visitors,
+            'yesterday_visitors': yesterday_visitors,
+            'online_visitors': online_visitors
+        }
+    except Exception as e:
+        return {
+            'unique_visitors': 0,
+            'total_views': 0,
+            'today_visitors': 0,
+            'yesterday_visitors': 0,
+            'online_visitors': 0
+        }
+
 class SDBIPlugin(plugins.SingletonPlugin):
     # SDBI Plugin for BNPB Data Portal
     plugins.implements(plugins.IConfigurer)
@@ -200,7 +260,8 @@ class SDBIPlugin(plugins.SingletonPlugin):
                 'ckan_site_url': ckan_site_url,
                 'package_showcase_list': package_showcase_list,
                 'get_dataset_views': get_dataset_views,
-                'get_dataset_views_by_name': get_dataset_views_by_name}
+                'get_dataset_views_by_name': get_dataset_views_by_name,
+                'get_total_visitors': get_total_visitors}
 
     # IRoutes
     def before_map(self, map):
