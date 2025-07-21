@@ -43,11 +43,9 @@ Example:
       <span class="label label-danger">{{ _('Deleted') }}</span>
       {% endif %}
       {% set tracking_data = h.get_dataset_views_by_name(package.name) %}
-      {% if tracking_data.total_views > 0 %}
       <span class="label label-default">
         <i class="fa fa-eye"></i> {{ _('Views') }}: {{ tracking_data.total_views }}
       </span>
-      {% endif %}
       {% endblock %}
     </h2>
     {% endblock %}
