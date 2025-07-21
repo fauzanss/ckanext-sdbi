@@ -42,11 +42,11 @@ Example:
       {% elif package.get('state', '').startswith('deleted') %}
       <span class="label label-danger">{{ _('Deleted') }}</span>
       {% endif %}
-      {% if package.tracking_summary %}
+      {% set tracking_data = h.get_dataset_views_by_name(package.name) %}
+      {% if tracking_data.total_views > 0 %}
       <span class="label label-default">
-        <i class="fa fa-eye"></i> {{ _('Total Views') }}: {{ package.tracking_summary.total }}
+        <i class="fa fa-eye"></i> {{ _('Views') }}: {{ tracking_data.total_views }}
       </span>
-      {{ h.popular('recent views', package.tracking_summary.recent, min=10) }}
       {% endif %}
       {% endblock %}
     </h2>

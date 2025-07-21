@@ -88,19 +88,23 @@ is_activity_archive=is_activity_archive %}
       <strong>{{ _('Dataset ID') }}:</strong>
       {{ pkg.id }}
     </li>
-    {% if pkg.tracking_summary %}
+    {% set tracking_data = h.get_dataset_views_by_name(pkg.name) %}
     <li class="list-group-item">
       <strong>{{ _('Total Views') }}:</strong>
       <span class="badge badge-info">
-        <i class="fa fa-eye"></i> {{ pkg.tracking_summary.total }}
+        <i class="fa fa-eye"></i> {{ tracking_data.total_views }}
       </span>
-      {% if pkg.tracking_summary.recent > 0 %}
+      {% if tracking_data.recent_views > 0 %}
       <br><small class="text-muted">
-        <i class="fa fa-clock-o"></i> {{ _('Recent Views') }}: {{ pkg.tracking_summary.recent }}
+        <i class="fa fa-clock-o"></i> {{ _('Recent Views') }}: {{ tracking_data.recent_views }}
+      </small>
+      {% endif %}
+      {% if tracking_data.today_views > 0 %}
+      <br><small class="text-muted">
+        <i class="fa fa-calendar-day"></i> {{ _('Today') }}: {{ tracking_data.today_views }}
       </small>
       {% endif %}
     </li>
-    {% endif %}
     <li class="list-group-item">
       <strong>{{ _('Metadata') }}:</strong>
       <ul class="list-group" style="margin-bottom: 0;">

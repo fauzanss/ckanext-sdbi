@@ -1,11 +1,3 @@
-<!-- Debug info -->
-<div style="background: #ffe6e6; padding: 10px; margin: 10px 0; border: 1px solid #ff9999;">
-  <strong>Debug Info:</strong><br>
-  Dataset name: {{ pkg.name }}<br>
-  Dataset ID: {{ pkg.id }}<br>
-  Raw tracking data count: {{ h.get_dataset_views_by_name(pkg.name).total_views }}<br>
-  Helper function result: {{ h.get_dataset_views_by_name(pkg.name) }}<br>
-</div>
 
 {% set tracking_data = h.get_dataset_views_by_name(pkg.name) %}
 {% if tracking_data.total_views > 0 %}
