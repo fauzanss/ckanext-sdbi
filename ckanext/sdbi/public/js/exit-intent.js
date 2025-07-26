@@ -1,32 +1,57 @@
-// Exit Intent Detection and Google Forms Popup
-// Detects when user is about to leave the page and shows Google Forms popup
+// Smart Exit Intent Detection and Google Forms Popup
+// Detects multiple user behaviors and shows Google Forms popup intelligently
 
 (function () {
   'use strict';
 
-  // Configuration
-  const EXIT_INTENT_CONFIG = {
+  // Enhanced Configuration
+  const SMART_EXIT_INTENT_CONFIG = {
+    // Basic settings
     threshold: 10, // Distance from top edge to trigger exit intent
     delay: 1000,   // Delay before showing popup (ms)
-    cookieName: 'exit_intent_shown',
+    cookieName: 'smart_exit_intent_shown',
     cookieExpiry: 1, // Days
-    debug: false,
-    // New features configuration
-    enableKeyboardShortcuts: true,  // Enable Cmd+W, Cmd+Q, Alt+F4 detection
-    enableEscapeKey: true,          // Enable Escape key detection
-    enableTabSwitch: true,          // Enable tab switching detection
-    enableFocusLoss: true,          // Enable focus loss detection
-    // Firefox-specific configuration
-    enableFirefoxWorkaround: true,  // Enable Firefox-specific workarounds
-    firefoxReturnDelay: 5000,       // Time window to detect return from Cmd+W (ms)
+    debug: true,
+
+    // Smart triggers configuration
+    enableMouseExit: true,           // Mouse movement to top
+    enableKeyboardShortcuts: true,   // Cmd+W, Cmd+Q, Alt+F4 detection
+    enableEscapeKey: true,           // Escape key detection
+    enableTabSwitch: true,           // Tab switching detection
+    enableFocusLoss: true,           // Focus loss detection
+
+    // NEW: Smart triggers
+    enableScrollBased: true,         // Show form when scrolling near bottom
+    enableTimeBased: true,           // Show form after X minutes on page
+    enableInactivityBased: true,     // Show form after X seconds of inactivity
+    enableClickBased: true,          // Show form when clicking external links
+
     // Timing thresholds (in milliseconds)
     escapeKeyDelay: 5000,           // Minimum time before Escape key triggers
     tabSwitchDelay: 10000,          // Minimum time before tab switch triggers
-    focusLossDelay: 15000           // Minimum time before focus loss triggers
+    focusLossDelay: 15000,          // Minimum time before focus loss triggers
+    timeBasedDelay: 180000,         // Show form after 3 minutes (180 seconds)
+    inactivityDelay: 30000,         // Show form after 30 seconds of inactivity
+    scrollThreshold: 0.8,           // Show form when 80% of page is scrolled
+
+    // Firefox-specific configuration
+    enableFirefoxWorkaround: true,
+    firefoxReturnDelay: 5000,
+
+    // Smart behavior
+    maxTriggersPerSession: 2,       // Maximum times to show form per session
+    sessionDuration: 3600000,       // Session duration (1 hour)
+    triggerCooldown: 300000,        // 5 minutes cooldown between triggers
   };
 
   let exitIntentTriggered = false;
   let popupShown = false;
+  let triggerCount = 0;
+  let lastTriggerTime = 0;
+  let sessionStartTime = Date.now();
+  let inactivityTimer = null;
+  let timeBasedTimer = null;
+  let pageLoadTime = Date.now();
 
   // Get Google Forms with exit intent enabled
   function getExitIntentForms() {
@@ -44,51 +69,66 @@
       });
   }
 
-  // Create popup modal
+  // Create enhanced popup modal with better UX
   function createPopupModal(form) {
     const modal = document.createElement('div');
-    modal.className = 'exit-intent-modal';
+    modal.className = 'smart-exit-intent-modal';
     modal.innerHTML = `
-      <div class="exit-intent-overlay"></div>
-      <div class="exit-intent-content">
-        <div class="exit-intent-header">
-          <h3><i class="fa fa-exclamation-triangle"></i> ${form.title}</h3>
-          <button class="exit-intent-close" onclick="closeExitIntentModal()">
+      <div class="smart-exit-intent-overlay"></div>
+      <div class="smart-exit-intent-content">
+        <div class="smart-exit-intent-header">
+          <div class="header-content">
+            <h3><i class="fa fa-heart"></i> ${form.title}</h3>
+            <p class="header-subtitle">Kami menghargai waktu Anda!</p>
+          </div>
+          <button class="smart-exit-intent-close" onclick="closeSmartExitIntentModal()">
             <i class="fa fa-times"></i>
           </button>
         </div>
-        <div class="exit-intent-body">
-          <p>${form.description || 'Mohon isi form ini sebelum Anda meninggalkan halaman.'}</p>
-          <div class="exit-intent-iframe-container">
+        <div class="smart-exit-intent-body">
+          <div class="form-description">
+            <p>${form.description || 'Sebelum Anda melanjutkan, mohon berikan feedback singkat untuk membantu kami meningkatkan layanan.'}</p>
+          </div>
+          <div class="smart-exit-intent-iframe-container">
             <iframe src="${form.form_url}" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
-        <div class="exit-intent-footer">
-          <button class="btn btn-secondary" onclick="closeExitIntentModal()">
-            <i class="fa fa-times"></i> Tutup
-          </button>
-          <a href="${form.form_url}" target="_blank" class="btn btn-primary">
-            <i class="fa fa-external-link"></i> Buka di Tab Baru
-          </a>
+        <div class="smart-exit-intent-footer">
+          <div class="footer-actions">
+            <button class="btn btn-secondary" onclick="closeSmartExitIntentModal()">
+              <i class="fa fa-times"></i> Tutup
+            </button>
+            <a href="${form.form_url}" target="_blank" class="btn btn-primary">
+              <i class="fa fa-external-link"></i> Buka di Tab Baru
+            </a>
+          </div>
+          <div class="footer-note">
+            <small><i class="fa fa-info-circle"></i> Form ini hanya membutuhkan waktu 1-2 menit</small>
+          </div>
         </div>
       </div>
     `;
     return modal;
   }
 
-  // Show popup modal
+  // Show enhanced popup modal
   function showPopupModal(form) {
     if (popupShown) return;
 
-    const modal = createPopupModal(form);
-    document.body.appendChild(modal);
-
-    // Add CSS for modal
-    if (!document.getElementById('exit-intent-styles')) {
-      const style = document.createElement('style');
-      style.id = 'exit-intent-styles';
+    // Use existing modal from footer
+    if (typeof showSurveyPopup === 'function') {
+      showSurveyPopup();
+    } else {
+      // Fallback: create and show the modal
+      const modal = createPopupModal(form);
+      document.body.appendChild(modal);
+      
+      // Add enhanced CSS if not already added
+      if (!document.getElementById('smart-exit-intent-styles')) {
+        const style = document.createElement('style');
+        style.id = 'smart-exit-intent-styles';
       style.textContent = `
-        .exit-intent-modal {
+        .smart-exit-intent-modal {
           position: fixed;
           top: 0;
           left: 0;
@@ -101,7 +141,7 @@
           animation: fadeIn 0.3s ease-in-out;
         }
 
-        .exit-intent-overlay {
+        .smart-exit-intent-overlay {
           position: absolute;
           top: 0;
           left: 0;
@@ -111,11 +151,11 @@
           backdrop-filter: blur(5px);
         }
 
-        .exit-intent-content {
+        .smart-exit-intent-content {
           position: relative;
           background: white;
           border-radius: 12px;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
           max-width: 90vw;
           max-height: 90vh;
           width: 600px;
@@ -123,116 +163,89 @@
           animation: slideIn 0.3s ease-out;
         }
 
-        .exit-intent-header {
-          background: #f8f9fa;
-          padding: 1rem 1.5rem;
-          border-bottom: 1px solid #e9ecef;
+        .smart-exit-intent-header {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 20px;
           display: flex;
           justify-content: space-between;
-          align-items: center;
+          align-items: flex-start;
         }
 
-        .exit-intent-header h3 {
+        .header-content h3 {
+          margin: 0 0 5px 0;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .header-subtitle {
           margin: 0;
-          color: #333;
-          font-size: 1.2rem;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
+          font-size: 14px;
+          opacity: 0.9;
         }
 
-        .exit-intent-header h3 i {
-          color: #ffc107;
-        }
-
-        .exit-intent-close {
+        .smart-exit-intent-close {
           background: none;
           border: none;
-          font-size: 1.5rem;
-          color: #6c757d;
+          color: white;
+          font-size: 20px;
           cursor: pointer;
-          padding: 0;
-          width: 30px;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          padding: 5px;
           border-radius: 50%;
-          transition: all 0.3s ease;
+          transition: background 0.3s;
         }
 
-        .exit-intent-close:hover {
-          background: #e9ecef;
-          color: #333;
+        .smart-exit-intent-close:hover {
+          background: rgba(255, 255, 255, 0.2);
         }
 
-        .exit-intent-body {
-          padding: 1.5rem;
+        .smart-exit-intent-body {
+          padding: 20px;
           max-height: 60vh;
           overflow-y: auto;
         }
 
-        .exit-intent-body p {
-          margin-bottom: 1rem;
-          color: #666;
+        .form-description {
+          margin-bottom: 15px;
+          padding: 15px;
+          background: #f8f9fa;
+          border-radius: 8px;
+          border-left: 4px solid #007bff;
+        }
+
+        .form-description p {
+          margin: 0;
+          color: #495057;
           line-height: 1.5;
         }
 
-        .exit-intent-iframe-container {
-          border: 1px solid #e9ecef;
+        .smart-exit-intent-iframe-container {
+          border: 1px solid #dee2e6;
           border-radius: 8px;
           overflow: hidden;
-          margin-bottom: 1rem;
         }
 
-        .exit-intent-iframe-container iframe {
+        .smart-exit-intent-iframe-container iframe {
           width: 100%;
           height: 400px;
           border: none;
         }
 
-        .exit-intent-footer {
+        .smart-exit-intent-footer {
+          padding: 15px 20px;
           background: #f8f9fa;
-          padding: 1rem 1.5rem;
-          border-top: 1px solid #e9ecef;
+          border-top: 1px solid #dee2e6;
+        }
+
+        .footer-actions {
           display: flex;
-          gap: 0.75rem;
-          justify-content: flex-end;
+          gap: 10px;
+          margin-bottom: 10px;
         }
 
-        .exit-intent-footer .btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.5rem 1rem;
-          border-radius: 6px;
-          text-decoration: none;
-          font-weight: 500;
-          transition: all 0.3s ease;
-        }
-
-        .btn-secondary {
-          background: #6c757d;
-          color: white;
-          border: 1px solid #6c757d;
-        }
-
-        .btn-secondary:hover {
-          background: #5a6268;
-          border-color: #545b62;
-          color: white;
-        }
-
-        .btn-primary {
-          background: #007bff;
-          color: white;
-          border: 1px solid #007bff;
-        }
-
-        .btn-primary:hover {
-          background: #0056b3;
-          border-color: #0056b3;
-          color: white;
+        .footer-note {
+          text-align: center;
+          color: #6c757d;
         }
 
         @keyframes fadeIn {
@@ -241,49 +254,45 @@
         }
 
         @keyframes slideIn {
-          from { 
-            opacity: 0;
-            transform: translateY(-50px) scale(0.9);
-          }
-          to { 
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
+          from { transform: translateY(-50px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
         }
 
         @media (max-width: 768px) {
-          .exit-intent-content {
+          .smart-exit-intent-content {
             width: 95vw;
-            max-height: 95vh;
+            margin: 10px;
           }
-
-          .exit-intent-iframe-container iframe {
+          
+          .smart-exit-intent-iframe-container iframe {
             height: 300px;
           }
-
-          .exit-intent-footer {
+          
+          .footer-actions {
             flex-direction: column;
-          }
-
-          .exit-intent-footer .btn {
-            justify-content: center;
           }
         }
       `;
       document.head.appendChild(style);
     }
+    }
 
     popupShown = true;
-    setCookie(EXIT_INTENT_CONFIG.cookieName, 'true', EXIT_INTENT_CONFIG.cookieExpiry);
+    setCookie(SMART_EXIT_INTENT_CONFIG.cookieName, 'true', SMART_EXIT_INTENT_CONFIG.cookieExpiry);
 
-    if (EXIT_INTENT_CONFIG.debug) {
-      console.log('Exit intent popup shown for form:', form.title);
+    if (SMART_EXIT_INTENT_CONFIG.debug) {
+      console.log('Smart exit intent popup shown for form:', form.title);
     }
   }
 
-  // Close popup modal
-  window.closeExitIntentModal = function () {
-    const modal = document.querySelector('.exit-intent-modal');
+  // Close enhanced popup modal
+  window.closeSmartExitIntentModal = function () {
+    const modal = document.querySelector('.smart-exit-intent-modal');
     if (modal) {
       modal.style.animation = 'fadeOut 0.3s ease-in-out';
       setTimeout(() => {
@@ -312,276 +321,234 @@
     return null;
   }
 
-  // Exit intent detection for mouse movement
-  function handleMouseExitIntent(e) {
-    if (exitIntentTriggered || popupShown) return;
+  // Smart trigger validation
+  function canTriggerExitIntent() {
+    if (exitIntentTriggered || popupShown) return false;
 
-    // Check if user is moving mouse towards the top of the page
-    if (e.clientY <= EXIT_INTENT_CONFIG.threshold) {
-      triggerExitIntent();
+    // Check session limits
+    const sessionElapsed = Date.now() - sessionStartTime;
+    if (sessionElapsed > SMART_EXIT_INTENT_CONFIG.sessionDuration) {
+      sessionStartTime = Date.now();
+      triggerCount = 0;
     }
+
+    if (triggerCount >= SMART_EXIT_INTENT_CONFIG.maxTriggersPerSession) {
+      return false;
+    }
+
+    // Check cooldown
+    const timeSinceLastTrigger = Date.now() - lastTriggerTime;
+    if (timeSinceLastTrigger < SMART_EXIT_INTENT_CONFIG.triggerCooldown) {
+      return false;
+    }
+
+    // Check cookie
+    if (getCookie(SMART_EXIT_INTENT_CONFIG.cookieName)) {
+      return false;
+    }
+
+    return true;
   }
 
-  // Exit intent detection for keyboard shortcuts
-  function handleKeyboardExitIntent(e) {
-    if (exitIntentTriggered || popupShown) return;
-
-    // Detect common exit shortcuts
-    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-    const cmdKey = isMac ? e.metaKey : e.ctrlKey;
-
-    // Cmd+W (close tab) or Ctrl+W - Note: Firefox may not allow preventDefault
-    if (EXIT_INTENT_CONFIG.enableKeyboardShortcuts && cmdKey && e.key === 'w') {
-      e.preventDefault();
-      e.stopPropagation();
-      triggerExitIntent();
-      return;
-    }
-
-    // Cmd+Q (quit browser) or Ctrl+Q
-    if (EXIT_INTENT_CONFIG.enableKeyboardShortcuts && cmdKey && e.key === 'q') {
-      e.preventDefault();
-      e.stopPropagation();
-      triggerExitIntent();
-      return;
-    }
-
-    // Cmd+X (cut - sometimes used to close) or Ctrl+X
-    if (EXIT_INTENT_CONFIG.enableKeyboardShortcuts && cmdKey && e.key === 'x') {
-      e.preventDefault();
-      e.stopPropagation();
-      triggerExitIntent();
-      return;
-    }
-
-    // Alt+F4 (Windows close window)
-    if (EXIT_INTENT_CONFIG.enableKeyboardShortcuts && e.altKey && e.key === 'F4') {
-      e.preventDefault();
-      e.stopPropagation();
-      triggerExitIntent();
-      return;
-    }
-
-    // Escape key (common exit key)
-    if (EXIT_INTENT_CONFIG.enableEscapeKey && e.key === 'Escape') {
-      // Only trigger if user has been on page for more than configured time
-      if (Date.now() - pageLoadTime > EXIT_INTENT_CONFIG.escapeKeyDelay) {
-        triggerExitIntent();
-      }
-      return;
-    }
-
-    // Additional macOS shortcuts
-    if (isMac && EXIT_INTENT_CONFIG.enableKeyboardShortcuts) {
-      // Cmd+H (hide window)
-      if (e.metaKey && e.key === 'h') {
-        e.preventDefault();
-        e.stopPropagation();
-        triggerExitIntent();
-        return;
-      }
-
-      // Cmd+M (minimize window)
-      if (e.metaKey && e.key === 'm') {
-        e.preventDefault();
-        e.stopPropagation();
-        triggerExitIntent();
-        return;
-      }
-    }
-  }
-
-  // Enhanced beforeunload handler for Firefox and other browsers
-  function handleBeforeUnload(e) {
-    if (!exitIntentTriggered && !popupShown) {
-      getExitIntentForms().then(forms => {
-        if (forms.length > 0 && !getCookie(EXIT_INTENT_CONFIG.cookieName)) {
-          // Show a simple confirmation dialog
-          e.preventDefault();
-          e.returnValue = 'Apakah Anda yakin ingin meninggalkan halaman ini?';
-          return e.returnValue;
-        }
-      });
-    }
-  }
-
-  // Pagehide handler for Firefox (when preventDefault doesn't work)
-  function handlePageHide(e) {
-    if (!exitIntentTriggered && !popupShown) {
-      // This is a last resort - the page is actually leaving
-      // We can't prevent it, but we can track it
-      if (EXIT_INTENT_CONFIG.debug) {
-        console.log('Page is leaving - exit intent triggered via pagehide');
-      }
-
-      // Store in sessionStorage that user tried to leave
-      sessionStorage.setItem('exit_intent_attempted', 'true');
-      sessionStorage.setItem('exit_intent_timestamp', Date.now().toString());
-    }
-  }
-
-    // Check for previous exit intent attempts on page load
-  function checkPreviousExitIntent() {
-    if (!EXIT_INTENT_CONFIG.enableFirefoxWorkaround) return;
-    
-    const attempted = sessionStorage.getItem('exit_intent_attempted');
-    const timestamp = sessionStorage.getItem('exit_intent_timestamp');
-    
-    if (attempted === 'true' && timestamp) {
-      const timeDiff = Date.now() - parseInt(timestamp);
-      // If user returned within configured time, show popup
-      if (timeDiff < EXIT_INTENT_CONFIG.firefoxReturnDelay) {
-        getExitIntentForms().then(forms => {
-          if (forms.length > 0 && !getCookie(EXIT_INTENT_CONFIG.cookieName)) {
-            setTimeout(() => {
-              showPopupModal(forms[0]);
-            }, 1000);
-          }
-        });
-      }
-      
-      // Clear the flag
-      sessionStorage.removeItem('exit_intent_attempted');
-      sessionStorage.removeItem('exit_intent_timestamp');
-    }
-  }
-
-  // Track keyboard activity to detect potential exit intent
-  let lastKeyPressTime = 0;
-  let keyPressCount = 0;
-
-  function handleKeyPress(e) {
-    if (exitIntentTriggered || popupShown) return;
-
-    const now = Date.now();
-    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-    const cmdKey = isMac ? e.metaKey : e.ctrlKey;
-
-    // Track Cmd+W or Ctrl+W attempts
-    if (cmdKey && e.key === 'w') {
-      keyPressCount++;
-      lastKeyPressTime = now;
-
-      // If user tries Cmd+W multiple times quickly, trigger exit intent
-      if (keyPressCount >= 2 && (now - lastKeyPressTime) < 2000) {
-        triggerExitIntent();
-      }
-    }
-  }
-
-  // Exit intent detection for visibility change (tab switching)
-  function handleVisibilityChange() {
-    if (exitIntentTriggered || popupShown) return;
-
-    if (EXIT_INTENT_CONFIG.enableTabSwitch) {
-      // Only trigger if user has been on page for more than configured time
-      if (Date.now() - pageLoadTime > EXIT_INTENT_CONFIG.tabSwitchDelay) {
-        if (document.hidden) {
-          triggerExitIntent();
-        }
-      }
-    }
-  }
-
-  // Exit intent detection for focus loss
-  function handleFocusLoss() {
-    if (exitIntentTriggered || popupShown) return;
-
-    if (EXIT_INTENT_CONFIG.enableFocusLoss) {
-      // Only trigger if user has been on page for more than configured time
-      if (Date.now() - pageLoadTime > EXIT_INTENT_CONFIG.focusLossDelay) {
-        triggerExitIntent();
-      }
-    }
-  }
-
-  // Main exit intent trigger function
-  function triggerExitIntent() {
-    if (exitIntentTriggered || popupShown) return;
+  // Enhanced exit intent trigger function
+  function triggerExitIntent(triggerType = 'unknown') {
+    if (!canTriggerExitIntent()) return;
 
     exitIntentTriggered = true;
+    triggerCount++;
+    lastTriggerTime = Date.now();
 
-    // Check if popup was already shown today
-    if (getCookie(EXIT_INTENT_CONFIG.cookieName)) {
-      if (EXIT_INTENT_CONFIG.debug) {
-        console.log('Exit intent popup already shown today');
-      }
-      return;
+    if (SMART_EXIT_INTENT_CONFIG.debug) {
+      console.log(`Smart exit intent triggered by: ${triggerType}`);
     }
 
     // Get exit intent forms and show popup
     getExitIntentForms().then(forms => {
       if (forms.length > 0) {
-        // Show first form (can be enhanced to show random form or based on priority)
         const form = forms[0];
         setTimeout(() => {
           showPopupModal(form);
-        }, EXIT_INTENT_CONFIG.delay);
+        }, SMART_EXIT_INTENT_CONFIG.delay);
       }
     });
   }
 
-  // Track page load time
-  let pageLoadTime = Date.now();
+  // NEW: Scroll-based exit intent
+  function handleScrollBasedExitIntent() {
+    if (!SMART_EXIT_INTENT_CONFIG.enableScrollBased) return;
 
-  // Initialize exit intent detection
-  function initExitIntent() {
-    // Only initialize if not already done
-    if (window.exitIntentInitialized) return;
+    const scrollPercentage = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+    if (scrollPercentage >= SMART_EXIT_INTENT_CONFIG.scrollThreshold) {
+      triggerExitIntent('scroll');
+    }
+  }
+
+  // NEW: Time-based exit intent
+  function handleTimeBasedExitIntent() {
+    if (!SMART_EXIT_INTENT_CONFIG.enableTimeBased) return;
+
+    const timeOnPage = Date.now() - pageLoadTime;
+    if (timeOnPage >= SMART_EXIT_INTENT_CONFIG.timeBasedDelay) {
+      triggerExitIntent('time');
+    }
+  }
+
+  // NEW: Inactivity-based exit intent
+  function resetInactivityTimer() {
+    if (inactivityTimer) {
+      clearTimeout(inactivityTimer);
+    }
+
+    if (SMART_EXIT_INTENT_CONFIG.enableInactivityBased) {
+      inactivityTimer = setTimeout(() => {
+        triggerExitIntent('inactivity');
+      }, SMART_EXIT_INTENT_CONFIG.inactivityDelay);
+    }
+  }
+
+  // NEW: Click-based exit intent
+  function handleClickBasedExitIntent(e) {
+    if (!SMART_EXIT_INTENT_CONFIG.enableClickBased) return;
+
+    const target = e.target.closest('a');
+    if (target && target.href) {
+      const url = new URL(target.href);
+      const currentUrl = new URL(window.location.href);
+
+      // Check if it's an external link
+      if (url.hostname !== currentUrl.hostname) {
+        triggerExitIntent('click');
+      }
+    }
+  }
+
+  // Original exit intent handlers (enhanced)
+  function handleMouseExitIntent(e) {
+    if (!SMART_EXIT_INTENT_CONFIG.enableMouseExit) return;
+
+    if (e.clientY <= SMART_EXIT_INTENT_CONFIG.threshold) {
+      triggerExitIntent('mouse');
+    }
+  }
+
+  function handleKeyboardExitIntent(e) {
+    if (!SMART_EXIT_INTENT_CONFIG.enableKeyboardShortcuts && !SMART_EXIT_INTENT_CONFIG.enableEscapeKey) return;
+
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const cmdKey = isMac ? e.metaKey : e.ctrlKey;
+
+    // Keyboard shortcuts
+    if (SMART_EXIT_INTENT_CONFIG.enableKeyboardShortcuts) {
+      if ((cmdKey && e.key === 'w') || (cmdKey && e.key === 'q') || (cmdKey && e.key === 'x') || (e.altKey && e.key === 'F4')) {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerExitIntent('keyboard');
+        return;
+      }
+
+      // macOS specific
+      if (isMac && ((e.metaKey && e.key === 'h') || (e.metaKey && e.key === 'm'))) {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerExitIntent('keyboard');
+        return;
+      }
+    }
+
+    // Escape key
+    if (SMART_EXIT_INTENT_CONFIG.enableEscapeKey && e.key === 'Escape') {
+      if (Date.now() - pageLoadTime > SMART_EXIT_INTENT_CONFIG.escapeKeyDelay) {
+        triggerExitIntent('escape');
+      }
+    }
+  }
+
+  function handleVisibilityChange() {
+    if (!SMART_EXIT_INTENT_CONFIG.enableTabSwitch) return;
+
+    if (Date.now() - pageLoadTime > SMART_EXIT_INTENT_CONFIG.tabSwitchDelay) {
+      if (document.hidden) {
+        triggerExitIntent('tab_switch');
+      }
+    }
+  }
+
+  function handleFocusLoss() {
+    if (!SMART_EXIT_INTENT_CONFIG.enableFocusLoss) return;
+
+    if (Date.now() - pageLoadTime > SMART_EXIT_INTENT_CONFIG.focusLossDelay) {
+      triggerExitIntent('focus_loss');
+    }
+  }
+
+  // Initialize smart exit intent detection
+  function initSmartExitIntent() {
+    if (window.smartExitIntentInitialized) return;
 
     // Check if we should show exit intent (not on admin pages)
     const currentPath = window.location.pathname;
     if (currentPath.includes('/google-forms') || currentPath.includes('/admin')) {
-      if (EXIT_INTENT_CONFIG.debug) {
-        console.log('Exit intent disabled on admin pages');
+      if (SMART_EXIT_INTENT_CONFIG.debug) {
+        console.log('Smart exit intent disabled on admin pages');
       }
       return;
     }
 
-    // Add event listeners for different exit intent triggers
-    document.addEventListener('mouseleave', handleMouseExitIntent);
-    document.addEventListener('mouseout', handleMouseExitIntent);
-
-    // Keyboard shortcuts detection
-    if (EXIT_INTENT_CONFIG.enableKeyboardShortcuts || EXIT_INTENT_CONFIG.enableEscapeKey) {
-      document.addEventListener('keydown', handleKeyboardExitIntent);
-      document.addEventListener('keypress', handleKeyPress);
+    // Add event listeners for different triggers
+    if (SMART_EXIT_INTENT_CONFIG.enableMouseExit) {
+      document.addEventListener('mouseleave', handleMouseExitIntent);
+      document.addEventListener('mouseout', handleMouseExitIntent);
     }
 
-    // Visibility change detection (tab switching)
-    if (EXIT_INTENT_CONFIG.enableTabSwitch) {
+    if (SMART_EXIT_INTENT_CONFIG.enableKeyboardShortcuts || SMART_EXIT_INTENT_CONFIG.enableEscapeKey) {
+      document.addEventListener('keydown', handleKeyboardExitIntent);
+    }
+
+    if (SMART_EXIT_INTENT_CONFIG.enableTabSwitch) {
       document.addEventListener('visibilitychange', handleVisibilityChange);
     }
 
-    // Focus loss detection
-    if (EXIT_INTENT_CONFIG.enableFocusLoss) {
+    if (SMART_EXIT_INTENT_CONFIG.enableFocusLoss) {
       window.addEventListener('blur', handleFocusLoss);
     }
 
-    // Enhanced beforeunload handler for Firefox and other browsers
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    // NEW: Smart triggers
+    if (SMART_EXIT_INTENT_CONFIG.enableScrollBased) {
+      window.addEventListener('scroll', handleScrollBasedExitIntent);
+    }
 
-    // Pagehide handler for Firefox (when preventDefault doesn't work)
-    window.addEventListener('pagehide', handlePageHide);
+    if (SMART_EXIT_INTENT_CONFIG.enableClickBased) {
+      document.addEventListener('click', handleClickBasedExitIntent);
+    }
 
-    window.exitIntentInitialized = true;
+    // Initialize inactivity timer
+    resetInactivityTimer();
 
-    // Check for previous exit intent attempts
-    checkPreviousExitIntent();
+    // Add activity listeners for inactivity detection
+    ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+      document.addEventListener(event, resetInactivityTimer, true);
+    });
 
-    if (EXIT_INTENT_CONFIG.debug) {
-      console.log('Exit intent detection initialized');
+    // Set up time-based trigger
+    if (SMART_EXIT_INTENT_CONFIG.enableTimeBased) {
+      timeBasedTimer = setTimeout(handleTimeBasedExitIntent, SMART_EXIT_INTENT_CONFIG.timeBasedDelay);
+    }
+
+    window.smartExitIntentInitialized = true;
+
+    if (SMART_EXIT_INTENT_CONFIG.debug) {
+      console.log('Smart exit intent detection initialized');
     }
   }
 
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initExitIntent);
+    document.addEventListener('DOMContentLoaded', initSmartExitIntent);
   } else {
-    initExitIntent();
+    initSmartExitIntent();
   }
 
   // Also initialize after a short delay to ensure all scripts are loaded
-  setTimeout(initExitIntent, 1000);
+  setTimeout(initSmartExitIntent, 1000);
 
 })(); 
