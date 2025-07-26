@@ -119,6 +119,125 @@ def get_dataset_views_by_name(dataset_name):
         # Return fallback data
         return {'total_views': 0, 'recent_views': 0, 'today_views': 0}
 
+def get_dataset_downloads(package_id):
+    """Get download count for a dataset from resource tracking data"""
+    try:
+        # Get dataset name from package_id
+        package = model.Package.get(package_id)
+        if not package:
+            return {'total_downloads': 0, 'recent_downloads': 0}
+        
+        dataset_url = f"/dataset/{package.name}"
+        
+        # Get all resources for this dataset
+        resources = package.resources
+        
+        # Count downloads for all resources of this dataset
+        from sqlalchemy import text
+        from datetime import datetime, timedelta
+        
+        # Get total downloads
+        result = model.Session.execute(text("""
+            SELECT COUNT(*) as count FROM tracking_raw 
+            WHERE tracking_type = 'resource' 
+            AND url LIKE :dataset_pattern
+        """), {'dataset_pattern': f"{dataset_url}/resource/%"})
+        total_downloads = result.fetchone()[0]
+        
+        # Get recent downloads (last 7 days)
+        seven_days_ago = datetime.utcnow() - timedelta(days=7)
+        result = model.Session.execute(text("""
+            SELECT COUNT(*) as count FROM tracking_raw 
+            WHERE tracking_type = 'resource' 
+            AND url LIKE :dataset_pattern
+            AND access_timestamp >= :seven_days_ago
+        """), {
+            'dataset_pattern': f"{dataset_url}/resource/%",
+            'seven_days_ago': seven_days_ago
+        })
+        recent_downloads = result.fetchone()[0]
+        
+        # Get today's downloads
+        today = datetime.utcnow().date()
+        result = model.Session.execute(text("""
+            SELECT COUNT(*) as count FROM tracking_raw 
+            WHERE tracking_type = 'resource' 
+            AND url LIKE :dataset_pattern
+            AND DATE(access_timestamp) = :today
+        """), {
+            'dataset_pattern': f"{dataset_url}/resource/%",
+            'today': today
+        })
+        today_downloads = result.fetchone()[0]
+        
+        return {
+            'total_downloads': total_downloads,
+            'recent_downloads': recent_downloads,
+            'today_downloads': today_downloads
+        }
+    except Exception as e:
+        return {'total_downloads': 0, 'recent_downloads': 0, 'today_downloads': 0}
+
+def get_dataset_downloads_by_name(dataset_name):
+    """Get download count for a dataset by name"""
+    try:
+        # Use direct SQL query for better reliability
+        from sqlalchemy import text
+        from datetime import datetime, timedelta
+        
+        # Get dataset ID from name first
+        result = model.Session.execute(text("""
+            SELECT id FROM package WHERE name = :dataset_name
+        """), {'dataset_name': dataset_name})
+        dataset_row = result.fetchone()
+        
+        if not dataset_row:
+            return {'total_downloads': 0, 'recent_downloads': 0, 'today_downloads': 0}
+        
+        dataset_id = dataset_row[0]
+        
+        # Get total downloads - menggunakan dataset ID
+        result = model.Session.execute(text("""
+            SELECT COUNT(*) as count FROM tracking_raw 
+            WHERE tracking_type = 'resource' 
+            AND url LIKE :dataset_pattern
+        """), {'dataset_pattern': f"%/dataset/{dataset_id}/resource/%"})
+        total_downloads = result.fetchone()[0]
+        
+        # Get recent downloads (last 7 days)
+        seven_days_ago = datetime.utcnow() - timedelta(days=7)
+        result = model.Session.execute(text("""
+            SELECT COUNT(*) as count FROM tracking_raw 
+            WHERE tracking_type = 'resource' 
+            AND url LIKE :dataset_pattern
+            AND access_timestamp >= :seven_days_ago
+        """), {
+            'dataset_pattern': f"%/dataset/{dataset_id}/resource/%",
+            'seven_days_ago': seven_days_ago
+        })
+        recent_downloads = result.fetchone()[0]
+        
+        # Get today's downloads
+        today = datetime.utcnow().date()
+        result = model.Session.execute(text("""
+            SELECT COUNT(*) as count FROM tracking_raw 
+            WHERE tracking_type = 'resource' 
+            AND url LIKE :dataset_pattern
+            AND DATE(access_timestamp) = :today
+        """), {
+            'dataset_pattern': f"%/dataset/{dataset_id}/resource/%",
+            'today': today
+        })
+        today_downloads = result.fetchone()[0]
+        
+        return {
+            'total_downloads': total_downloads,
+            'recent_downloads': recent_downloads,
+            'today_downloads': today_downloads
+        }
+    except Exception as e:
+        return {'total_downloads': 0, 'recent_downloads': 0, 'today_downloads': 0}
+
 def get_total_visitors():
     """Get total number of unique visitors from tracking_raw table"""
     try:
@@ -179,12 +298,22 @@ def get_total_visitors():
             'online_visitors': 0
         }
 
+def json_loads(data):
+    """Parse JSON string safely"""
+    try:
+        import json
+        if data:
+            return json.loads(data)
+        return None
+    except (ValueError, TypeError):
+        return None
+
 class SDBIPlugin(plugins.SingletonPlugin):
     # SDBI Plugin for BNPB Data Portal
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IFacets, inherit=True)
     plugins.implements(plugins.ITemplateHelpers)
-    plugins.implements(plugins.IRoutes, inherit=True)
+    plugins.implements(plugins.IBlueprint)
 
     # IConfigurer
     def update_config(self, config_):
@@ -261,15 +390,31 @@ class SDBIPlugin(plugins.SingletonPlugin):
                 'package_showcase_list': package_showcase_list,
                 'get_dataset_views': get_dataset_views,
                 'get_dataset_views_by_name': get_dataset_views_by_name,
-                'get_total_visitors': get_total_visitors}
+                'get_dataset_downloads': get_dataset_downloads,
+                'get_dataset_downloads_by_name': get_dataset_downloads_by_name,
+                'get_total_visitors': get_total_visitors,
+                'json_loads': json_loads}
 
-    # IRoutes
-    def before_map(self, map):
-        """Add custom routes for tracking"""
-        map.connect('sdbi_tracking', '/sdbi/tracking',
-                   controller='ckanext.sdbi.controllers.tracking:TrackingController',
-                   action='track')
-        map.connect('sdbi_tracking_page', '/sdbi/tracking/page',
-                   controller='ckanext.sdbi.controllers.tracking:TrackingController',
-                   action='track_page')
-        return map
+    # IBlueprint
+    def get_blueprint(self):
+        """Register blueprints"""
+        import logging
+        log = logging.getLogger(__name__)
+        log.info("Registering blueprints")
+        
+        from ckanext.sdbi.controllers.google_forms import google_forms_blueprint
+        from ckanext.sdbi.controllers.tracking import TrackingController
+        
+        # Create tracking blueprint
+        from flask import Blueprint
+        tracking_blueprint = Blueprint('tracking', __name__)
+        
+        # Add routes
+        tracking_blueprint.add_url_rule('/sdbi/tracking', 'track', TrackingController().track, methods=['POST'])
+        tracking_blueprint.add_url_rule('/sdbi/tracking/page', 'track_page', TrackingController().track_page, methods=['GET'])
+        tracking_blueprint.add_url_rule('/sdbi/downloads/<dataset_name>', 'get_downloads', TrackingController().get_downloads, methods=['GET'])
+        
+        # Return list of blueprints
+        return [google_forms_blueprint, tracking_blueprint]
+
+

@@ -15,9 +15,10 @@
         // Kirim tracking data
         sendTrackingData(currentUrl, 'page');
 
-        // Update view count setelah 2 detik
+        // Update view count dan download count setelah 2 detik
         setTimeout(function () {
           updateViewCount(datasetId);
+          updateDownloadCount(datasetId);
         }, 2000);
       }
     }
@@ -94,12 +95,51 @@
     });
   }
 
-  // Track resource downloads
-  $(document).on('click', 'a.resource-url-analytics, a.btn-download', function () {
+  function updateDownloadCount(datasetId) {
+    // Get download count using template helper
+    $.ajax({
+      url: '/api/3/action/package_show',
+      method: 'POST',
+      data: JSON.stringify({
+        id: datasetId
+      }),
+      contentType: 'application/json',
+      success: function (response) {
+        if (response.success) {
+          var datasetName = response.result.name;
+
+          // Get download count via AJAX call to helper function
+          $.ajax({
+            url: '/sdbi/downloads/' + datasetName,
+            method: 'GET',
+            success: function (downloadData) {
+              // Update download count display
+              $('.tracking-total-downloads').text(downloadData.total_downloads || 0);
+              $('.tracking-recent-downloads').text(downloadData.recent_downloads || 0);
+              $('.tracking-today-downloads').text(downloadData.today_downloads || 0);
+
+              // Update sidebar downloads juga
+              $('.badge-success .fa-download').parent().text(downloadData.total_downloads || 0);
+            },
+            error: function (xhr, status, error) {
+              console.error('Failed to get download count:', error);
+            }
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error('Failed to get dataset info:', error);
+      }
+    });
+  }
+
+  // Track resource downloads - menggunakan selector yang lebih spesifik
+  $(document).on('click', 'a.resource-url-analytics, a[href*="/resource/"], .resource-item a[href*="/resource/"], .btn-group a[href*="/resource/"]', function () {
     var resourceUrl = $(this).attr('href');
     var currentUrl = window.location.pathname;
 
     if (resourceUrl && currentUrl.indexOf('/dataset/') !== -1) {
+      console.log('Download tracking: ' + resourceUrl);
       sendTrackingData(resourceUrl, 'resource');
     }
   });
@@ -111,6 +151,7 @@
       var datasetId = currentUrl.split('/dataset/')[1];
       if (datasetId) {
         updateViewCount(datasetId);
+        updateDownloadCount(datasetId);
       }
     }
   }, 30000);

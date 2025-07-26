@@ -89,22 +89,56 @@ is_activity_archive=is_activity_archive %}
       {{ pkg.id }}
     </li>
     {% set tracking_data = h.get_dataset_views_by_name(pkg.name) %}
+    {% set download_data = h.get_dataset_downloads_by_name(pkg.name) %}
+
+    <!-- Views Info -->
     <li class="list-group-item">
       <strong>{{ _('Total Views') }}:</strong>
-      <span class="badge badge-info">
-        <i class="fa fa-eye"></i> {{ tracking_data.total_views }}
-      </span>
-      {% if tracking_data.recent_views > 0 %}
-      <br><small class="text-muted">
-        <i class="fa fa-clock-o"></i> {{ _('Recent Views') }}: {{ tracking_data.recent_views }}
-      </small>
-      {% endif %}
-      {% if tracking_data.today_views > 0 %}
-      <br><small class="text-muted">
-        <i class="fa fa-calendar-day"></i> {{ _('Today') }}: {{ tracking_data.today_views }}
-      </small>
-      {% endif %}
+      <div style="margin-top: 5px;">
+        <span class="badge badge-info" style="font-size: 14px; padding: 8px 12px;">
+          <i class="fa fa-eye"></i> {{ tracking_data.total_views }}
+        </span>
+        {% if tracking_data.recent_views > 0 or tracking_data.today_views > 0 %}
+        <div style="margin-top: 5px;">
+          {% if tracking_data.recent_views > 0 %}
+          <small class="text-muted">
+            <i class="fa fa-clock-o"></i> {{ _('Recent') }}: {{ tracking_data.recent_views }}
+          </small>
+          {% endif %}
+          {% if tracking_data.today_views > 0 %}
+          <br><small class="text-muted">
+            <i class="fa fa-calendar-day"></i> {{ _('Today') }}: {{ tracking_data.today_views }}
+          </small>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
     </li>
+
+    <!-- Downloads Info -->
+    <li class="list-group-item">
+      <strong>{{ _('Total Downloads') }}:</strong>
+      <div style="margin-top: 5px;">
+        <span class="badge badge-success" style="font-size: 14px; padding: 8px 12px;">
+          <i class="fa fa-download"></i> {{ download_data.total_downloads }}
+        </span>
+        {% if download_data.recent_downloads > 0 or download_data.today_downloads > 0 %}
+        <div style="margin-top: 5px;">
+          {% if download_data.recent_downloads > 0 %}
+          <small class="text-muted">
+            <i class="fa fa-clock-o"></i> {{ _('Recent') }}: {{ download_data.recent_downloads }}
+          </small>
+          {% endif %}
+          {% if download_data.today_downloads > 0 %}
+          <br><small class="text-muted">
+            <i class="fa fa-calendar-day"></i> {{ _('Today') }}: {{ download_data.today_downloads }}
+          </small>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </li>
+
     <li class="list-group-item">
       <strong>{{ _('Metadata') }}:</strong>
       <ul class="list-group" style="margin-bottom: 0;">

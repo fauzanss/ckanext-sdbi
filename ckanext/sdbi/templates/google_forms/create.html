@@ -1,0 +1,441 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Tambah Google Form') }}{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ h.url_for_static('css/google_forms_create.css') }}">
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ h.url_for_static('js/google_forms_create.js') }}"></script>
+{% endblock %}
+
+{% block breadcrumb_content %}
+<li><a href="/google-forms">{{ _('Google Forms') }}</a></li>
+<li class="active">{{ _('Tambah Google Form') }}</li>
+{% endblock %}
+
+{% block primary_content %}
+<article class="module">
+  <div class="module-content">
+    <!-- Hero Section -->
+    <div class="create-hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <i class="fa fa-plus-circle text-primary"></i>
+          {{ _('Tambah Google Form Baru') }}
+        </h1>
+        <p class="hero-subtitle">{{ _('Buat form untuk mengumpulkan data dari pengguna portal BNPB') }}</p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">3</div>
+          <div class="stat-label">{{ _('Langkah Mudah') }}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">5</div>
+          <div class="stat-label">{{ _('Kategori') }}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">{{ _('Responses') }}</div>
+        </div>
+      </div>
+    </div>
+
+    {% if c.user and h.check_access('sysadmin', {'user': c.user}) %}
+
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+      <div class="step active" data-step="1">
+        <div class="step-icon">1</div>
+        <div class="step-label">{{ _('Informasi Dasar') }}</div>
+      </div>
+      <div class="step" data-step="2">
+        <div class="step-icon">2</div>
+        <div class="step-label">{{ _('URL & Kategori') }}</div>
+      </div>
+      <div class="step" data-step="3">
+        <div class="step-icon">3</div>
+        <div class="step-label">{{ _('Review & Simpan') }}</div>
+      </div>
+    </div>
+
+    <form method="post" class="form-horizontal modern-form" id="createForm">
+      <!-- Step 1: Basic Information -->
+      <div class="form-step active" data-step="1">
+        <div class="step-header">
+          <h3><i class="fa fa-info-circle"></i> {{ _('Informasi Dasar Form') }}</h3>
+          <p>{{ _('Isi informasi dasar tentang form yang akan dibuat') }}</p>
+        </div>
+
+        <div class="form-group modern-form-group">
+          <label for="title" class="control-label">
+            <i class="fa fa-edit"></i> {{ _('Judul Form') }} <span class="text-danger">*</span>
+          </label>
+          <div class="controls">
+            <input type="text" id="title" name="title" class="form-control modern-input" required
+              placeholder="{{ _('Contoh: Survey Kesiapsiagaan Bencana') }}">
+            <div class="input-tip">
+              <i class="fa fa-lightbulb-o"></i>
+              {{ _('Gunakan judul yang jelas dan deskriptif') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group modern-form-group">
+          <label for="description" class="control-label">
+            <i class="fa fa-align-left"></i> {{ _('Deskripsi') }}
+          </label>
+          <div class="controls">
+            <textarea id="description" name="description" class="form-control modern-textarea" rows="4"
+              placeholder="{{ _('Jelaskan tujuan dan manfaat form ini...') }}"></textarea>
+            <div class="input-tip">
+              <i class="fa fa-lightbulb-o"></i>
+              {{ _('Deskripsi membantu pengguna memahami tujuan form') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-primary next-step">
+            <i class="fa fa-arrow-right"></i> {{ _('Lanjutkan') }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: URL and Category -->
+      <div class="form-step" data-step="2">
+        <div class="step-header">
+          <h3><i class="fa fa-link"></i> {{ _('URL & Kategori Form') }}</h3>
+          <p>{{ _('Masukkan URL Google Form dan tentukan kategorinya') }}</p>
+        </div>
+
+        <div class="form-group modern-form-group">
+          <label for="form_url" class="control-label">
+            <i class="fa fa-external-link"></i> {{ _('URL Google Form') }} <span class="text-danger">*</span>
+          </label>
+          <div class="controls">
+            <div class="url-input-group">
+              <input type="url" id="form_url" name="form_url" class="form-control modern-input" required
+                placeholder="{{ _('https://forms.gle/...') }}">
+              <button type="button" class="btn btn-info url-helper" data-toggle="modal" data-target="#urlHelpModal">
+                <i class="fa fa-question-circle"></i>
+              </button>
+            </div>
+            <div class="url-validation" id="urlValidation"></div>
+          </div>
+        </div>
+
+        <div class="form-group modern-form-group">
+          <label for="category" class="control-label">
+            <i class="fa fa-tags"></i> {{ _('Kategori') }}
+          </label>
+          <div class="controls">
+            <select id="category" name="category" class="form-control modern-select">
+              <option value="general">
+                <i class="fa fa-globe"></i> {{ _('Umum') }}
+              </option>
+              <option value="feedback">
+                <i class="fa fa-comments"></i> {{ _('Feedback') }}
+              </option>
+              <option value="emergency">
+                <i class="fa fa-exclamation-triangle"></i> {{ _('Darurat') }}
+              </option>
+              <option value="report">
+                <i class="fa fa-file-text"></i> {{ _('Laporan') }}
+              </option>
+              <option value="survey">
+                <i class="fa fa-clipboard"></i> {{ _('Survey') }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group modern-form-group">
+          <label for="status" class="control-label">
+            <i class="fa fa-toggle-on"></i> {{ _('Status') }}
+          </label>
+          <div class="controls">
+            <div class="status-toggle">
+              <input type="radio" id="status_active" name="status" value="active" checked>
+              <label for="status_active" class="status-label active">
+                <i class="fa fa-check-circle"></i> {{ _('Aktif') }}
+              </label>
+              <input type="radio" id="status_inactive" name="status" value="inactive">
+              <label for="status_inactive" class="status-label">
+                <i class="fa fa-pause-circle"></i> {{ _('Tidak Aktif') }}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group modern-form-group">
+          <label for="exit_intent" class="control-label">
+            <i class="fa fa-external-link"></i> {{ _('Exit Intent') }}
+          </label>
+          <div class="controls">
+            <div class="exit-intent-toggle">
+              <input type="checkbox" id="exit_intent" name="exit_intent" class="exit-intent-checkbox">
+              <label for="exit_intent" class="exit-intent-label">
+                <i class="fa fa-mouse-pointer"></i> {{ _('Tampilkan form sebelum tab browser ditutup') }}
+              </label>
+            </div>
+            <div class="input-tip">
+              <i class="fa fa-lightbulb-o"></i>
+              {{ _('Form akan muncul ketika pengguna mencoba menutup tab browser') }}
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-default prev-step">
+            <i class="fa fa-arrow-left"></i> {{ _('Kembali') }}
+          </button>
+          <button type="button" class="btn btn-primary next-step">
+            <i class="fa fa-arrow-right"></i> {{ _('Lanjutkan') }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Review and Save -->
+      <div class="form-step" data-step="3">
+        <div class="step-header">
+          <h3><i class="fa fa-check-circle"></i> {{ _('Review & Simpan') }}</h3>
+          <p>{{ _('Periksa kembali informasi form sebelum disimpan') }}</p>
+        </div>
+
+        <div class="review-section">
+          <div class="review-item">
+            <div class="review-label">{{ _('Judul Form') }}:</div>
+            <div class="review-value" id="review-title"></div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">{{ _('Deskripsi') }}:</div>
+            <div class="review-value" id="review-description"></div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">{{ _('URL Form') }}:</div>
+            <div class="review-value" id="review-url"></div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">{{ _('Kategori') }}:</div>
+            <div class="review-value" id="review-category"></div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">{{ _('Status') }}:</div>
+            <div class="review-value" id="review-status"></div>
+          </div>
+          <div class="review-item">
+            <div class="review-label">{{ _('Exit Intent') }}:</div>
+            <div class="review-value" id="review-exit-intent"></div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" class="btn btn-default prev-step">
+            <i class="fa fa-arrow-left"></i> {{ _('Kembali') }}
+          </button>
+          <button type="submit" class="btn btn-success">
+            <i class="fa fa-save"></i> {{ _('Simpan Form') }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- URL Help Modal -->
+    <div class="modal fade" id="urlHelpModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">
+              <i class="fa fa-question-circle text-info"></i>
+              {{ _('Cara Mendapatkan URL Google Form') }}
+            </h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="url-help-steps">
+              <div class="help-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                  <h5>{{ _('Buat Form di Google Forms') }}</h5>
+                  <p>{{ _('Kunjungi forms.google.com dan buat form baru') }}</p>
+                  <img src="/img/google-forms-step1.png" alt="Step 1" class="help-image">
+                </div>
+              </div>
+              <div class="help-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                  <h5>{{ _('Klik Tombol "Send"') }}</h5>
+                  <p>{{ _('Setelah selesai membuat form, klik tombol "Send" di pojok kanan atas') }}</p>
+                  <img src="/img/google-forms-step2.png" alt="Step 2" class="help-image">
+                </div>
+              </div>
+              <div class="help-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                  <h5>{{ _('Pilih Tab "Link"') }}</h5>
+                  <p>{{ _('Pilih tab "Link" untuk mendapatkan URL yang dapat dibagikan') }}</p>
+                  <img src="/img/google-forms-step3.png" alt="Step 3" class="help-image">
+                </div>
+              </div>
+              <div class="help-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                  <h5>{{ _('Copy URL') }}</h5>
+                  <p>{{ _('Copy URL yang muncul dan paste ke form ini') }}</p>
+                  <img src="/img/google-forms-step4.png" alt="Step 4" class="help-image">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">{{ _('Mengerti') }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% else %}
+    <div class="access-denied">
+      <div class="denied-icon">
+        <i class="fa fa-lock"></i>
+      </div>
+      <h3>{{ _('Akses Ditolak') }}</h3>
+      <p>{{ _('Anda tidak memiliki akses untuk menambahkan Google Form.') }}</p>
+      <a href="/google-forms" class="btn btn-primary">
+        <i class="fa fa-arrow-left"></i> {{ _('Kembali ke Google Forms') }}
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}
+
+{% block secondary_content %}
+<div class="tips-sidebar">
+  <!-- Quick Tips -->
+  <div class="tip-card">
+    <div class="tip-header">
+      <i class="fa fa-lightbulb-o text-warning"></i>
+      <h4>{{ _('Tips Cepat') }}</h4>
+    </div>
+    <div class="tip-content">
+      <ul class="tip-list">
+        <li><i class="fa fa-check text-success"></i> {{ _('Gunakan judul yang jelas dan deskriptif') }}</li>
+        <li><i class="fa fa-check text-success"></i> {{ _('Buat deskripsi yang informatif') }}</li>
+        <li><i class="fa fa-check text-success"></i> {{ _('Pilih kategori yang sesuai') }}</li>
+        <li><i class="fa fa-check text-success"></i> {{ _('Test form sebelum dipublikasikan') }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Best Practices -->
+  <div class="tip-card">
+    <div class="tip-header">
+      <i class="fa fa-star text-primary"></i>
+      <h4>{{ _('Best Practices') }}</h4>
+    </div>
+    <div class="tip-content">
+      <div class="practice-item">
+        <h5><i class="fa fa-users"></i> {{ _('User Experience') }}</h5>
+        <ul>
+          <li>{{ _('Buat form yang mudah dipahami') }}</li>
+          <li>{{ _('Gunakan pertanyaan yang relevan') }}</li>
+          <li>{{ _('Batasi jumlah pertanyaan') }}</li>
+        </ul>
+      </div>
+      <div class="practice-item">
+        <h5><i class="fa fa-shield"></i> {{ _('Keamanan') }}</h5>
+        <ul>
+          <li>{{ _('Set pengaturan privasi yang tepat') }}</li>
+          <li>{{ _('Batasi akses jika diperlukan') }}</li>
+          <li>{{ _('Monitor responses secara berkala') }}</li>
+        </ul>
+      </div>
+      <div class="practice-item">
+        <h5><i class="fa fa-cog"></i> {{ _('Konfigurasi') }}</h5>
+        <ul>
+          <li>{{ _('Aktifkan notifikasi email') }}</li>
+          <li>{{ _('Set response limit jika perlu') }}</li>
+          <li>{{ _('Gunakan template yang sesuai') }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Guide -->
+  <div class="tip-card">
+    <div class="tip-header">
+      <i class="fa fa-book text-info"></i>
+      <h4>{{ _('Panduan Kategori') }}</h4>
+    </div>
+    <div class="tip-content">
+      <div class="category-guide">
+        <div class="category-item">
+          <i class="fa fa-globe text-primary"></i>
+          <div>
+            <strong>{{ _('Umum') }}</strong>
+            <small>{{ _('Form untuk keperluan umum') }}</small>
+          </div>
+        </div>
+        <div class="category-item">
+          <i class="fa fa-comments text-success"></i>
+          <div>
+            <strong>{{ _('Feedback') }}</strong>
+            <small>{{ _('Form untuk masukan dan saran') }}</small>
+          </div>
+        </div>
+        <div class="category-item">
+          <i class="fa fa-exclamation-triangle text-danger"></i>
+          <div>
+            <strong>{{ _('Darurat') }}</strong>
+            <small>{{ _('Form untuk situasi darurat') }}</small>
+          </div>
+        </div>
+        <div class="category-item">
+          <i class="fa fa-file-text text-warning"></i>
+          <div>
+            <strong>{{ _('Laporan') }}</strong>
+            <small>{{ _('Form untuk pelaporan') }}</small>
+          </div>
+        </div>
+        <div class="category-item">
+          <i class="fa fa-clipboard text-info"></i>
+          <div>
+            <strong>{{ _('Survey') }}</strong>
+            <small>{{ _('Form untuk survei dan penelitian') }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Resources -->
+  <div class="tip-card">
+    <div class="tip-header">
+      <i class="fa fa-question-circle text-secondary"></i>
+      <h4>{{ _('Bantuan') }}</h4>
+    </div>
+    <div class="tip-content">
+      <div class="help-links">
+        <a href="https://support.google.com/docs/answer/6281888" target="_blank" class="help-link">
+          <i class="fa fa-external-link"></i>
+          {{ _('Dokumentasi Google Forms') }}
+        </a>
+        <a href="https://workspace.google.com/learning-center/products/forms/" target="_blank" class="help-link">
+          <i class="fa fa-external-link"></i>
+          {{ _('Tutorial Google Forms') }}
+        </a>
+        <a href="#" class="help-link" data-toggle="modal" data-target="#urlHelpModal">
+          <i class="fa fa-question-circle"></i>
+          {{ _('Cara Dapatkan URL') }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

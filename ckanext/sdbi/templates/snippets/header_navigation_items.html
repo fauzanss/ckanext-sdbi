@@ -3,10 +3,14 @@
 <li><a href="{{ h.url_for('dataset.search') }}" class="site-header__menu-item menu-item" title="Dataset">Dataset</a>
 </li>
 <li><a href="{{ h.url_for('organization.index') }}" class="site-header__menu-item menu-item"
-        title="Organisasi">Organisasi</a></li>
+                title="Organisasi">Organisasi</a></li>
 <li><a href="{{ h.url_for('showcase_blueprint.index') }}" class="site-header__menu-item menu-item"
-        title="Aplikasi">Aplikasi</a></li>
+                title="Aplikasi">Aplikasi</a></li>
 <li><a href="{{ h.url_for('pages.blog_index') }}" class="site-header__menu-item menu-item"
-        title="Tanggap Darurat">Tanggap Darurat</a></li>
+                title="Tanggap Darurat">Tanggap Darurat</a></li>
+
+{% if c.userobj and c.userobj.sysadmin %}
+<li><a href="/google-forms" class="site-header__menu-item menu-item" title="Google Forms">Google Forms</a></li>
+{% endif %}
 <li><a href="{{ h.url_for('home.about') }}" class="site-header__menu-item menu-item" title="Tentang">Tentang</a></li>
 {% endblock %}

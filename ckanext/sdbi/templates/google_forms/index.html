@@ -1,0 +1,656 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Google Forms') }}{% endblock %}
+
+{% block breadcrumb_content %}
+<li class="active">{{ _('Google Forms') }}</li>
+{% endblock %}
+
+{% block primary_content %}
+<article class="module">
+  <div class="module-content">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <i class="fa fa-file-text-o"></i>
+            {{ _('Google Forms') }}
+          </h1>
+          <p class="hero-subtitle">{{ _('Kelola dan tampilkan Google Forms untuk mengumpulkan data dari pengguna portal
+            data BNPB') }}</p>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number">{{ forms|length }}</span>
+              <span class="stat-label">{{ _('Total Forms') }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">{{ forms|selectattr('status', 'equalto', 'active')|list|length }}</span>
+              <span class="stat-label">{{ _('Active') }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">{{ forms|selectattr('category', 'equalto', 'feedback')|list|length }}</span>
+              <span class="stat-label">{{ _('Feedback') }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          {% if c.user and h.check_access('sysadmin', {'user': c.user}) %}
+          <a href="/google-forms/create" class="btn btn-primary btn-lg hero-btn">
+            <i class="fa fa-plus"></i> {{ _('Tambah Google Form') }}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <div class="filters-content">
+        <div class="filter-group">
+          <label class="filter-label">{{ _('Filter by:') }}</label>
+          <select id="categoryFilter" class="form-control filter-select" onchange="filterForms()">
+            <option value="">{{ _('All Categories') }}</option>
+            <option value="general">{{ _('General') }}</option>
+            <option value="feedback">{{ _('Feedback') }}</option>
+            <option value="emergency">{{ _('Emergency') }}</option>
+            <option value="report">{{ _('Report') }}</option>
+            <option value="survey">{{ _('Survey') }}</option>
+          </select>
+        </div>
+        <div class="search-group">
+          <input type="text" id="searchInput" class="form-control search-input" placeholder="{{ _('Search forms...') }}"
+            onkeyup="filterForms()">
+          <i class="fa fa-search search-icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forms Grid -->
+    {% if forms %}
+    <div class="forms-grid" id="formsGrid">
+      {% for form in forms %}
+      <div class="form-card" data-status="{{ form.status }}" data-category="{{ form.category }}"
+        data-title="{{ form.title|lower }}">
+        <div class="form-card-header">
+          <div class="form-card-icon">
+            <i
+              class="fa fa-{% if form.category == 'feedback' %}comments{% elif form.category == 'emergency' %}exclamation-triangle{% elif form.category == 'report' %}file-text{% elif form.category == 'survey' %}bar-chart{% else %}file-text-o{% endif %}"></i>
+          </div>
+          <div class="form-card-badges">
+            <span class="status-badge status-{{ form.status }}">
+              <i class="fa fa-{% if form.status == 'active' %}check-circle{% else %}pause-circle{% endif %}"></i>
+              {{ form.status|title }}
+            </span>
+            <span class="category-badge category-{{ form.category }}">
+              {{ form.category|title }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-card-body">
+          <h3 class="form-card-title">{{ form.title }}</h3>
+          <p class="form-card-description">
+            {{ form.description[:120] }}{% if form.description|length > 120 %}...{% endif %}
+          </p>
+
+          <div class="form-card-meta">
+            <div class="meta-item">
+              <i class="fa fa-calendar"></i>
+              <span>{{ form.created_at }}</span>
+            </div>
+            <div class="meta-item">
+              <i class="fa fa-tag"></i>
+              <span>{{ form.category|title }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card-actions">
+          <a href="/google-forms/view/{{ form.id }}" class="btn btn-primary btn-sm action-btn">
+            <i class="fa fa-eye"></i> {{ _('Lihat') }}
+          </a>
+          {% if c.user and h.check_access('sysadmin', {'user': c.user}) %}
+          <a href="/google-forms/edit/{{ form.id }}" class="btn btn-outline-secondary btn-sm action-btn">
+            <i class="fa fa-edit"></i> {{ _('Edit') }}
+          </a>
+          <button class="btn btn-outline-danger btn-sm action-btn" onclick="deleteForm('{{ form.id }}')">
+            <i class="fa fa-trash"></i> {{ _('Hapus') }}
+          </button>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- No Results Message -->
+    <div class="no-results" id="noResults" style="display: none;">
+      <div class="no-results-content">
+        <i class="fa fa-search fa-3x text-muted mb-3"></i>
+        <h3 class="text-muted">{{ _('Tidak ada form yang ditemukan') }}</h3>
+        <p class="text-muted">{{ _('Coba ubah filter atau kata kunci pencarian Anda') }}</p>
+        <button class="btn btn-outline-primary" onclick="clearFilters()">
+          <i class="fa fa-refresh"></i> {{ _('Reset Filter') }}
+        </button>
+      </div>
+    </div>
+
+    {% else %}
+    <!-- Empty State -->
+    <div class="empty-state">
+      <div class="empty-state-content">
+        <div class="empty-state-icon">
+          <i class="fa fa-file-text-o"></i>
+        </div>
+        <h2 class="empty-state-title">{{ _('Belum ada Google Forms') }}</h2>
+        <p class="empty-state-description">{{ _('Mulai dengan menambahkan Google Form pertama Anda untuk mengumpulkan
+          data dan feedback dari pengguna') }}</p>
+        {% if c.user and h.check_access('sysadmin', {'user': c.user}) %}
+        <a href="/google-forms/create" class="btn btn-primary btn-lg empty-state-btn">
+          <i class="fa fa-plus"></i> {{ _('Tambah Google Form Pertama') }}
+        </a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}
+
+{% block secondary_content %}
+<div class="module module-narrow module-shallow">
+  <h2 class="module-heading">
+    <i class="fa fa-info-circle"></i>
+    {{ _('Tentang Google Forms') }}
+  </h2>
+  <div class="module-content">
+    <p>{{ _('Google Forms memungkinkan Anda untuk mengumpulkan data dan feedback dari pengguna melalui form online.') }}
+    </p>
+    <p>{{ _('Anda dapat membuat form di Google Forms dan mengintegrasikannya ke portal data BNPB.') }}</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  function deleteForm(formId) {
+    if (confirm('{{ _("Apakah Anda yakin ingin menghapus form ini?") }}')) {
+      fetch(`/google-forms/delete/${formId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            location.reload();
+          } else {
+            alert('{{ _("Gagal menghapus form") }}: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('{{ _("Terjadi kesalahan saat menghapus form") }}');
+        });
+    }
+  }
+
+  function filterForms() {
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const formsGrid = document.getElementById('formsGrid');
+    const noResults = document.getElementById('noResults');
+    const formCards = document.querySelectorAll('.form-card');
+
+    let visibleCount = 0;
+
+    formCards.forEach(card => {
+      const category = card.dataset.category;
+      const title = card.dataset.title;
+
+      const categoryMatch = !categoryFilter || category === categoryFilter;
+      const searchMatch = !searchInput || title.includes(searchInput);
+
+      if (categoryMatch && searchMatch) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (visibleCount === 0) {
+      noResults.style.display = 'block';
+    } else {
+      noResults.style.display = 'none';
+    }
+  }
+
+  function clearFilters() {
+    document.getElementById('categoryFilter').value = '';
+    document.getElementById('searchInput').value = '';
+    filterForms();
+  }
+</script>
+
+<style>
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 3rem 0;
+    margin: -1.5rem -1.5rem 2rem -1.5rem;
+    border-radius: 0 0 1rem 1rem;
+  }
+
+  .hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title i {
+    margin-right: 0.5rem;
+    opacity: 0.9;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .hero-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    transition: all 0.3s ease;
+  }
+
+  .hero-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* Filters Section */
+  .filters-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .filters-content {
+    display: flex;
+    gap: 1.5rem;
+    align-items: end;
+    flex-wrap: wrap;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 200px;
+  }
+
+  .filter-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.25rem;
+  }
+
+  .filter-select {
+    min-width: 200px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    height: 38px;
+  }
+
+  .search-group {
+    position: relative;
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .search-group::before {
+    content: "Search:";
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+  }
+
+  .search-input {
+    padding-left: 2.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    height: 38px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 2.25rem;
+    color: #6c757d;
+    z-index: 1;
+  }
+
+  /* Forms Grid */
+  .forms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+  }
+
+  .form-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .form-card-header {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .form-card-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+  }
+
+  .form-card-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .status-badge i {
+    margin-right: 0.25rem;
+  }
+
+  .status-active {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .status-inactive {
+    background: #f8d7da;
+    color: #721c24;
+  }
+
+  .category-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .category-general {
+    background: #e2e3e5;
+    color: #383d41;
+  }
+
+  .category-feedback {
+    background: #d1ecf1;
+    color: #0c5460;
+  }
+
+  .category-emergency {
+    background: #f8d7da;
+    color: #721c24;
+  }
+
+  .category-report {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  .category-survey {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .form-card-body {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+  }
+
+  .form-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #212529;
+    line-height: 1.3;
+  }
+
+  .form-card-description {
+    color: #6c757d;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .form-card-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+  }
+
+  .meta-item i {
+    color: #adb5bd;
+  }
+
+  .form-card-actions {
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    flex: 1;
+    min-width: 80px;
+    border-radius: 0.5rem;
+    font-weight: 500;
+  }
+
+  /* No Results */
+  .no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+
+  .no-results-content {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+
+  .empty-state-content {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .empty-state-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem auto;
+    color: white;
+    font-size: 2.5rem;
+  }
+
+  .empty-state-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #495057;
+  }
+
+  .empty-state-description {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .empty-state-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .empty-state-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 2rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-stats {
+      justify-content: center;
+    }
+
+    .filters-content {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .search-group {
+      min-width: auto;
+    }
+
+    .forms-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-card-actions {
+      flex-direction: column;
+    }
+
+    .action-btn {
+      flex: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-section {
+      padding: 2rem 0;
+    }
+
+    .hero-stats {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-card-header {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .form-card-badges {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+</style>
+{% endblock %}
