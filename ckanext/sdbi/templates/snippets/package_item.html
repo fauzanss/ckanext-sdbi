@@ -44,11 +44,11 @@ Example:
       {% endif %}
       {% set tracking_data = h.get_dataset_views_by_name(package.name) %}
       {% set download_data = h.get_dataset_downloads_by_name(package.name) %}
-      <span class="label label-default">
-        <i class="fa fa-eye"></i> {{ _('Views') }}: {{ tracking_data.total_views }}
+      <span class="label label-default" style="font-size: 11px; padding: 2px 6px; margin-right: 3px;" title="Total Views: {{ tracking_data.total_views }}{% if tracking_data.recent_views > 0 %}&#10;Recent (7 days): {{ tracking_data.recent_views }}{% endif %}{% if tracking_data.today_views > 0 %}&#10;Today: {{ tracking_data.today_views }}{% endif %}">
+        <i class="fa fa-eye"></i> {{ tracking_data.total_views }}
       </span>
-      <span class="label label-success">
-        <i class="fa fa-download"></i> {{ _('Downloads') }}: {{ download_data.total_downloads }}
+      <span class="label label-success" style="font-size: 11px; padding: 2px 6px;" title="Total Downloads: {{ download_data.total_downloads }}{% if download_data.recent_downloads > 0 %}&#10;Recent (7 days): {{ download_data.recent_downloads }}{% endif %}{% if download_data.today_downloads > 0 %}&#10;Today: {{ download_data.today_downloads }}{% endif %}">
+        <i class="fa fa-download"></i> {{ download_data.total_downloads }}
       </span>
       {% endblock %}
     </h2>

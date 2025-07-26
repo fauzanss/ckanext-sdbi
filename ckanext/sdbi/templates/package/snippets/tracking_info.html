@@ -2,34 +2,20 @@
 {% set download_data = h.get_dataset_downloads_by_name(pkg.name) %}
 {% if tracking_data.total_views > 0 or download_data.total_downloads > 0 %}
 <div class="tracking-info"
-  style="margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid #007cba;">
-
-  <!-- Views Section -->
-  <div class="row" style="margin-bottom: 10px;">
-    <div class="col-md-6">
-      <div style="text-align: center; padding: 10px; background: white; border-radius: 4px; margin-bottom: 10px;">
-        <h4 style="margin: 0; color: #007cba;">
-          <i class="fa fa-eye"></i> {{ tracking_data.total_views }}
-        </h4>
-        <small class="text-muted">Total Views</small>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div style="text-align: center; padding: 10px; background: white; border-radius: 4px; margin-bottom: 10px;">
-        <h4 style="margin: 0; color: #28a745;">
-          <i class="fa fa-download"></i> {{ download_data.total_downloads }}
-        </h4>
-        <small class="text-muted">Total Downloads</small>
-      </div>
-    </div>
-  </div>
+  style="margin: 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #007cba; font-size: 13px;">
+  <span style="margin-right: 15px;" title="Total Views: {{ tracking_data.total_views }}{% if tracking_data.recent_views > 0 %}&#10;Recent (7 days): {{ tracking_data.recent_views }}{% endif %}{% if tracking_data.today_views > 0 %}&#10;Today: {{ tracking_data.today_views }}{% endif %}">
+    <i class="fa fa-eye" style="color: #007cba;"></i>
+    <strong>{{ tracking_data.total_views }}</strong> views
+  </span>
+  <span title="Total Downloads: {{ download_data.total_downloads }}{% if download_data.recent_downloads > 0 %}&#10;Recent (7 days): {{ download_data.recent_downloads }}{% endif %}{% if download_data.today_downloads > 0 %}&#10;Today: {{ download_data.today_downloads }}{% endif %}">
+    <i class="fa fa-download" style="color: #28a745;"></i>
+    <strong>{{ download_data.total_downloads }}</strong> downloads
+  </span>
 </div>
 {% else %}
 <div class="tracking-info"
-  style="margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid #ffc107;">
-  <div style="text-align: center;">
-    <i class="fa fa-info-circle" style="color: #ffc107;"></i>
-    <span class="text-muted">No tracking data available yet.</span>
-  </div>
+  style="margin: 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #ffc107; font-size: 13px;">
+  <i class="fa fa-info-circle" style="color: #ffc107;"></i>
+  <span class="text-muted">No tracking data available yet.</span>
 </div>
 {% endif %}
