@@ -122,12 +122,12 @@
       // Fallback: create and show the modal
       const modal = createPopupModal(form);
       document.body.appendChild(modal);
-      
+
       // Add enhanced CSS if not already added
       if (!document.getElementById('smart-exit-intent-styles')) {
         const style = document.createElement('style');
         style.id = 'smart-exit-intent-styles';
-      style.textContent = `
+        style.textContent = `
         .smart-exit-intent-modal {
           position: fixed;
           top: 0;
@@ -278,8 +278,8 @@
           }
         }
       `;
-      document.head.appendChild(style);
-    }
+        document.head.appendChild(style);
+      }
     }
 
     popupShown = true;
@@ -437,16 +437,33 @@
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     const cmdKey = isMac ? e.metaKey : e.ctrlKey;
 
-    // Keyboard shortcuts
+    // Keyboard shortcuts - using safer combinations that don't conflict with browser
     if (SMART_EXIT_INTENT_CONFIG.enableKeyboardShortcuts) {
-      if ((cmdKey && e.key === 'w') || (cmdKey && e.key === 'q') || (cmdKey && e.key === 'x') || (e.altKey && e.key === 'F4')) {
+      // Safe shortcuts that won't close the browser
+      if ((cmdKey && e.key === 'q') || (cmdKey && e.key === 'x') || (e.altKey && e.key === 'F4')) {
         e.preventDefault();
         e.stopPropagation();
         triggerExitIntent('keyboard');
         return;
       }
 
-      // macOS specific
+      // Cmd+W alternative - use Cmd+Shift+W instead
+      if (cmdKey && e.shiftKey && e.key === 'W') {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerExitIntent('keyboard');
+        return;
+      }
+
+      // Additional safe shortcuts
+      if ((cmdKey && e.key === 'E') || (cmdKey && e.key === 'R') || (cmdKey && e.key === 'T')) {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerExitIntent('keyboard');
+        return;
+      }
+
+      // macOS specific - hide/minimize
       if (isMac && ((e.metaKey && e.key === 'h') || (e.metaKey && e.key === 'm'))) {
         e.preventDefault();
         e.stopPropagation();
