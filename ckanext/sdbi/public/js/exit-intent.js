@@ -11,7 +11,7 @@
     delay: 1000,   // Delay before showing popup (ms)
     cookieName: 'smart_exit_intent_shown',
     cookieExpiry: 1, // Days
-    debug: true,
+    debug: false,
 
     // Smart triggers configuration
     enableMouseExit: true,           // Mouse movement to top
@@ -115,19 +115,11 @@
   function showPopupModal(form) {
     if (popupShown) return;
 
-    // Use existing modal from footer
-    if (typeof showSurveyPopup === 'function') {
-      showSurveyPopup();
-    } else {
-      // Fallback: create and show the modal
-      const modal = createPopupModal(form);
-      document.body.appendChild(modal);
-
-      // Add enhanced CSS if not already added
-      if (!document.getElementById('smart-exit-intent-styles')) {
-        const style = document.createElement('style');
-        style.id = 'smart-exit-intent-styles';
-        style.textContent = `
+    // Add enhanced CSS if not already added
+    if (!document.getElementById('smart-exit-intent-styles')) {
+      const style = document.createElement('style');
+      style.id = 'smart-exit-intent-styles';
+      style.textContent = `
         .smart-exit-intent-modal {
           position: fixed;
           top: 0;
@@ -278,8 +270,7 @@
           }
         }
       `;
-        document.head.appendChild(style);
-      }
+      document.head.appendChild(style);
     }
 
     popupShown = true;
@@ -437,33 +428,16 @@
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     const cmdKey = isMac ? e.metaKey : e.ctrlKey;
 
-    // Keyboard shortcuts - using safer combinations that don't conflict with browser
+    // Keyboard shortcuts
     if (SMART_EXIT_INTENT_CONFIG.enableKeyboardShortcuts) {
-      // Safe shortcuts that won't close the browser
-      if ((cmdKey && e.key === 'q') || (cmdKey && e.key === 'x') || (e.altKey && e.key === 'F4')) {
+      if ((cmdKey && e.key === 'w') || (cmdKey && e.key === 'q') || (cmdKey && e.key === 'x') || (e.altKey && e.key === 'F4')) {
         e.preventDefault();
         e.stopPropagation();
         triggerExitIntent('keyboard');
         return;
       }
 
-      // Cmd+W alternative - use Cmd+Shift+W instead
-      if (cmdKey && e.shiftKey && e.key === 'W') {
-        e.preventDefault();
-        e.stopPropagation();
-        triggerExitIntent('keyboard');
-        return;
-      }
-
-      // Additional safe shortcuts
-      if ((cmdKey && e.key === 'E') || (cmdKey && e.key === 'R') || (cmdKey && e.key === 'T')) {
-        e.preventDefault();
-        e.stopPropagation();
-        triggerExitIntent('keyboard');
-        return;
-      }
-
-      // macOS specific - hide/minimize
+      // macOS specific
       if (isMac && ((e.metaKey && e.key === 'h') || (e.metaKey && e.key === 'm'))) {
         e.preventDefault();
         e.stopPropagation();
