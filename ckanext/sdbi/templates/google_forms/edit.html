@@ -1,0 +1,131 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Edit Google Form') }} - {{ form.title }}{% endblock %}
+
+{% block breadcrumb_content %}
+<li><a href="/google-forms">{{ _('Google Forms') }}</a></li>
+<li class="active">{{ _('Edit') }}</li>
+{% endblock %}
+
+{% block primary_content %}
+<article class="module">
+  <div class="module-content">
+    <div class="page-header">
+      <h1>{{ _('Edit Google Form') }}: {{ form.title }}</h1>
+      <p class="text-muted">{{ _('Perbarui informasi Google Form di bawah ini') }}</p>
+    </div>
+    {% if c.user and h.check_access('sysadmin', {'user': c.user}) %}
+    <form method="post" class="form-horizontal">
+      <div class="form-group">
+        <label for="title" class="control-label">{{ _('Judul Form') }} <span class="text-danger">*</span></label>
+        <div class="controls">
+          <input type="text" id="title" name="title" class="form-control" required value="{{ form.title }}"
+            placeholder="{{ _('Masukkan judul form') }}">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="control-label">{{ _('Deskripsi') }}</label>
+        <div class="controls">
+          <textarea id="description" name="description" class="form-control" rows="4"
+            placeholder="{{ _('Masukkan deskripsi form') }}">{{ form.description or '' }}</textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="form_url" class="control-label">{{ _('URL Google Form') }} <span
+            class="text-danger">*</span></label>
+        <div class="controls">
+          <input type="url" id="form_url" name="form_url" class="form-control" required value="{{ form.form_url }}"
+            placeholder="{{ _('https://forms.gle/...') }}">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="category" class="control-label">{{ _('Kategori') }}</label>
+        <div class="controls">
+          <select id="category" name="category" class="form-control">
+            <option value="general" {% if form.category=='general' %}selected{% endif %}>{{ _('Umum') }}</option>
+            <option value="feedback" {% if form.category=='feedback' %}selected{% endif %}>{{ _('Feedback') }}</option>
+            <option value="emergency" {% if form.category=='emergency' %}selected{% endif %}>{{ _('Darurat') }}</option>
+            <option value="report" {% if form.category=='report' %}selected{% endif %}>{{ _('Laporan') }}</option>
+            <option value="survey" {% if form.category=='survey' %}selected{% endif %}>{{ _('Survey') }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="status" class="control-label">{{ _('Status') }}</label>
+        <div class="controls">
+          <select id="status" name="status" class="form-control">
+            <option value="active" {% if form.status=='active' %}selected{% endif %}>{{ _('Aktif') }}</option>
+            <option value="inactive" {% if form.status=='inactive' %}selected{% endif %}>{{ _('Tidak Aktif') }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="exit_intent" class="control-label">{{ _('Exit Intent') }}</label>
+        <div class="controls">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="exit_intent" name="exit_intent" {% if form.exit_intent %}checked{% endif %}>
+              {{ _('Tampilkan form sebelum tab browser ditutup') }}
+            </label>
+          </div>
+          <p class="help-block">{{ _('Form akan muncul ketika pengguna mencoba menutup tab browser') }}</p>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-save"></i> {{ _('Simpan Perubahan') }}
+        </button>
+        <a href="/google-forms" class="btn btn-default">
+          <i class="fa fa-times"></i> {{ _('Batal') }}
+        </a>
+      </div>
+    </form>
+    {% else %}
+    <div class="alert alert-danger mt-4">{{ _('Anda tidak memiliki akses untuk mengedit Google Form ini.') }}</div>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}
+
+{% block secondary_content %}
+<div class="module module-narrow module-shallow">
+  <h2 class="module-heading">
+    <i class="fa fa-info-circle"></i>
+    {{ _('Informasi Form') }}
+  </h2>
+  <div class="module-content">
+    <dl>
+      <dt>{{ _('ID Form') }}</dt>
+      <dd>{{ form.id }}</dd>
+
+      <dt>{{ _('Dibuat pada') }}</dt>
+      <dd>{{ form.created_at }}</dd>
+
+      <dt>{{ _('Status') }}</dt>
+      <dd><span class="label label-{% if form.status=='active' %}success{% else %}default{% endif %}">{{ form.status
+          }}</span></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="module module-narrow module-shallow">
+  <h2 class="module-heading">
+    <i class="fa fa-lightbulb"></i>
+    {{ _('Tips Edit Form') }}
+  </h2>
+  <div class="module-content">
+    <ul class="list-unstyled">
+      <li><i class="fa fa-check text-success"></i> {{ _('Judul harus jelas dan informatif') }}</li>
+      <li><i class="fa fa-check text-success"></i> {{ _('Deskripsi harus lengkap') }}</li>
+      <li><i class="fa fa-check text-success"></i> {{ _('URL harus valid dan dapat diakses') }}</li>
+      <li><i class="fa fa-check text-success"></i> {{ _('Set status yang tepat') }}</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

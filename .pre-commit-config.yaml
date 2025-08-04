@@ -1,0 +1,11 @@
+repos:
+  - repo: local
+    hooks:
+      - id: restart-ckan
+        name: Restart CKAN Container
+        entry: docker-compose restart ckan
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [post-commit]
+        description: "Restart CKAN container after commit" 

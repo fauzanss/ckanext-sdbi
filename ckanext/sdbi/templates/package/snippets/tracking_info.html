@@ -1,0 +1,21 @@
+{% set tracking_data = h.get_dataset_views_by_name(pkg.name) %}
+{% set download_data = h.get_dataset_downloads_by_name(pkg.name) %}
+{% if tracking_data.total_views > 0 or download_data.total_downloads > 0 %}
+<div class="tracking-info"
+  style="margin: 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #007cba; font-size: 13px;">
+  <span style="margin-right: 15px;" title="Total Views: {{ tracking_data.total_views }}{% if tracking_data.recent_views > 0 %}&#10;Recent (7 days): {{ tracking_data.recent_views }}{% endif %}{% if tracking_data.today_views > 0 %}&#10;Today: {{ tracking_data.today_views }}{% endif %}">
+    <i class="fa fa-eye" style="color: #007cba;"></i>
+    <strong>{{ tracking_data.total_views }}</strong> views
+  </span>
+  <span title="Total Downloads: {{ download_data.total_downloads }}{% if download_data.recent_downloads > 0 %}&#10;Recent (7 days): {{ download_data.recent_downloads }}{% endif %}{% if download_data.today_downloads > 0 %}&#10;Today: {{ download_data.today_downloads }}{% endif %}">
+    <i class="fa fa-download" style="color: #28a745;"></i>
+    <strong>{{ download_data.total_downloads }}</strong> downloads
+  </span>
+</div>
+{% else %}
+<div class="tracking-info"
+  style="margin: 8px 0; padding: 8px 12px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #ffc107; font-size: 13px;">
+  <i class="fa fa-info-circle" style="color: #ffc107;"></i>
+  <span class="text-muted">No tracking data available yet.</span>
+</div>
+{% endif %}
