@@ -8,10 +8,10 @@
   const SMART_EXIT_INTENT_CONFIG = {
     // Basic settings
     threshold: 10, // Distance from top edge to trigger exit intent
-    delay: 1000,   // Delay before showing popup (ms)
+    delay: 0,      // Delay before showing popup (ms)
     cookieName: 'smart_exit_intent_shown',
     cookieExpiry: 1, // Days
-    debug: false,
+    debug: true,
 
     // Smart triggers configuration
     enableMouseExit: true,           // Mouse movement to top
@@ -111,6 +111,8 @@
     `;
     return modal;
   }
+
+
 
   // Show enhanced popup modal
   function showPopupModal(form) {
@@ -253,14 +255,14 @@
 
   function canTriggerExitIntent() {
     if (popupShown) return false;
-    if (exitIntentTriggered && Date.now() - lastTriggerTime < SMART_EXIT_INTENT_CONFIG.triggerCooldown) {
-      return false;
-    }
+    // if (exitIntentTriggered && Date.now() - lastTriggerTime < SMART_EXIT_INTENT_CONFIG.triggerCooldown) {
+    //   return false;
+    // }
 
-    // Max triggers per session
-    if (triggerCount >= SMART_EXIT_INTENT_CONFIG.maxTriggersPerSession) {
-      return false;
-    }
+    // // Max triggers per session
+    // if (triggerCount >= SMART_EXIT_INTENT_CONFIG.maxTriggersPerSession) {
+    //   return false;
+    // }
 
     // Check cookie
     if (getCookie(SMART_EXIT_INTENT_CONFIG.cookieName)) {
@@ -356,27 +358,53 @@
 
     const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     const cmdKey = isMac ? e.metaKey : e.ctrlKey;
+    const key = (e.key || '').toLowerCase();
+
+    if (SMART_EXIT_INTENT_CONFIG.debug) {
+      try {
+        const debugPayload = {
+          key,
+          code: e.code,
+          metaKey: e.metaKey,
+          ctrlKey: e.ctrlKey,
+          altKey: e.altKey,
+          shiftKey: e.shiftKey,
+          repeat: !!e.repeat,
+          targetTag: e.target && e.target.tagName,
+          timeMsSinceLoad: Date.now() - pageLoadTime,
+        };
+        console.log('[ExitIntent][keydown]', debugPayload);
+        if (key === 'w') {
+          console.log('[ExitIntent] Detected key "w"');
+        }
+        if (e.metaKey) {
+          console.log('[ExitIntent] Detected Meta/Cmd pressed');
+        }
+      } catch (err) {
+        // no-op
+      }
+    }
 
     // Keyboard shortcuts
     if (SMART_EXIT_INTENT_CONFIG.enableKeyboardShortcuts) {
-      if ((cmdKey && e.key === 'w') || (cmdKey && e.key === 'q') || (cmdKey && e.key === 'x') || (e.altKey && e.key === 'F4')) {
+      if ((cmdKey && (key === 'w' || key === 'q' || key === 'x')) || (e.altKey && key === 'f4')) {
         e.preventDefault();
-        e.stopPropagation();
+        e.stopImmediatePropagation();
         triggerExitIntent('keyboard');
         return;
       }
 
       // macOS specific
-      if (isMac && ((e.metaKey && e.key === 'h') || (e.metaKey && e.key === 'm'))) {
+      if (isMac && ((e.metaKey && key === 'h') || (e.metaKey && key === 'm'))) {
         e.preventDefault();
-        e.stopPropagation();
+        e.stopImmediatePropagation();
         triggerExitIntent('keyboard');
         return;
       }
     }
 
     // Escape key
-    if (SMART_EXIT_INTENT_CONFIG.enableEscapeKey && e.key === 'Escape') {
+    if (SMART_EXIT_INTENT_CONFIG.enableEscapeKey && key === 'escape') {
       if (Date.now() - pageLoadTime > SMART_EXIT_INTENT_CONFIG.escapeKeyDelay) {
         triggerExitIntent('escape');
       }
@@ -433,7 +461,9 @@
     }
 
     if (SMART_EXIT_INTENT_CONFIG.enableKeyboardShortcuts || SMART_EXIT_INTENT_CONFIG.enableEscapeKey) {
-      document.addEventListener('keydown', handleKeyboardExitIntent);
+      const keydownOptions = { capture: true, passive: false };
+      window.addEventListener('keydown', handleKeyboardExitIntent, keydownOptions);
+      document.addEventListener('keydown', handleKeyboardExitIntent, keydownOptions);
     }
 
     if (SMART_EXIT_INTENT_CONFIG.enableTabSwitch) {
@@ -469,6 +499,8 @@
     if (SMART_EXIT_INTENT_CONFIG.enableTimeBased) {
       timeBasedTimer = setTimeout(handleTimeBasedExitIntent, SMART_EXIT_INTENT_CONFIG.timeBasedDelay);
     }
+
+
 
     window.smartExitIntentInitialized = true;
 
