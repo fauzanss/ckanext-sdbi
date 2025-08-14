@@ -19,6 +19,7 @@
     enableEscapeKey: true,           // Escape key detection
     enableTabSwitch: true,           // Tab switching detection
     enableFocusLoss: true,           // Focus loss detection
+    enableBeforeUnload: true,        // Attempt to catch close-tab/window
 
     // NEW: Smart triggers
     enableScrollBased: true,         // Show form when scrolling near bottom
@@ -199,137 +200,65 @@
 
         .form-description {
           margin-bottom: 15px;
-          padding: 15px;
-          background: #f8f9fa;
-          border-radius: 8px;
-          border-left: 4px solid #007bff;
-        }
-
-        .form-description p {
-          margin: 0;
-          color: #495057;
-          line-height: 1.5;
+          color: #444;
         }
 
         .smart-exit-intent-iframe-container {
-          border: 1px solid #dee2e6;
-          border-radius: 8px;
-          overflow: hidden;
+          width: 100%;
+          height: 400px;
         }
 
         .smart-exit-intent-iframe-container iframe {
           width: 100%;
-          height: 400px;
-          border: none;
+          height: 100%;
         }
 
         .smart-exit-intent-footer {
           padding: 15px 20px;
-          background: #f8f9fa;
-          border-top: 1px solid #dee2e6;
-        }
-
-        .footer-actions {
+          background: #fafafa;
+          border-top: 1px solid #eee;
           display: flex;
-          gap: 10px;
-          margin-bottom: 10px;
+          align-items: center;
+          justify-content: space-between;
         }
 
-        .footer-note {
-          text-align: center;
-          color: #6c757d;
+        .footer-actions .btn {
+          margin-right: 8px;
         }
 
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-          from { transform: translateY(-50px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes fadeOut {
-          from { opacity: 1; }
-          to { opacity: 0; }
-        }
-
-        @media (max-width: 768px) {
-          .smart-exit-intent-content {
-            width: 95vw;
-            margin: 10px;
-          }
-          
-          .smart-exit-intent-iframe-container iframe {
-            height: 300px;
-          }
-          
-          .footer-actions {
-            flex-direction: column;
-          }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
       `;
       document.head.appendChild(style);
     }
 
+    const modal = createPopupModal(form);
+    document.body.appendChild(modal);
     popupShown = true;
-    setCookie(SMART_EXIT_INTENT_CONFIG.cookieName, 'true', SMART_EXIT_INTENT_CONFIG.cookieExpiry);
 
-    if (SMART_EXIT_INTENT_CONFIG.debug) {
-      console.log('Smart exit intent popup shown for form:', form.title);
-    }
+    // Set cookie to avoid showing again in the same session/day
+    const expiry = new Date();
+    expiry.setTime(expiry.getTime() + (SMART_EXIT_INTENT_CONFIG.cookieExpiry * 24 * 60 * 60 * 1000));
+    document.cookie = `${SMART_EXIT_INTENT_CONFIG.cookieName}=1; expires=${expiry.toUTCString()}; path=/`;
   }
 
-  // Close enhanced popup modal
-  window.closeSmartExitIntentModal = function () {
-    const modal = document.querySelector('.smart-exit-intent-modal');
-    if (modal) {
-      modal.style.animation = 'fadeOut 0.3s ease-in-out';
-      setTimeout(() => {
-        if (modal.parentNode) {
-          modal.parentNode.removeChild(modal);
-        }
-      }, 300);
-    }
-  };
-
-  // Cookie utilities
-  function setCookie(name, value, days) {
-    const expires = new Date();
-    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-  }
-
+  // Utility functions for cookies and sessions
   function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
     return null;
   }
 
-  // Smart trigger validation
   function canTriggerExitIntent() {
-    if (exitIntentTriggered || popupShown) return false;
-
-    // Check session limits
-    const sessionElapsed = Date.now() - sessionStartTime;
-    if (sessionElapsed > SMART_EXIT_INTENT_CONFIG.sessionDuration) {
-      sessionStartTime = Date.now();
-      triggerCount = 0;
-    }
-
-    if (triggerCount >= SMART_EXIT_INTENT_CONFIG.maxTriggersPerSession) {
+    if (popupShown) return false;
+    if (exitIntentTriggered && Date.now() - lastTriggerTime < SMART_EXIT_INTENT_CONFIG.triggerCooldown) {
       return false;
     }
 
-    // Check cooldown
-    const timeSinceLastTrigger = Date.now() - lastTriggerTime;
-    if (timeSinceLastTrigger < SMART_EXIT_INTENT_CONFIG.triggerCooldown) {
+    // Max triggers per session
+    if (triggerCount >= SMART_EXIT_INTENT_CONFIG.maxTriggersPerSession) {
       return false;
     }
 
@@ -472,6 +401,18 @@
     }
   }
 
+  // Attempt to detect close tab/window via beforeunload
+  function handleBeforeUnload(e) {
+    if (!SMART_EXIT_INTENT_CONFIG.enableBeforeUnload) return;
+    if (!canTriggerExitIntent()) return;
+    // Trigger the modal and try to prevent immediate unload
+    triggerExitIntent('beforeunload');
+    // Modern browsers require setting returnValue to show a confirm dialog
+    e.preventDefault();
+    e.returnValue = '';
+    return '';
+  }
+
   // Initialize smart exit intent detection
   function initSmartExitIntent() {
     if (window.smartExitIntentInitialized) return;
@@ -501,6 +442,10 @@
 
     if (SMART_EXIT_INTENT_CONFIG.enableFocusLoss) {
       window.addEventListener('blur', handleFocusLoss);
+    }
+
+    if (SMART_EXIT_INTENT_CONFIG.enableBeforeUnload) {
+      window.addEventListener('beforeunload', handleBeforeUnload);
     }
 
     // NEW: Smart triggers
@@ -539,7 +484,12 @@
     initSmartExitIntent();
   }
 
-  // Also initialize after a short delay to ensure all scripts are loaded
-  setTimeout(initSmartExitIntent, 1000);
-
+  // Expose close function globally
+  window.closeSmartExitIntentModal = function () {
+    const modal = document.querySelector('.smart-exit-intent-modal');
+    if (modal) {
+      modal.parentNode.removeChild(modal);
+      popupShown = false;
+    }
+  };
 })(); 
