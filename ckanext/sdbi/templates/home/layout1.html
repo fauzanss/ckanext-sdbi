@@ -141,6 +141,21 @@ dropdown in the settings page and rename this file layout4.html.
   </div>
 </div>
 
+<!-- DEBUG: Temporary debug section -->
+<div style="background: #f0f0f0; padding: 20px; margin: 20px 0;">
+  {% include 'debug_connected.html' %}
+</div>
+
+<div role="main" class="main-search">
+  <div class="container">
+    <div class="row row2">
+      <div class="col-md-12 col1">
+        {% snippet 'home/snippets/connected_statistics.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+
 <div role="main" class="main-updates">
   <div class="container">
     <div class="row row2">
@@ -148,12 +163,7 @@ dropdown in the settings page and rename this file layout4.html.
         {% snippet 'home/snippets/latest_datasets.html' %}
       </div>
       <div class="col-md-6 col2">
-        <div class="module-content box">
-          <h2 class="secondary-heading">Tweets</h2>
-          <a class="twitter-timeline" height="420" data-chrome="nofooter noscrollbar  noheader transparent"
-            href="https://twitter.com/BNPB_Indonesia" data-widget-id="547080711753449472">Tweets by @BNPB_Indonesia</a>
-          <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
-        </div>
+        {% snippet 'home/snippets/popular_datasets.html' %}
       </div>
     </div>
   </div>

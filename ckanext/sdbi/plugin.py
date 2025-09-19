@@ -4,17 +4,231 @@ import ckan.plugins.toolkit as toolkit
 from ckan.common import config
 import ckan.model as model
 
-def most_recent_datasets(num=3):
+def most_recent_datasets(num=4):
         datasets = toolkit.get_action('package_search')({}, {'sort': 'metadata_modified desc',
                                                         'fq': 'private:false',
                                                         'rows': num})
         return datasets.get('results', [])
 
+def most_popular_datasets(num=4):
+    """Get most popular datasets based on view count using direct SQL JOIN"""
+    try:
+        from sqlalchemy import text
+        
+        # Use direct SQL query with JOIN to get datasets ordered by view count
+        query = text("""
+            SELECT p.id, p.name, p.title, p.notes, p.state, p.private, 
+                   p.metadata_created, p.metadata_modified,
+                   COUNT(t.url) as view_count
+            FROM package p
+            LEFT JOIN tracking_raw t ON t.url = '/dataset/' || p.name
+            WHERE p.state = 'active' AND p.private = false
+            GROUP BY p.id, p.name, p.title, p.notes, p.state, p.private, 
+                     p.metadata_created, p.metadata_modified
+            ORDER BY view_count DESC, p.metadata_modified DESC
+            LIMIT :limit
+        """)
+        
+        result = model.Session.execute(query, {'limit': num})
+        
+        # Get package IDs from SQL result
+        package_ids = [row.id for row in result]
+        
+        if not package_ids:
+            return []
+        
+        # Get full package data using CKAN API for proper formatting
+        packages = []
+        for package_id in package_ids:
+            try:
+                package = toolkit.get_action('package_show')({}, {'id': package_id})
+                packages.append(package)
+            except:
+                continue
+        
+        return packages
+        
+    except Exception as e:
+        # Fallback to recent datasets if there's an error
+        return most_recent_datasets(num)
+
 def dataset_count():
     """Return a count of all datasets"""
+    try:
+        from sqlalchemy import text
+        
+        query = text("""
+            SELECT COUNT(*) as total
+            FROM package 
+            WHERE state = 'active' AND private = false
+        """)
+        
+        result = model.Session.execute(query)
+        row = result.fetchone()
+        return row.total if row else 0
+        
+    except Exception as e:
+        # Fallback to original method
+        result = toolkit.get_action('package_search')({}, {'rows': 1})
+        return result['count']
 
-    result = toolkit.get_action('package_search')({}, {'rows': 1})
-    return result['count']
+def get_connected_statistics():
+    """Get statistics for connected provinces, NGOs, and ministries/institutions using dynamic table-based approach"""
+    try:
+        from sqlalchemy import text
+        
+        # Use dynamic table-based approach for better maintainability
+        query = text("""
+            WITH dataset_text AS (
+                SELECT 
+                    name,
+                    title,
+                    notes,
+                    LOWER(CONCAT(title, ' ', COALESCE(notes, ''))) as full_text
+                FROM package 
+                WHERE state = 'active' AND private = false
+            ),
+            provinsi_matches AS (
+                SELECT DISTINCT pk.provinsi_name
+                FROM dataset_text dt
+                JOIN provinsi_keywords pk ON dt.full_text LIKE '%' || pk.keyword || '%'
+            ),
+            kabupaten_kota_matches AS (
+                SELECT DISTINCT kkk.kabupaten_kota_name
+                FROM dataset_text dt
+                JOIN kabupaten_kota_keywords kkk ON dt.full_text LIKE '%' || kkk.keyword || '%'
+            ),
+            kementerian_matches AS (
+                SELECT DISTINCT kk.kementerian_name
+                FROM dataset_text dt
+                JOIN kementerian_keywords kk ON dt.full_text LIKE '%' || kk.keyword || '%'
+            )
+            SELECT 
+                (SELECT COUNT(*) FROM provinsi_matches) as provinsi_count,
+                (SELECT COUNT(*) FROM kabupaten_kota_matches) as kabupaten_kota_count,
+                (SELECT COUNT(*) FROM kementerian_matches) as kementerian_count
+        """)
+        
+        result = model.Session.execute(query)
+        row = result.fetchone()
+        
+        return {
+            'provinsi_terhubung': row.provinsi_count if row else 0,
+            'kabupaten_kota_terhubung': row.kabupaten_kota_count if row else 0,
+            'kementerian_lembaga_terhubung': row.kementerian_count if row else 0
+        }
+        
+    except Exception as e:
+        return {
+            'provinsi_terhubung': 0,
+            'kabupaten_kota_terhubung': 0,
+            'kementerian_lembaga_terhubung': 0
+        }
+
+def debug_connected_statistics():
+    """Debug function to see all datasets and their matching using table-based approach"""
+    try:
+        from sqlalchemy import text
+        
+        # Get all datasets with their keyword matches using table-based approach
+        query = text("""
+            WITH dataset_text AS (
+                SELECT 
+                    p.name,
+                    p.title,
+                    p.notes,
+                    LOWER(CONCAT(p.title, ' ', COALESCE(p.notes, ''))) as full_text
+                FROM package p
+                WHERE p.state = 'active' AND p.private = false
+                ORDER BY p.metadata_created DESC
+            ),
+            dataset_matches AS (
+                SELECT 
+                    dt.name,
+                    dt.title,
+                    dt.notes,
+                    dt.full_text,
+                    -- Provinsi matches
+                    STRING_AGG(DISTINCT pk.provinsi_name, ', ') as provinsi_matches,
+                    STRING_AGG(DISTINCT pk.keyword, ', ') as provinsi_keywords,
+                    -- Kabupaten/Kota matches
+                    STRING_AGG(DISTINCT kkk.kabupaten_kota_name, ', ') as kabupaten_kota_matches,
+                    STRING_AGG(DISTINCT kkk.keyword, ', ') as kabupaten_kota_keywords,
+                    -- Kementerian matches
+                    STRING_AGG(DISTINCT kk.kementerian_name, ', ') as kementerian_matches,
+                    STRING_AGG(DISTINCT kk.keyword, ', ') as kementerian_keywords
+                FROM dataset_text dt
+                LEFT JOIN provinsi_keywords pk ON dt.full_text LIKE '%' || pk.keyword || '%'
+                LEFT JOIN kabupaten_kota_keywords kkk ON dt.full_text LIKE '%' || kkk.keyword || '%'
+                LEFT JOIN kementerian_keywords kk ON dt.full_text LIKE '%' || kk.keyword || '%'
+                GROUP BY dt.name, dt.title, dt.notes, dt.full_text
+            )
+            SELECT 
+                name,
+                title,
+                notes,
+                full_text,
+                COALESCE(provinsi_matches, '') as provinsi_matches,
+                COALESCE(provinsi_keywords, '') as provinsi_keywords,
+                COALESCE(kabupaten_kota_matches, '') as kabupaten_kota_matches,
+                COALESCE(kabupaten_kota_keywords, '') as kabupaten_kota_keywords,
+                COALESCE(kementerian_matches, '') as kementerian_matches,
+                COALESCE(kementerian_keywords, '') as kementerian_keywords
+            FROM dataset_matches
+            ORDER BY name
+        """)
+        
+        result = model.Session.execute(query)
+        datasets = []
+        
+        for row in result:
+            datasets.append({
+                'name': row.name,
+                'title': row.title,
+                'notes': row.notes or '',
+                'full_text': row.full_text[:200] + '...' if len(row.full_text) > 200 else row.full_text,
+                'provinsi_matches': row.provinsi_matches.split(', ') if row.provinsi_matches else [],
+                'provinsi_keywords': row.provinsi_keywords.split(', ') if row.provinsi_keywords else [],
+                'kabupaten_kota_matches': row.kabupaten_kota_matches.split(', ') if row.kabupaten_kota_matches else [],
+                'kabupaten_kota_keywords': row.kabupaten_kota_keywords.split(', ') if row.kabupaten_kota_keywords else [],
+                'kementerian_matches': row.kementerian_matches.split(', ') if row.kementerian_matches else [],
+                'kementerian_keywords': row.kementerian_keywords.split(', ') if row.kementerian_keywords else []
+            })
+        
+        # Get all available keywords from tables
+        provinsi_query = text("SELECT DISTINCT provinsi_name, keyword FROM provinsi_keywords ORDER BY provinsi_name, keyword")
+        kabupaten_kota_query = text("SELECT DISTINCT kabupaten_kota_name, keyword FROM kabupaten_kota_keywords ORDER BY kabupaten_kota_name, keyword")
+        kementerian_query = text("SELECT DISTINCT kementerian_name, keyword FROM kementerian_keywords ORDER BY kementerian_name, keyword")
+        
+        provinsi_result = model.Session.execute(provinsi_query)
+        kabupaten_kota_result = model.Session.execute(kabupaten_kota_query)
+        kementerian_result = model.Session.execute(kementerian_query)
+        
+        all_keywords = {
+            'provinsi': [{'name': row.provinsi_name, 'keyword': row.keyword} for row in provinsi_result],
+            'kabupaten_kota': [{'name': row.kabupaten_kota_name, 'keyword': row.keyword} for row in kabupaten_kota_result],
+            'kementerian': [{'name': row.kementerian_name, 'keyword': row.keyword} for row in kementerian_result]
+        }
+        
+        return {
+            'datasets': datasets,
+            'keywords': all_keywords,
+            'total_datasets': len(datasets),
+            'matched_datasets': len([d for d in datasets if any([d['provinsi_matches'], d['kabupaten_kota_matches'], d['kementerian_matches']])])
+        }
+        
+    except Exception as e:
+        return {
+            'datasets': [],
+            'keywords': {
+                'provinsi': [],
+                'kabupaten_kota': [],
+                'kementerian': []
+            },
+            'total_datasets': 0,
+            'matched_datasets': 0,
+            'error': str(e)
+        }
 
 def groups():
     """Return a list of groups"""
@@ -384,7 +598,10 @@ class SDBIPlugin(plugins.SingletonPlugin):
         """Register sdbi_theme_* helper functions"""
 
         return {'sdbi_theme_most_recent_datasets': most_recent_datasets,
+                'sdbi_theme_most_popular_datasets': most_popular_datasets,
                 'sdbi_theme_dataset_count': dataset_count,
+                'sdbi_theme_connected_statistics': get_connected_statistics,
+                'sdbi_theme_debug_connected': debug_connected_statistics,
                 'sdbi_theme_groups': groups,
                 'ckan_site_url': ckan_site_url,
                 'package_showcase_list': package_showcase_list,

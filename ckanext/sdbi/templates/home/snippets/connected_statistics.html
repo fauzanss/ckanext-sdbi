@@ -1,0 +1,66 @@
+{% set stats = h.sdbi_theme_connected_statistics() %}
+{% set total_datasets = h.sdbi_theme_dataset_count() %}
+
+<div class="module-content box">
+  <header>
+    <h2 class="secondary-heading">Statistik Konektivitas</h2>
+  </header>
+  <section>
+    <!-- Total Dataset Info -->
+    <div class="row" style="margin-bottom: 20px;">
+      <div class="col-md-12 text-center">
+        <div class="stat-item"
+          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+          <h3 class="stat-number" style="color: white; font-size: 3em;">{{ total_datasets }}+</h3>
+          <p class="stat-label" style="color: white; font-size: 1.3em;">Total Dataset Tersedia</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connectivity Statistics -->
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <div class="stat-item">
+          <h3 class="stat-number">{{ stats.provinsi_terhubung }}</h3>
+          <p class="stat-label">Provinsi Terhubung</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="stat-item">
+          <h3 class="stat-number">{{ stats.kabupaten_kota_terhubung }}</h3>
+          <p class="stat-label">Kabupaten/Kota Terhubung</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="stat-item">
+          <h3 class="stat-number">{{ stats.kementerian_lembaga_terhubung }}</h3>
+          <p class="stat-label">Kementerian/Lembaga Terhubung</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .stat-item {
+    padding: 20px;
+    margin: 10px 0;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+  }
+
+  .stat-number {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #007bff;
+    margin: 0;
+  }
+
+  .stat-label {
+    font-size: 1.1em;
+    color: #6c757d;
+    margin: 10px 0 0 0;
+    font-weight: 500;
+  }
+</style>

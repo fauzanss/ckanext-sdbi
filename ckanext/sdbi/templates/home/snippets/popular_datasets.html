@@ -1,0 +1,10 @@
+{% set popular_datasets = h.sdbi_theme_most_popular_datasets() %}
+
+<div class="module-content box">
+  <header>
+    <h2 class="secondary-heading">Dataset Populer</h2>
+  </header>
+  <section>
+    {% snippet 'snippets/package_list.html', packages=popular_datasets %}
+  </section>
+</div>
