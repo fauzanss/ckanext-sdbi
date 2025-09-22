@@ -1,10 +1,205 @@
 {% set popular_datasets = h.sdbi_theme_most_popular_datasets() %}
 
-<div class="module-content box">
-  <header>
-    <h2 class="secondary-heading">Dataset Populer</h2>
-  </header>
-  <section>
-    {% snippet 'snippets/package_list.html', packages=popular_datasets %}
-  </section>
+{% if popular_datasets %}
+{% for package in popular_datasets %}
+<div class="dataset-card popular-card"
+  onclick="window.location.href='{{ h.url_for('dataset.read', id=package.name) }}'">
+  <div class="dataset-card-header">
+    <div class="dataset-icon popular-icon">
+      <i class="fa fa-line-chart"></i>
+    </div>
+    <div class="dataset-badge">
+      <span class="badge-popular">POPULER</span>
+    </div>
+  </div>
+  <div class="dataset-card-body">
+    <h4 class="dataset-title">
+      <a href="{{ h.url_for('dataset.read', id=package.name) }}">
+        {{ package.title or package.name }}
+      </a>
+    </h4>
+    {% if package.organization %}
+    <p class="dataset-org">
+      <i class="fa fa-building-o"></i> {{ package.organization.title }}
+    </p>
+    {% endif %}
+    {% if package.notes %}
+    <p class="dataset-description">{{ h.truncate(package.notes, length=100, whole_word=True) }}</p>
+    {% endif %}
+  </div>
+  <div class="dataset-card-footer">
+    <div class="dataset-meta">
+      <span class="dataset-views">
+        <i class="fa fa-eye"></i>
+        {% set view_count = h.sdbi_theme_get_view_count(package.name) %}
+        {{ view_count }} views
+      </span>
+      {% set download_data = h.get_dataset_downloads_by_name(package.name) %}
+      {% if download_data.total_downloads > 0 %}
+      <span class="dataset-resources">
+        <i class="fa fa-download"></i> {{ download_data.total_downloads }} downloads
+      </span>
+      {% endif %}
+    </div>
+  </div>
 </div>
+{% endfor %}
+{% else %}
+<div class="no-datasets">
+  <i class="fa fa-info-circle"></i>
+  <p>Tidak ada dataset populer</p>
+</div>
+{% endif %}
+
+<style>
+  .dataset-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border-top: 4px solid #ff5e14;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .popular-card {
+    border-top-color: #206b82;
+  }
+
+  .dataset-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(255, 94, 20, 0.15);
+  }
+
+  .dataset-card-header {
+    position: relative;
+    padding: 20px 20px 0 20px;
+  }
+
+  .dataset-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  .popular-icon {
+    background: linear-gradient(135deg, #206b82, #164959);
+  }
+
+  .dataset-icon i {
+    color: white;
+    font-size: 20px;
+  }
+
+  .dataset-badge {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+  }
+
+  .badge-popular {
+    background: linear-gradient(135deg, #206b82, #164959);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .dataset-card-body {
+    padding: 0 20px 15px 20px;
+  }
+
+  .dataset-title {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .dataset-title a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .dataset-title a:hover {
+    color: #206b82;
+    text-decoration: none;
+  }
+
+  .dataset-org {
+    color: #6c757d;
+    font-size: 0.9em;
+    margin: 5px 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .dataset-description {
+    color: #6c757d;
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin: 10px 0;
+  }
+
+  .dataset-card-footer {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .dataset-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85em;
+    color: #6c757d;
+  }
+
+  .dataset-views,
+  .dataset-resources {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .dataset-views {
+    color: #206b82;
+    font-weight: 600;
+  }
+
+  .no-datasets {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+  }
+
+  .no-datasets i {
+    font-size: 4em;
+    margin-bottom: 20px;
+    color: #ff5e14;
+  }
+
+  .no-datasets p {
+    font-size: 1.2em;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .dataset-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+</style>

@@ -5,7 +5,42 @@ from ckan.common import config
 import ckan.model as model
 
 def most_recent_datasets(num=4):
-        datasets = toolkit.get_action('package_search')({}, {'sort': 'metadata_modified desc',
+    """Get most recent datasets based on creation date using direct SQL query"""
+    try:
+        from sqlalchemy import text
+        
+        # Use direct SQL query to get datasets ordered by creation date
+        query = text("""
+            SELECT p.id, p.name, p.title, p.notes, p.state, p.private, 
+                   p.metadata_created, p.metadata_modified
+            FROM package p
+            WHERE p.state = 'active' AND p.private = false
+            ORDER BY p.metadata_created DESC
+            LIMIT :limit
+        """)
+        
+        result = model.Session.execute(query, {'limit': num})
+        
+        # Get package IDs from SQL result
+        package_ids = [row.id for row in result]
+        
+        if not package_ids:
+            return []
+        
+        # Get full package data using CKAN API for proper formatting
+        packages = []
+        for package_id in package_ids:
+            try:
+                package = toolkit.get_action('package_show')({}, {'id': package_id})
+                packages.append(package)
+            except:
+                continue
+        
+        return packages
+        
+    except Exception as e:
+        # Fallback to original method if there's an error
+        datasets = toolkit.get_action('package_search')({}, {'sort': 'metadata_created desc',
                                                         'fq': 'private:false',
                                                         'rows': num})
         return datasets.get('results', [])
@@ -58,7 +93,7 @@ def dataset_count():
         from sqlalchemy import text
         
         query = text("""
-            SELECT COUNT(*) as total
+            SELECT COUNT(1) as total
             FROM package 
             WHERE state = 'active' AND private = false
         """)
@@ -73,40 +108,19 @@ def dataset_count():
         return result['count']
 
 def get_connected_statistics():
-    """Get statistics for connected provinces, NGOs, and ministries/institutions using dynamic table-based approach"""
+    """Get statistics for connected provinces, NGOs, and ministries/institutions based on organization name prefixes"""
     try:
         from sqlalchemy import text
         
-        # Use dynamic table-based approach for better maintainability
+        # Count organizations based on title prefixes
         query = text("""
-            WITH dataset_text AS (
-                SELECT 
-                    name,
-                    title,
-                    notes,
-                    LOWER(CONCAT(title, ' ', COALESCE(notes, ''))) as full_text
-                FROM package 
-                WHERE state = 'active' AND private = false
-            ),
-            provinsi_matches AS (
-                SELECT DISTINCT pk.provinsi_name
-                FROM dataset_text dt
-                JOIN provinsi_keywords pk ON dt.full_text LIKE '%' || pk.keyword || '%'
-            ),
-            kabupaten_kota_matches AS (
-                SELECT DISTINCT kkk.kabupaten_kota_name
-                FROM dataset_text dt
-                JOIN kabupaten_kota_keywords kkk ON dt.full_text LIKE '%' || kkk.keyword || '%'
-            ),
-            kementerian_matches AS (
-                SELECT DISTINCT kk.kementerian_name
-                FROM dataset_text dt
-                JOIN kementerian_keywords kk ON dt.full_text LIKE '%' || kk.keyword || '%'
-            )
             SELECT 
-                (SELECT COUNT(*) FROM provinsi_matches) as provinsi_count,
-                (SELECT COUNT(*) FROM kabupaten_kota_matches) as kabupaten_kota_count,
-                (SELECT COUNT(*) FROM kementerian_matches) as kementerian_count
+                COUNT(CASE WHEN LOWER(title) LIKE '%provinsi%' THEN 1 END) as provinsi_count,
+                COUNT(CASE WHEN LOWER(title) LIKE '%kementerian%' OR LOWER(title) LIKE '%lembaga%' OR LOWER(title) LIKE '%badan%' THEN 1 END) as kementerian_count,
+                COUNT(CASE WHEN LOWER(title) LIKE '%ngo%' THEN 1 END) as ngo_count,
+                COUNT(CASE WHEN LOWER(title) LIKE '%kabupaten%' OR LOWER(title) LIKE '%kota%' THEN 1 END) as kabupaten_kota_count
+            FROM "group" 
+            WHERE state = 'active'
         """)
         
         result = model.Session.execute(query)
@@ -115,15 +129,55 @@ def get_connected_statistics():
         return {
             'provinsi_terhubung': row.provinsi_count if row else 0,
             'kabupaten_kota_terhubung': row.kabupaten_kota_count if row else 0,
-            'kementerian_lembaga_terhubung': row.kementerian_count if row else 0
+            'kementerian_lembaga_terhubung': row.kementerian_count if row else 0,
+            'ngo_terhubung': row.ngo_count if row else 0
         }
         
     except Exception as e:
         return {
             'provinsi_terhubung': 0,
             'kabupaten_kota_terhubung': 0,
-            'kementerian_lembaga_terhubung': 0
+            'kementerian_lembaga_terhubung': 0,
+            'ngo_terhubung': 0
         }
+
+def debug_organizations():
+    """Debug function to see all organizations in the database"""
+    try:
+        from sqlalchemy import text
+        
+        # Get all organizations
+        query = text("""
+            SELECT name, title, state 
+            FROM "group" 
+            WHERE state = 'active'
+            ORDER BY title
+        """)
+        
+        result = model.Session.execute(query)
+        organizations = result.fetchall()
+        
+        # Also check for kementerian/lembaga/badan specifically
+        kementerian_query = text("""
+            SELECT name, title, state 
+            FROM "group" 
+            WHERE state = 'active' 
+            AND (LOWER(title) LIKE '%kementerian%' OR LOWER(title) LIKE '%lembaga%' OR LOWER(title) LIKE '%badan%')
+            ORDER BY title
+        """)
+        
+        kementerian_result = model.Session.execute(kementerian_query)
+        kementerian_orgs = kementerian_result.fetchall()
+        
+        return {
+            'all_organizations': [{'name': org.name, 'title': org.title, 'state': org.state} for org in organizations],
+            'kementerian_organizations': [{'name': org.name, 'title': org.title, 'state': org.state} for org in kementerian_orgs],
+            'total_count': len(organizations),
+            'kementerian_count': len(kementerian_orgs)
+        }
+        
+    except Exception as e:
+        return {'error': str(e), 'all_organizations': [], 'kementerian_organizations': [], 'total_count': 0, 'kementerian_count': 0}
 
 def debug_connected_statistics():
     """Debug function to see all datasets and their matching using table-based approach"""
@@ -229,6 +283,26 @@ def debug_connected_statistics():
             'matched_datasets': 0,
             'error': str(e)
         }
+
+
+def get_view_count(package_name):
+    """Get view count for a specific package"""
+    try:
+        from sqlalchemy import text
+        
+        query = text("""
+            SELECT COUNT(*) as view_count
+            FROM tracking_raw 
+            WHERE url = '/dataset/' || :package_name
+        """)
+        
+        result = model.Session.execute(query, {'package_name': package_name})
+        row = result.fetchone()
+        return row.view_count if row else 0
+        
+    except Exception as e:
+        return 0
+
 
 def groups():
     """Return a list of groups"""
@@ -602,6 +676,7 @@ class SDBIPlugin(plugins.SingletonPlugin):
                 'sdbi_theme_dataset_count': dataset_count,
                 'sdbi_theme_connected_statistics': get_connected_statistics,
                 'sdbi_theme_debug_connected': debug_connected_statistics,
+                'sdbi_theme_get_view_count': get_view_count,
                 'sdbi_theme_groups': groups,
                 'ckan_site_url': ckan_site_url,
                 'package_showcase_list': package_showcase_list,
