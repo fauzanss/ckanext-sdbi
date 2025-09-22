@@ -5,8 +5,8 @@
   <!-- Total Dataset Info -->
   <div class="row mb-4">
     <div class="col-md-12">
-      <div class="total-dataset-card" onclick="window.location.href='{{ h.url_for('dataset.search') }}'"
-        style="cursor: pointer;">
+      <div class="total-dataset-card">
+        <a class="dataset-card-link" href="{{ h.url_for('dataset.search') }}" aria-label="Cari dataset"></a>
         <div class="total-dataset-content">
           <div class="total-dataset-icon">
             <i class="fa fa-database"></i>
@@ -272,5 +272,23 @@
     .stat-number {
       font-size: 2.5em;
     }
+  }
+</style>
+
+<style>
+  .total-dataset-card {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .dataset-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .total-dataset-content {
+    position: relative;
+    z-index: 2;
   }
 </style>

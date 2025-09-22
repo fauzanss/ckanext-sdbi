@@ -2,8 +2,8 @@
 
 {% if popular_datasets %}
 {% for package in popular_datasets %}
-<div class="dataset-card popular-card"
-  onclick="window.location.href='{{ h.url_for('dataset.read', id=package.name) }}'">
+<div class="dataset-card popular-card">
+  <a class="dataset-card-link" href="{{ h.url_for('dataset.read', id=package.name) }}" aria-label="Buka dataset"></a>
   <div class="dataset-card-header">
     <div class="dataset-icon popular-icon">
       <i class="fa fa-line-chart"></i>
@@ -35,11 +35,11 @@
         {{ view_count }} views
       </span>
       {% set download_data = h.get_dataset_downloads_by_name(package.name) %}
-      {% if download_data.total_downloads > 0 %}
+      {% set download_count = download_data.total_downloads|int if download_data and download_data.total_downloads else
+      0 %}
       <span class="dataset-resources">
-        <i class="fa fa-download"></i> {{ download_data.total_downloads }} downloads
+        <i class="fa fa-download"></i> {{ download_count }} downloads
       </span>
-      {% endif %}
     </div>
   </div>
 </div>
@@ -201,5 +201,24 @@
       align-items: flex-start;
       gap: 8px;
     }
+  }
+</style>
+
+<style>
+  .dataset-card.popular-card {
+    position: relative;
+  }
+
+  .dataset-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .dataset-card-header,
+  .dataset-card-body,
+  .dataset-card-footer {
+    position: relative;
+    z-index: 2;
   }
 </style>

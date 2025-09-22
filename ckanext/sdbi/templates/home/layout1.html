@@ -57,13 +57,20 @@ dropdown in the settings page and rename this file layout4.html.
           </div>
 
           <div class="carousel-container">
+            <!-- Navigation Buttons -->
+            <button class="carousel-nav carousel-nav-left" id="carouselPrev">
+              <i class="fa fa-chevron-left"></i>
+            </button>
+            <button class="carousel-nav carousel-nav-right" id="carouselNext">
+              <i class="fa fa-chevron-right"></i>
+            </button>
+
             <div class="carousel-wrapper">
               <div class="carousel-track" id="carouselTrack">
                 <div class="news-card" onclick="window.open('https://gis.bnpb.go.id/', '_blank')">
                   <div class="card-image background a">
                   </div>
                   <div class="card-content">
-                    <div class="card-date">26 Agustus 2025</div>
                     <h3 class="card-title">Geoportal Data Bencana</h3>
                     <p class="card-description">Layanan interoperabilitas data dalam rangka mendukung penyelenggaraan
                       Satu
@@ -76,7 +83,6 @@ dropdown in the settings page and rename this file layout4.html.
                   <div class="card-image background b">
                   </div>
                   <div class="card-content">
-                    <div class="card-date">25 Agustus 2025</div>
                     <h3 class="card-title">Data Geospasial dan Drone</h3>
                     <p class="card-description">Halaman ini berisikan beberapa video, foto, maupun pemetaan yang
                       dilakukan
@@ -90,7 +96,6 @@ dropdown in the settings page and rename this file layout4.html.
                   <div class="card-image background c">
                   </div>
                   <div class="card-content">
-                    <div class="card-date">20 Agustus 2025</div>
                     <h3 class="card-title">Galeri Peta</h3>
                     <p class="card-description">Halaman ini berisikan beberapa peta yang dihasilkan oleh Bidang
                       Pengelolaan
@@ -104,7 +109,6 @@ dropdown in the settings page and rename this file layout4.html.
                   <div class="card-image background d">
                   </div>
                   <div class="card-content">
-                    <div class="card-date">15 Agustus 2025</div>
                     <h3 class="card-title">Buletin Info Bencana</h3>
                     <p class="card-description">Halaman ini berisi kumpulan kejadian bencana yang dirangkum menjadi
                       sebuah
@@ -117,7 +121,6 @@ dropdown in the settings page and rename this file layout4.html.
                   <div class="card-image background e">
                   </div>
                   <div class="card-content">
-                    <div class="card-date">11 Agustus 2025</div>
                     <h3 class="card-title">Dashboard Penanganan Darurat Gempa Bumi Cianjur 2022</h3>
                     <p class="card-description">Berikut adalah informasi penanganan gempa bumi cianjur 2022 yang dikemas
                       menjadi sebuah dashboard</p>
@@ -129,7 +132,6 @@ dropdown in the settings page and rename this file layout4.html.
                   <div class="card-image background f">
                   </div>
                   <div class="card-content">
-                    <div class="card-date">8 Agustus 2025</div>
                     <h3 class="card-title">Dashboard Penanganan Darurat Erupsi Lewotobi Laki-Laki</h3>
                     <p class="card-description">Berikut adalah informasi penanganan darurat erupsi gunung api lewotobi
                       laki-laki yang dikemas menjadi sebuah dashboard</p>
@@ -412,6 +414,54 @@ dropdown in the settings page and rename this file layout4.html.
         padding: 0 60px;
       }
 
+      /* Carousel Navigation Buttons */
+      .carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid #ff5e14;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .carousel-nav:hover {
+        background: #ff5e14;
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(255, 94, 20, 0.3);
+      }
+
+      .carousel-nav:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+
+      .carousel-nav i {
+        font-size: 1.2em;
+        color: #ff5e14;
+        transition: color 0.3s ease;
+      }
+
+      .carousel-nav:hover i {
+        color: white;
+      }
+
+      .carousel-nav-left {
+        left: 10px;
+      }
+
+      .carousel-nav-right {
+        right: 10px;
+      }
+
       .carousel-wrapper {
         overflow: hidden;
         width: 100%;
@@ -422,6 +472,10 @@ dropdown in the settings page and rename this file layout4.html.
         gap: 20px;
         padding: 10px 0;
         animation: scroll 30s linear infinite;
+      }
+
+      .carousel-track.manual-control {
+        animation: none;
       }
 
       @keyframes scroll {
@@ -468,13 +522,12 @@ dropdown in the settings page and rename this file layout4.html.
         transform: scale(1.05);
       }
 
-      /* Background classes for different services */
       .background.a {
         background-image: url('https://data.bnpb.go.id/base/images/geoportal_bnpb.png');
       }
 
       .background.b {
-        background-image: url('https://data.bnpb.go.id/base/images/heli.JPG');
+        background-image: url('https://data.bnpb.go.id/base/images/Dokumentasi-Erupsi-semeru.JPG');
       }
 
       .background.c {
@@ -482,7 +535,7 @@ dropdown in the settings page and rename this file layout4.html.
       }
 
       .background.d {
-        background-image: url('https://data.bnpb.go.id/base/images/Dokumentasi-Erupsi-semeru.JPG');
+        background-image: url('https://data.bnpb.go.id/base/images/heli.JPG');
       }
 
       .background.e {
@@ -554,6 +607,15 @@ dropdown in the settings page and rename this file layout4.html.
           padding: 0 20px;
         }
 
+        .carousel-nav {
+          width: 40px;
+          height: 40px;
+        }
+
+        .carousel-nav i {
+          font-size: 1em;
+        }
+
         .news-card {
           width: 250px;
         }
@@ -566,6 +628,15 @@ dropdown in the settings page and rename this file layout4.html.
       @media (max-width: 480px) {
         .carousel-container {
           padding: 0 40px;
+        }
+
+        .carousel-nav {
+          width: 35px;
+          height: 35px;
+        }
+
+        .carousel-nav i {
+          font-size: 0.9em;
         }
 
         .news-card {
@@ -585,3 +656,101 @@ dropdown in the settings page and rename this file layout4.html.
         }
       }
     </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const carouselTrack = document.getElementById('carouselTrack');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        const newsCards = document.querySelectorAll('.news-card');
+
+        // Check if elements exist
+        if (!carouselTrack || !prevBtn || !nextBtn) {
+          console.log('Carousel elements not found');
+          return;
+        }
+
+        let currentIndex = 0;
+        const cardsPerView = 3; // Number of cards visible at once
+        const totalCards = newsCards.length;
+        let autoScrollTimer = null;
+        let isManualControl = false;
+
+        // Calculate the width of each card including gap
+        const cardWidth = 250 + 20; // card width + gap
+
+        function updateCarousel() {
+          const translateX = -currentIndex * cardWidth;
+          carouselTrack.style.transform = `translateX(${translateX}px)`;
+          carouselTrack.style.transition = 'transform 0.3s ease';
+
+          // Update button states
+          prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+          nextBtn.style.opacity = currentIndex >= totalCards - cardsPerView ? '0.5' : '1';
+
+          // Disable buttons at boundaries
+          prevBtn.disabled = currentIndex === 0;
+          nextBtn.disabled = currentIndex >= totalCards - cardsPerView;
+        }
+
+        function enableManualControl() {
+          isManualControl = true;
+          carouselTrack.classList.add('manual-control');
+
+          // Clear existing timer
+          if (autoScrollTimer) {
+            clearTimeout(autoScrollTimer);
+          }
+
+          // Set timer to resume auto-scroll after 5 seconds
+          autoScrollTimer = setTimeout(() => {
+            resumeAutoScroll();
+          }, 5000);
+        }
+
+        function resumeAutoScroll() {
+          isManualControl = false;
+          carouselTrack.classList.remove('manual-control');
+          carouselTrack.style.animationPlayState = 'running';
+        }
+
+        // Previous button
+        prevBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+            enableManualControl();
+          }
+        });
+
+        // Next button
+        nextBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (currentIndex < totalCards - cardsPerView) {
+            currentIndex++;
+            updateCarousel();
+            enableManualControl();
+          }
+        });
+
+        // Initialize carousel
+        updateCarousel();
+
+        // Pause auto-scroll when hovering over carousel
+        const carouselContainer = document.querySelector('.carousel-container');
+        if (carouselContainer) {
+          carouselContainer.addEventListener('mouseenter', function () {
+            if (!isManualControl) {
+              carouselTrack.style.animationPlayState = 'paused';
+            }
+          });
+
+          carouselContainer.addEventListener('mouseleave', function () {
+            if (!isManualControl) {
+              carouselTrack.style.animationPlayState = 'running';
+            }
+          });
+        }
+      });
+    </script>
