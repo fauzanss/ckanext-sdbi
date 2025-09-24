@@ -1,3 +1,4 @@
+/* HOT RELOAD TEST - CSS file modified */
 /* Modern Create Form Styles */
 .create-hero-section {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -294,15 +295,15 @@
   transition: all 0.3s ease;
 }
 
-.exit-intent-checkbox:checked + .exit-intent-label {
+.exit-intent-checkbox:checked+.exit-intent-label {
   color: #007bff;
 }
 
-.exit-intent-checkbox:checked + .exit-intent-label i {
+.exit-intent-checkbox:checked+.exit-intent-label i {
   color: #007bff;
 }
 
-.exit-intent-checkbox:checked ~ .exit-intent-toggle {
+.exit-intent-checkbox:checked~.exit-intent-toggle {
   border-color: #007bff;
   background: #f0f8ff;
 }

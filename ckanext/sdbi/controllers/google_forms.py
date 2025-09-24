@@ -82,6 +82,36 @@ def delete(id):
         log.error(f"Delete form error: {str(e)}")
         return {'error': str(e)}, 500
 
+@google_forms_blueprint.route('/api/google-forms')
+def get_all_forms():
+    """Get all Google Forms"""
+    try:
+        from sqlalchemy import text
+        result = model.Session.execute(text("""
+            SELECT id, title, description, form_url, category, status, exit_intent, created_at
+            FROM google_forms 
+            ORDER BY created_at DESC
+        """))
+        
+        forms = []
+        for row in result:
+            forms.append({
+                'id': str(row[0]),
+                'title': row[1],
+                'description': row[2],
+                'form_url': row[3],
+                'category': row[4],
+                'status': row[5],
+                'exit_intent': row[6],
+                'created_at': str(row[7])
+            })
+        
+        return {'success': True, 'forms': forms}
+        
+    except Exception as e:
+        log.error(f"Get all forms error: {str(e)}")
+        return {'success': False, 'error': str(e)}, 500
+
 @google_forms_blueprint.route('/api/google-forms/exit-intent')
 def get_exit_intent_forms():
     """Get Google Forms with exit intent enabled"""
