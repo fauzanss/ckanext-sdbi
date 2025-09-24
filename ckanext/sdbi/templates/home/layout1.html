@@ -8,6 +8,11 @@ dropdown in the settings page and rename this file layout4.html.
 
 -->
 
+<!-- Force cache refresh -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <h2 class="text-center mt-5" style="margin-top: 3rem;">Peta Sebaran Kejadian Bencana</h2>
 
 <div class="w-100 mt-5" style="margin-top: 3rem; padding: 0;">
@@ -17,144 +22,735 @@ dropdown in the settings page and rename this file layout4.html.
 </div>
 
 <div class="container-fluid main">
+  <!-- Layanan Terkini Section -->
+  <div class="layanan-terkini-section">
 
-  <div id="myCarousel" class="carousel carousel-fade slide" data-ride="carousel" data-interval="3000">
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-      <li data-target="#myCarousel" data-slide-to="3"></li>
-      <li data-target="#myCarousel" data-slide-to="4"></li>
-      <li data-target="#myCarousel" data-slide-to="5"></li>
-    </ol>
-
-
-    <div class="carousel-inner">
-      <div class="carousel-caption item active background a">
-        <h1>Geoportal Data Bencana</h1>
-        <p>Layanan interoperabilitas data dalam rangka mendukung penyelenggaraan Satu Data Bencana, khususnya dalam hal
-          data spasial </p>
-        <p><a class="btn btn-lg btn-primary" href="https://gis.bnpb.go.id/" target="_blank"
-            role="button">Selengkapnya</a></p>
-      </div>
-      <div class="carousel-caption text-left item background b">
-        <h1>Data Geospasial dan Drone</h1>
-        <p>Halaman ini berisikan beberapa video, foto, maupun pemetaan yang dilakukan oleh beberapa pihak dalam
-          mendukung penanganan bencana Awan Panas Guguran Gunung Semeru</p>
-        <p><a class="btn btn-lg btn-primary" href="https://bit.ly/DokumentasiDroneSemeru" target="_blank"
-            role="button">Selengkapnya</a></p>
-      </div>
-      <div class="carousel-caption text-left item background c">
-        <h1>Galeri Peta</h1>
-        <p>Halaman ini berisikan beberapa peta yang dihasilkan oleh Bidang Pengelolaan Data dan Sistem Informasi BNPB
-          terkait dengan penanganan bencana Awan Panas Guguran Gunung Semeru</p>
-        <p><a class="btn btn-lg btn-primary"
-            href="https://gis.bnpb.go.id/arcgis/apps/sites/?fromEdit=true#/public/pages/galeri-peta-tanggap-darurat"
-            target="_blank" role="button">Selengkapnya</a></p>
-      </div>
-      <div class="carousel-caption text-left item background d">
-        <h1>Buletin Info Bencana</h1>
-        <p>Halaman ini berisi kumpulan kejadian bencana yang dirangkum menjadi sebuah buletin info Bencana</p>
-        <p><a class="btn btn-lg btn-primary" href="https://gis.bnpb.go.id/arcgis/apps/sites/#/public/pages/buletin"
-            target="_blank" role="button">Selengkapnya</a></p>
-      </div>
-      <div class="carousel-caption text-left item background e">
-        <h1>Dashboard Penanganan Darurat Gempa Bumi Cianjur 2022</h1>
-        <p>Berikut adalah informasi penanganan gempa bumi cianjur 2022 yang dikemas menjadi sebuah dashboard</p>
-        <p><a class="btn btn-lg btn-primary" href="https://gis.bnpb.go.id/cianjur2022" target="_blank"
-            role="button">Selengkapnya</a></p>
-      </div>
-      <div class="carousel-caption text-left item background f">
-        <h1>Dashboard Penanganan Darurat Erupsi Lewotobi Laki-Laki</h1>
-        <p>Berikut adalah informasi penanganan darurat erupsi gunung api lewotobi laki-laki yang dikemas menjadi sebuah
-          dashboard</p>
-        <p><a class="btn btn-lg btn-primary" href="https://gis.bnpb.go.id/lewotobi2024" target="_blank"
-            role="button">Selengkapnya</a></p>
-      </div>
-    </div>
-  </div>
-
-  <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-
-</div>
-
-<div role="main" class="main-search">
-  <div class="container">
-    <div class="row row2">
-      <div class="col-md-12 col1">
-        {% snippet 'home/snippets/search.html' %}
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="itemsss">
-  <div class="itemss">
-    <a href="https://data.bnpb.go.id/dataset/?fase=prabencana" target="_blank">
-      <div class="itemss-content">
-        <h55 class="itemss-category">Pra Bencana</h55>
-        <p class="itemss-description">adalah kegiatan yang mencakup mitigasi, kesiapsagaan dan peringatan dini. Upaya
-          yang dilakukan untuk mencegah terjadinya bencana dengan disusunnya perencanaan tindakan-tindakan, pengenalan
-          dan pengkajian ancaman bencana, pemahaman tentang kerentanan masyarakat, analisis kemungkinan dampak bencana,
-          pilihan tindakan pengurangan risiko bencana, penentuan mekanisme kesiapan dan penanggulangan dampak bencana,
-          dan alokasi tugas, kewenangan, dan sumber daya yang tersedia.</p>
-      </div>
-    </a>
-  </div>
-  <div class="itemss">
-    <a href="https://data.bnpb.go.id/dataset/?fase=saatbencana" target="_blank">
-      <div class="itemss-content">
-        <h55 class="itemss-category">Saat Bencana</h55>
-        <p class="itemss-description">adalah serangkaian kegiatan yang dilakukan dengan segera pada saat kejadian
-          bencana untuk menangani dampak buruk yang ditimbulkan, yang meliputi kegiatan penyelamatan dan evakuasi
-          korban, harta benda, pemenuhan kebutuhan dasar, pelindungan, pengurusan pengungsi, penyelamatan, serta
-          pemulihan prasarana dan sarana.</p>
-      </div>
-    </a>
-  </div>
-  <div class="itemss">
-    <a href="https://data.bnpb.go.id/dataset/?fase=pascabencana" target="_blank">
-      <div class="itemss-content">
-        <h55 class="itemss-category">Pascabencana</h55>
-        <p class="itemss-description">adalah tahapan pemulihan, rehabilitasi dan juga rekonstruksi dari rangkaian
-          kegiatan untuk mengembalikan kondisi masyarakat dan lingkungan hidup yang terkena bencana dengan memfungsikan
-          kembali kelembagaan, prasarana dan sarana dengan melakukan upaya rehabilitasi dan rekonstruksi.</p>
-      </div>
-    </a>
-  </div>
-</div>
-
-<div role="main" class="main-search">
-  <div class="container">
-    <div class="row row2">
-      <div class="col-md-12 col1">
-        {% snippet 'home/snippets/stats.html' %}
-      </div>
-    </div>
-  </div>
-</div>
-
-<div role="main" class="main-updates">
-  <div class="container">
-    <div class="row row2">
-      <div class="col-md-6 col1">
-        {% snippet 'home/snippets/latest_datasets.html' %}
-      </div>
-      <div class="col-md-6 col2">
-        <div class="module-content box">
-          <h2 class="secondary-heading">Tweets</h2>
-          <a class="twitter-timeline" height="420" data-chrome="nofooter noscrollbar  noheader transparent"
-            href="https://twitter.com/BNPB_Indonesia" data-widget-id="547080711753449472">Tweets by @BNPB_Indonesia</a>
-          <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+    <!-- Statistik Konektivitas Section -->
+    <div role="main" class="main-search"
+      style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 60px 0;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-center mb-5">
+              <h2 style="color: #206b82; font-weight: 600; margin-bottom: 10px;">Statistik Konektivitas</h2>
+              <p style="color: #6c757d; font-size: 1.1em;">Data terintegrasi dari seluruh Indonesia</p>
+            </div>
+            {% snippet 'home/snippets/connected_statistics.html' %}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+
+    <div class="container" style="margin-top: 60px;">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header">
+            <div class="header-content">
+              <div class="header-icon">
+                <i class="fa fa-cube"></i>
+              </div>
+              <h2 class="section-title">Layanan Terkini</h2>
+            </div>
+            <!-- <a href="#" class="lihat-semua-btn">
+              Lihat Semua <i class="fa fa-arrow-right"></i>
+            </a> -->
+          </div>
+
+          <div class="carousel-container">
+            <!-- Navigation Buttons -->
+            <button class="carousel-nav carousel-nav-left" id="carouselPrev">
+              <i class="fa fa-chevron-left"></i>
+            </button>
+            <button class="carousel-nav carousel-nav-right" id="carouselNext">
+              <i class="fa fa-chevron-right"></i>
+            </button>
+
+            <div class="carousel-wrapper">
+              <div class="carousel-track" id="carouselTrack">
+                <div class="news-card" onclick="window.open('https://gis.bnpb.go.id/', '_blank')">
+                  <div class="card-image background a">
+                  </div>
+                  <div class="card-content">
+                    <h3 class="card-title">Geoportal Data Bencana</h3>
+                    <p class="card-description">Layanan interoperabilitas data dalam rangka mendukung penyelenggaraan
+                      Satu
+                      Data Bencana, khususnya dalam hal data spasial</p>
+                    <div class="card-category">Geospasial</div>
+                  </div>
+                </div>
+
+                <div class="news-card" onclick="window.open('https://bit.ly/DokumentasiDroneSemeru', '_blank')">
+                  <div class="card-image background b">
+                  </div>
+                  <div class="card-content">
+                    <h3 class="card-title">Data Geospasial dan Drone</h3>
+                    <p class="card-description">Halaman ini berisikan beberapa video, foto, maupun pemetaan yang
+                      dilakukan
+                      oleh beberapa pihak dalam mendukung penanganan bencana</p>
+                    <div class="card-category">Teknologi</div>
+                  </div>
+                </div>
+
+                <div class="news-card"
+                  onclick="window.open('https://gis.bnpb.go.id/arcgis/apps/sites/?fromEdit=true#/public/pages/galeri-peta-tanggap-darurat', '_blank')">
+                  <div class="card-image background c">
+                  </div>
+                  <div class="card-content">
+                    <h3 class="card-title">Galeri Peta</h3>
+                    <p class="card-description">Halaman ini berisikan beberapa peta yang dihasilkan oleh Bidang
+                      Pengelolaan
+                      Data dan Sistem Informasi BNPB</p>
+                    <div class="card-category">Peta</div>
+                  </div>
+                </div>
+
+                <div class="news-card"
+                  onclick="window.open('https://gis.bnpb.go.id/arcgis/apps/sites/#/public/pages/buletin', '_blank')">
+                  <div class="card-image background d">
+                  </div>
+                  <div class="card-content">
+                    <h3 class="card-title">Buletin Info Bencana</h3>
+                    <p class="card-description">Halaman ini berisi kumpulan kejadian bencana yang dirangkum menjadi
+                      sebuah
+                      buletin info Bencana</p>
+                    <div class="card-category">Informasi</div>
+                  </div>
+                </div>
+
+                <div class="news-card" onclick="window.open('https://gis.bnpb.go.id/cianjur2022', '_blank')">
+                  <div class="card-image background e">
+                  </div>
+                  <div class="card-content">
+                    <h3 class="card-title">Dashboard Penanganan Darurat Gempa Bumi Cianjur 2022</h3>
+                    <p class="card-description">Berikut adalah informasi penanganan gempa bumi cianjur 2022 yang dikemas
+                      menjadi sebuah dashboard</p>
+                    <div class="card-category">Dashboard</div>
+                  </div>
+                </div>
+
+                <div class="news-card" onclick="window.open('https://gis.bnpb.go.id/lewotobi2024', '_blank')">
+                  <div class="card-image background f">
+                  </div>
+                  <div class="card-content">
+                    <h3 class="card-title">Dashboard Penanganan Darurat Erupsi Lewotobi Laki-Laki</h3>
+                    <p class="card-description">Berikut adalah informasi penanganan darurat erupsi gunung api lewotobi
+                      laki-laki yang dikemas menjadi sebuah dashboard</p>
+                    <div class="card-category">Dashboard</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div role="main" class="main-search">
+      <div class="container">
+        <div class="row row2">
+          <div class="col-md-12 col1">
+            {% snippet 'home/snippets/search.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="itemsss">
+      <div class="itemss">
+        <a href="https://data.bnpb.go.id/dataset/?fase=prabencana" target="_blank">
+          <div class="itemss-content">
+            <h55 class="itemss-category">Pra Bencana</h55>
+            <p class="itemss-description">adalah kegiatan yang mencakup mitigasi, kesiapsagaan dan peringatan dini.
+              Upaya
+              yang dilakukan untuk mencegah terjadinya bencana dengan disusunnya perencanaan tindakan-tindakan,
+              pengenalan
+              dan pengkajian ancaman bencana, pemahaman tentang kerentanan masyarakat, analisis kemungkinan dampak
+              bencana,
+              pilihan tindakan pengurangan risiko bencana, penentuan mekanisme kesiapan dan penanggulangan dampak
+              bencana,
+              dan alokasi tugas, kewenangan, dan sumber daya yang tersedia.</p>
+          </div>
+        </a>
+      </div>
+      <div class="itemss">
+        <a href="https://data.bnpb.go.id/dataset/?fase=saatbencana" target="_blank">
+          <div class="itemss-content">
+            <h55 class="itemss-category">Saat Bencana</h55>
+            <p class="itemss-description">adalah serangkaian kegiatan yang dilakukan dengan segera pada saat kejadian
+              bencana untuk menangani dampak buruk yang ditimbulkan, yang meliputi kegiatan penyelamatan dan evakuasi
+              korban, harta benda, pemenuhan kebutuhan dasar, pelindungan, pengurusan pengungsi, penyelamatan, serta
+              pemulihan prasarana dan sarana.</p>
+          </div>
+        </a>
+      </div>
+      <div class="itemss">
+        <a href="https://data.bnpb.go.id/dataset/?fase=pascabencana" target="_blank">
+          <div class="itemss-content">
+            <h55 class="itemss-category">Pascabencana</h55>
+            <p class="itemss-description">adalah tahapan pemulihan, rehabilitasi dan juga rekonstruksi dari rangkaian
+              kegiatan untuk mengembalikan kondisi masyarakat dan lingkungan hidup yang terkena bencana dengan
+              memfungsikan
+              kembali kelembagaan, prasarana dan sarana dengan melakukan upaya rehabilitasi dan rekonstruksi.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Dataset Terbaru Section -->
+    <div role="main" class="main-updates" style="background: #fff; padding: 60px 0;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-5">
+            <div class="dataset-section-header">
+              <div class="section-icon">
+                <i class="fa fa-clock-o"></i>
+              </div>
+              <div class="section-title">
+                <h2>Dataset Terbaru</h2>
+                <p>Koleksi dataset terbaru yang tersedia</p>
+              </div>
+            </div>
+            <div class="dataset-grid">
+              {% snippet 'home/snippets/latest_datasets.html' %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dataset Populer Section -->
+    <div role="main" class="main-updates" style="background: #f8f9fa; padding: 60px 0;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-5">
+            <div class="dataset-section-header">
+              <div class="section-icon">
+                <i class="fa fa-line-chart"></i>
+              </div>
+              <div class="section-title">
+                <h2>Dataset Populer</h2>
+                <p>Dataset yang paling banyak diakses</p>
+              </div>
+            </div>
+            <div class="dataset-grid">
+              {% snippet 'home/snippets/popular_datasets.html' %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <style>
+      /* Cache busting timestamp: 2025-09-22 06:33:00 */
+      .dataset-section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 3px solid #ff5e14;
+      }
+
+      .section-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #ff5e14, #206b82);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 30px;
+        box-shadow: 0 10px 25px rgba(255, 94, 20, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .section-icon::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+        animation: pulse 3s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+
+        50% {
+          transform: scale(1.1);
+          opacity: 0.8;
+        }
+      }
+
+      .section-icon i {
+        color: white;
+        font-size: 2.5em;
+        position: relative;
+        z-index: 2;
+      }
+
+      .section-title h2 {
+        color: #206b82;
+        font-weight: 700;
+        font-size: 1em;
+        margin: 0 0 8px 0;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        font-family: 'Arial', 'Helvetica', sans-serif;
+      }
+
+      .section-title p {
+        color: #6c757d;
+        font-size: 0.6em;
+        margin: 0;
+        font-weight: 500;
+        font-family: 'Arial', 'Helvetica', sans-serif;
+      }
+
+      .dataset-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .dataset-section-header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .section-icon {
+          margin-right: 0;
+          margin-bottom: 20px;
+        }
+
+        /* .section-title h2 {
+          font-size: 2em;
+        } */
+
+        .dataset-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
+
+      /* Layanan Terkini Section Styles */
+      .layanan-terkini-section {
+        padding: 60px 0;
+        background: #fff;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding: 0 20px;
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .header-icon {
+        width: 50px;
+        height: 50px;
+        background: #ff5e14;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header-icon i {
+        color: white;
+        font-size: 1.5em;
+      }
+
+      .section-title {
+        color: #ff5e14;
+        font-size: 2.5em;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .lihat-semua-btn {
+        background: transparent;
+        color: #ff5e14;
+        border: 2px solid #ff5e14;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .lihat-semua-btn:hover {
+        background: #ff5e14;
+        color: white;
+        text-decoration: none;
+      }
+
+      /* Carousel Container */
+      .carousel-container {
+        position: relative;
+        overflow: hidden;
+        padding: 0 60px;
+      }
+
+      /* Carousel Navigation Buttons */
+      .carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid #ff5e14;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .carousel-nav:hover {
+        background: #ff5e14;
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(255, 94, 20, 0.3);
+      }
+
+      .carousel-nav:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+
+      .carousel-nav i {
+        font-size: 1.2em;
+        color: #ff5e14;
+        transition: color 0.3s ease;
+      }
+
+      .carousel-nav:hover i {
+        color: white;
+      }
+
+      .carousel-nav-left {
+        left: 10px;
+      }
+
+      .carousel-nav-right {
+        right: 10px;
+      }
+
+      .carousel-wrapper {
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .carousel-track {
+        display: flex;
+        gap: 20px;
+        padding: 10px 0;
+        animation: scroll 30s linear infinite;
+      }
+
+      .carousel-track.manual-control {
+        animation: none;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      .carousel-track:hover {
+        animation-play-state: paused;
+      }
+
+      .news-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 250px;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .news-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .card-image {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: transform 0.3s ease;
+      }
+
+      .news-card:hover .card-image {
+        transform: scale(1.05);
+      }
+
+      .background.a {
+        background-image: url('https://data.bnpb.go.id/base/images/geoportal_bnpb.png');
+      }
+
+      .background.b {
+        background-image: url('https://data.bnpb.go.id/base/images/Dokumentasi-Erupsi-semeru.JPG');
+      }
+
+      .background.c {
+        background-image: url('https://data.bnpb.go.id/base/images/Peta-wilayah-terdampak-erupsi-semeru-2021.jpg');
+      }
+
+      .background.d {
+        background-image: url('https://data.bnpb.go.id/base/images/heli.JPG');
+      }
+
+      .background.e {
+        background-image: url('https://data.bnpb.go.id/base/images/dashboard-cianjur.png');
+      }
+
+      .background.f {
+        background-image: url('https://data.bnpb.go.id/base/images/Lewotobi.PNG');
+      }
+
+      .card-content {
+        padding: 20px;
+      }
+
+      .card-date {
+        color: #6c757d;
+        font-size: 0.9em;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .card-title {
+        color: #206b82;
+        font-size: 1.3em;
+        font-weight: 700;
+        margin: 0 0 12px 0;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .card-description {
+        color: #6c757d;
+        font-size: 0.95em;
+        line-height: 1.5;
+        margin: 0 0 15px 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .card-category {
+        background: #ff5e14;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.8em;
+        font-weight: 600;
+        display: inline-block;
+      }
+
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .section-header {
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+        }
+
+        .section-title {
+          font-size: 2em;
+        }
+
+        .carousel-container {
+          padding: 0 20px;
+        }
+
+        .carousel-nav {
+          width: 40px;
+          height: 40px;
+        }
+
+        .carousel-nav i {
+          font-size: 1em;
+        }
+
+        .news-card {
+          width: 250px;
+        }
+
+        .card-image {
+          height: 160px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .carousel-container {
+          padding: 0 40px;
+        }
+
+        .carousel-nav {
+          width: 35px;
+          height: 35px;
+        }
+
+        .carousel-nav i {
+          font-size: 0.9em;
+        }
+
+        .news-card {
+          width: 220px;
+        }
+
+        .card-content {
+          padding: 15px;
+        }
+
+        .card-title {
+          font-size: 1.1em;
+        }
+
+        .card-description {
+          font-size: 0.9em;
+        }
+      }
+    </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const carouselTrack = document.getElementById('carouselTrack');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        const newsCards = document.querySelectorAll('.news-card');
+
+        // Check if elements exist
+        if (!carouselTrack || !prevBtn || !nextBtn) {
+          console.log('Carousel elements not found');
+          return;
+        }
+
+        let currentIndex = 0;
+        const cardsPerView = 3; // Number of cards visible at once
+        const totalCards = newsCards.length;
+        let autoScrollTimer = null;
+        let isManualControl = false;
+
+        // Calculate the width of each card including gap
+        const cardWidth = 250 + 20; // card width + gap
+
+        function updateCarousel() {
+          const translateX = -currentIndex * cardWidth;
+          carouselTrack.style.transform = `translateX(${translateX}px)`;
+          carouselTrack.style.transition = 'transform 0.3s ease';
+
+          // Update button states
+          prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+          nextBtn.style.opacity = currentIndex >= totalCards - cardsPerView ? '0.5' : '1';
+
+          // Disable buttons at boundaries
+          prevBtn.disabled = currentIndex === 0;
+          nextBtn.disabled = currentIndex >= totalCards - cardsPerView;
+        }
+
+        function enableManualControl() {
+          isManualControl = true;
+          carouselTrack.classList.add('manual-control');
+
+          // Clear existing timer
+          if (autoScrollTimer) {
+            clearTimeout(autoScrollTimer);
+          }
+
+          // Set timer to resume auto-scroll after 5 seconds
+          autoScrollTimer = setTimeout(() => {
+            resumeAutoScroll();
+          }, 5000);
+        }
+
+        function resumeAutoScroll() {
+          isManualControl = false;
+          carouselTrack.classList.remove('manual-control');
+          carouselTrack.style.animationPlayState = 'running';
+        }
+
+        // Previous button
+        prevBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+            enableManualControl();
+          }
+        });
+
+        // Next button
+        nextBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (currentIndex < totalCards - cardsPerView) {
+            currentIndex++;
+            updateCarousel();
+            enableManualControl();
+          }
+        });
+
+        // Initialize carousel
+        updateCarousel();
+
+        // Pause auto-scroll when hovering over carousel
+        const carouselContainer = document.querySelector('.carousel-container');
+        if (carouselContainer) {
+          carouselContainer.addEventListener('mouseenter', function () {
+            if (!isManualControl) {
+              carouselTrack.style.animationPlayState = 'paused';
+            }
+          });
+
+          carouselContainer.addEventListener('mouseleave', function () {
+            if (!isManualControl) {
+              carouselTrack.style.animationPlayState = 'running';
+            }
+          });
+        }
+      });
+    </script>

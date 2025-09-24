@@ -1,18 +1,15 @@
-{% set latest_datasets = h.sdbi_theme_most_recent_datasets() %}
+{% set popular_datasets = h.sdbi_theme_most_popular_datasets() %}
 
-{% if latest_datasets %}
-{% for package in latest_datasets %}
-<div class="dataset-card">
+{% if popular_datasets %}
+{% for package in popular_datasets %}
+<div class="dataset-card popular-card">
   <a class="dataset-card-link" href="{{ h.url_for('dataset.read', id=package.name) }}" aria-label="Buka dataset"></a>
   <div class="dataset-card-header">
-    <div class="dataset-icon">
-      <i class="fa fa-file-text-o"></i>
+    <div class="dataset-icon popular-icon">
+      <i class="fa fa-line-chart"></i>
     </div>
-    <div class="dataset-date-badge">
-      <span class="date-badge">
-        <i class="fa fa-clock-o"></i>
-        {{ h.render_datetime(package.metadata_created, date_format='%d %b %Y') }}
-      </span>
+    <div class="dataset-badge">
+      <span class="badge-popular">POPULER</span>
     </div>
   </div>
   <div class="dataset-card-body">
@@ -50,7 +47,7 @@
 {% else %}
 <div class="no-datasets">
   <i class="fa fa-info-circle"></i>
-  <p>Tidak ada dataset terbaru</p>
+  <p>Tidak ada dataset populer</p>
 </div>
 {% endif %}
 
@@ -66,6 +63,10 @@
     cursor: pointer;
   }
 
+  .popular-card {
+    border-top-color: #206b82;
+  }
+
   .dataset-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(255, 94, 20, 0.15);
@@ -79,7 +80,6 @@
   .dataset-icon {
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, #ff5e14, #206b82);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -87,27 +87,30 @@
     margin-bottom: 15px;
   }
 
+  .popular-icon {
+    background: linear-gradient(135deg, #206b82, #164959);
+  }
+
   .dataset-icon i {
     color: white;
     font-size: 20px;
   }
 
-  .dataset-date-badge {
+  .dataset-badge {
     position: absolute;
     top: 15px;
     right: 20px;
   }
 
-  .date-badge {
-    background: linear-gradient(135deg, #ff5e14, #206b82);
+  .badge-popular {
+    background: linear-gradient(135deg, #206b82, #164959);
     color: white;
     padding: 5px 12px;
     border-radius: 20px;
     font-size: 0.75em;
     font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .dataset-card-body {
@@ -170,8 +173,8 @@
   }
 
   .dataset-views {
-    color: #ff5e14;
-    font-weight: 500;
+    color: #206b82;
+    font-weight: 600;
   }
 
   .no-datasets {
@@ -202,7 +205,7 @@
 </style>
 
 <style>
-  .dataset-card {
+  .dataset-card.popular-card {
     position: relative;
   }
 
