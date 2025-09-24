@@ -1,0 +1,89 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Analytics{% endblock %}
+
+{% block primary %}
+<style>
+  /* Hide layout stripe only on Analytics page */
+  @media (min-width: 768px) {
+    .wrapper:before {
+      display: none !important;
+    }
+  }
+
+  /* Ensure content layers above any pseudo elements */
+  .module-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .form-inline {
+    position: relative;
+    z-index: 3;
+  }
+
+  .form-inline .form-group {
+    position: relative;
+  }
+
+  .form-inline input[type="date"] {
+    position: relative;
+    z-index: 4;
+  }
+
+  /* Optional: remove any residual borders if theme adds them */
+  .module {
+    border: none;
+  }
+
+  .module h1 {
+    border: 0;
+  }
+
+  /* Keep layout consistent */
+  .analytics-page {
+    position: relative;
+  }
+
+  /* Prevent accidental pointer blocking */
+  .module:before,
+  .module:after {
+    pointer-events: none;
+  }
+
+  /* Safety: if theme uses .layout or other wrappers */
+  .layout:before {
+    display: none !important;
+  }
+
+  .content:before {
+    display: none !important;
+  }
+
+  /* Scope override only to this page by relying on being inline here */
+</style>
+<section class="module">
+  <div class="module-content">
+    <h1>Analytics</h1>
+    <p>Export pengunjung berdasarkan rentang waktu.</p>
+
+    <form method="get" action="/analytics/export" class="form-inline"
+      style="margin-bottom: 1rem; position: relative; z-index: 2;">
+      <div class="form-group" style="margin-right: 15px; position: relative;">
+        <label for="start_date" style="margin-right: 5px;">Tanggal Mulai:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ start_date }}" class="form-control"
+          style="display: inline-block; width: auto; position: relative; z-index: 3;" autocomplete="off" />
+      </div>
+      <div class="form-group" style="margin-right: 15px; position: relative;">
+        <label for="end_date" style="margin-right: 5px;">Tanggal Selesai:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ end_date }}" class="form-control"
+          style="display: inline-block; width: auto; position: relative; z-index: 3;" autocomplete="off" />
+      </div>
+      <button type="submit" class="btn btn-primary">Export Excel</button>
+    </form>
+
+    <p>Catatan: Data diambil dari tabel tracking_raw (page views dan resource downloads).</p>
+  </div>
+
+</section>
+{% endblock %}
