@@ -292,3 +292,14 @@
     z-index: 2;
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const totalDatasetCard = document.querySelector('.total-dataset-card');
+    if (totalDatasetCard) {
+      totalDatasetCard.addEventListener('click', function () {
+        window.location.href = "{{ h.url_for('dataset.search') }}";
+      });
+    }
+  });
+</script>
