@@ -1,0 +1,48 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Tanggap Darurat{% endblock %}
+
+{% block primary %}
+<style>
+  @media (min-width: 768px) {
+    .wrapper:before {
+      display: none !important;
+    }
+  }
+
+  .module {
+    border: none;
+  }
+
+  .tanggap-darurat-iframe-wrap {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 160px);
+    min-height: 480px;
+  }
+
+  .tanggap-darurat-iframe-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+
+<article class="module">
+  <div class="module-content">
+    <h1 class="hide-heading">{{ _('Tanggap Darurat') }}</h1>
+    <div class="tanggap-darurat-iframe-wrap">
+      <iframe
+        src="https://dibi.bnpb.go.id/superset/dashboard/83/"
+        title="{{ _('Tanggap Darurat') }}"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}
