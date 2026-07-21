@@ -1,0 +1,66 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Tanggap Darurat{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<style>
+  .main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .tanggap-darurat-iframe-wrap {
+    position: fixed;
+    top: var(--td-header-offset, 120px);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 100%;
+    height: calc(100vh - var(--td-header-offset, 120px));
+  }
+
+  .tanggap-darurat-iframe-wrap iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+
+<div class="tanggap-darurat-iframe-wrap">
+  {# standalone=1: hide top nav Superset saja, filter bar tetap tampil #}
+  <iframe
+    src="https://dibi.bnpb.go.id/superset/dashboard/83/?standalone=1"
+    title="{{ _('Tanggap Darurat') }}"
+    loading="lazy"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<script>
+  (function () {
+    function syncHeaderOffset() {
+      var account = document.querySelector('.account-masthead');
+      var masthead = document.querySelector('header.masthead');
+      var bottom = 0;
+      if (account) {
+        bottom = Math.max(bottom, account.getBoundingClientRect().bottom);
+      }
+      if (masthead) {
+        bottom = Math.max(bottom, masthead.getBoundingClientRect().bottom);
+      }
+      if (bottom > 0) {
+        document.documentElement.style.setProperty(
+          '--td-header-offset',
+          Math.ceil(bottom) + 'px'
+        );
+      }
+    }
+    syncHeaderOffset();
+    window.addEventListener('resize', syncHeaderOffset);
+  })();
+</script>
+{% endblock %}

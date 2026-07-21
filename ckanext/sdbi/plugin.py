@@ -555,6 +555,7 @@ class SDBIPlugin(plugins.SingletonPlugin):
         from ckanext.sdbi.controllers.google_forms import google_forms_blueprint
         from ckanext.sdbi.controllers.tracking import TrackingController
         from ckanext.sdbi.controllers.analytics import analytics_blueprint
+        from ckanext.sdbi.controllers.tanggap_darurat import tanggap_darurat_blueprint
         
         # Create tracking blueprint
         from flask import Blueprint
@@ -566,6 +567,6 @@ class SDBIPlugin(plugins.SingletonPlugin):
         tracking_blueprint.add_url_rule('/sdbi/downloads/<dataset_name>', 'get_downloads', TrackingController().get_downloads, methods=['GET'])
         
         # Return list of blueprints
-        return [google_forms_blueprint, tracking_blueprint, analytics_blueprint]
+        return [google_forms_blueprint, tracking_blueprint, analytics_blueprint, tanggap_darurat_blueprint]
 
 
