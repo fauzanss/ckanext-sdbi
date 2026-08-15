@@ -10,6 +10,6 @@ def index():
     return toolkit.render('tanggap_darurat/index.html')
 
 
-@tanggap_darurat_blueprint.route('/gis-tanggap-darurat', methods=['GET'])
+@tanggap_darurat_blueprint.route('/gempantt2026', methods=['GET'])
 def gis_index():
     return toolkit.render('tanggap_darurat/gis.html')
