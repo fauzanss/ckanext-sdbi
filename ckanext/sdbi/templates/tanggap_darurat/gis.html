@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Tanggap Darurat{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block page %}
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+  .gis-td-frame {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    border: 0; display: block;
+  }
+</style>
+<iframe
+  class="gis-td-frame"
+  src="https://gis.bnpb.go.id/arcgis/apps/dashboards/e2cb91fafc7a4c93aa37f896ebb473bb"
+  title="{{ _('Tanggap Darurat') }}"
+  allowfullscreen
+></iframe>
+{% endblock %}
