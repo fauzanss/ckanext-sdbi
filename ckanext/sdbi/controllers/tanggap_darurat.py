@@ -73,6 +73,10 @@ def embed_page(link):
         page = _get_embed_page(link)
     except Exception as e:
         log.error('embed_page lookup error for %s: %s', link, e)
+        try:
+            model.Session.rollback()
+        except Exception:
+            pass
         abort(404)
 
     if not page:
