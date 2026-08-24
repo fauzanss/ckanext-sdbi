@@ -64,7 +64,7 @@ def gis_index():
     return toolkit.render('tanggap_darurat/gis.html')
 
 
-@tanggap_darurat_blueprint.route('/q/<link>', methods=['GET'])
+@tanggap_darurat_blueprint.route('/data/<link>', methods=['GET'])
 def embed_page(link):
     if not _LINK_RE.match(link):
         abort(404)
