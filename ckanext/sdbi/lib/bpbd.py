@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """BPBD CSV import, record validation, and Google Maps URL helpers."""
 import csv
+import io
 
 try:
     from urllib.parse import quote_plus
@@ -106,3 +107,17 @@ def records_to_geojson(records):
             'properties': properties,
         })
     return {'type': 'FeatureCollection', 'features': features}
+
+
+def geojson_to_csv(geojson):
+    output = io.StringIO()
+    writer = csv.DictWriter(output, fieldnames=BPBD_CSV_FIELDS, extrasaction='ignore')
+    writer.writeheader()
+    for feature in geojson.get('features') or []:
+        props = feature.get('properties') or {}
+        row = {}
+        for field in BPBD_CSV_FIELDS:
+            value = props.get(field, '')
+            row[field] = '' if value is None else value
+        writer.writerow(row)
+    return output.getvalue()

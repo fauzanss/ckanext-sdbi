@@ -8,6 +8,7 @@ from ckanext.sdbi.lib.bpbd import (
     BpbdImportError,
     build_google_maps_url,
     csv_to_records,
+    geojson_to_csv,
     records_to_geojson,
 )
 
@@ -67,3 +68,13 @@ def test_records_to_geojson_skips_rows_without_coordinates():
     assert geojson['type'] == 'FeatureCollection'
     assert len(geojson['features']) == 2
     assert BPBD_CSV_FIELDS
+
+
+def test_geojson_to_csv_roundtrip_keeps_import_columns():
+    records = csv_to_records(io.StringIO(SAMPLE_CSV))
+    csv_text = geojson_to_csv(records_to_geojson(records))
+    exported = csv_to_records(io.StringIO(csv_text))
+    assert len(exported) == 2
+    assert exported[0]['nama_instansi'] == 'BPBD DKI Jakarta'
+    assert exported[0]['kode_wilayah'] == '31'
+    assert exported[1]['tingkat'] == 'kabupaten'
