@@ -43,6 +43,38 @@ def test_load_faq_rejects_missing_file():
         load_faq('/tmp/does-not-exist-sdbi-faq.yaml')
 
 
+def test_parse_faq_from_dict():
+    from ckanext.sdbi.lib.faq import parse_faq
+    parsed = parse_faq({
+        'categories': [{
+            'id': 'akun',
+            'title': 'Akun',
+            'questions': [{'q': 'Apa itu 2FA?', 'a': 'Kode sekali pakai.'}],
+        }],
+    })
+    assert parsed['categories'][0]['questions'][0]['q'] == 'Apa itu 2FA?'
+
+
+def test_resolve_json_falls_back_when_db_invalid():
+    from ckanext.sdbi.lib.faq import parse_faq
+    from ckanext.sdbi.lib.settings import resolve_json
+    called = []
+
+    def fallback():
+        called.append(True)
+        return parse_faq({
+            'categories': [{
+                'id': 'x',
+                'title': 'X',
+                'questions': [{'q': 'Q', 'a': 'A'}],
+            }],
+        })
+
+    result = resolve_json(parse_faq, {'not': 'faq'}, fallback)
+    assert called == [True]
+    assert result['categories'][0]['id'] == 'x'
+
+
 def test_search_faq_filters_by_query():
     faq = {
         'categories': [

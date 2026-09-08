@@ -22,6 +22,7 @@
     </select>
     <span class="tanggap-darurat__room-label">Kamar: {{ current_room.label }}</span>
     {% if c.userobj and c.userobj.sysadmin %}
+    <a class="tanggap-darurat__guide" href="/tanggap-darurat/kelola">Kelola kamar</a>
     <a class="tanggap-darurat__guide" href="/tanggap-darurat/panduan">Panduan hosting</a>
     {% endif %}
   </form>

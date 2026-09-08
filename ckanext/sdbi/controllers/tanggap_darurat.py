@@ -1,15 +1,22 @@
+import json
 import logging
-import os
 import re
 
-from flask import Blueprint, abort, request
+from flask import Blueprint, abort, redirect, request
 from sqlalchemy import text
 
 import ckan.authz as authz
 import ckan.model as model
 from ckan.plugins import toolkit
 
-from ckanext.sdbi.lib.dashboard_rooms import get_room, load_rooms
+from ckanext.sdbi.lib.dashboard_rooms import (
+    DashboardRoomsError,
+    get_room,
+    load_rooms,
+    parse_rooms,
+    rooms_payload,
+)
+from ckanext.sdbi.lib.settings import KEY_TANGGAP_ROOMS, set_json
 
 log = logging.getLogger(__name__)
 
@@ -17,13 +24,10 @@ tanggap_darurat_blueprint = Blueprint('tanggap_darurat', __name__)
 
 _LINK_RE = re.compile(r'^[A-Za-z0-9_-]{1,100}$')
 _TABLE_ENSURED = False
-_ROOMS_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), 'data', 'dashboard_rooms.yaml'
-)
 
 
 def _rooms():
-    return load_rooms(_ROOMS_PATH)
+    return load_rooms()
 
 
 def _current_username():
@@ -92,6 +96,38 @@ def panduan():
     return toolkit.render(
         'tanggap_darurat/panduan.html',
         extra_vars={'rooms': _rooms()},
+    )
+
+
+@tanggap_darurat_blueprint.route('/tanggap-darurat/kelola', methods=['GET', 'POST'])
+def kelola():
+    if not authz.is_sysadmin(_current_username()):
+        abort(403, description='Access denied. Admin privileges required.')
+    error = None
+    saved = request.args.get('saved') == '1'
+    payload = ''
+    if request.method == 'POST':
+        payload = request.form.get('payload') or ''
+        try:
+            rooms = parse_rooms(json.loads(payload))
+            set_json(KEY_TANGGAP_ROOMS, rooms_payload(rooms), _current_username())
+            return redirect('/tanggap-darurat/kelola?saved=1')
+        except (ValueError, TypeError, DashboardRoomsError) as exc:
+            error = str(exc)
+            saved = False
+    if not payload:
+        try:
+            payload = json.dumps(rooms_payload(_rooms()), indent=2, ensure_ascii=False)
+        except DashboardRoomsError as exc:
+            error = error or str(exc)
+            payload = '{\n  "rooms": []\n}'
+    return toolkit.render(
+        'tanggap_darurat/kelola.html',
+        extra_vars={
+            'payload': payload,
+            'error': error,
+            'saved': saved,
+        },
     )
 
 

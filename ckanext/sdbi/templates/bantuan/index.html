@@ -4,36 +4,67 @@
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="/css/bantuan.css" />
+<link rel="stylesheet" href="/css/bantuan.css?v=8" />
 {% endblock %}
 
-{% block primary %}
-<article class="module bantuan">
-  <div class="module-content">
-    <h1 class="page-heading">Bantuan</h1>
-    <p class="bantuan__lead">Pertanyaan yang sering diajukan seputar Portal Data BNPB.</p>
-    <label class="bantuan__search">
-      <span class="sr-only">Cari bantuan</span>
-      <input id="bantuan-q" type="search" placeholder="Cari pertanyaan..." autocomplete="off">
-    </label>
+{% block content %}
+<div id="content" class="bantuan-main">
+  <div class="container">
+  <article class="bantuan">
+    <header class="bantuan__hero">
+      <div class="bantuan__hero-copy">
+        <h1 class="bantuan__title">Bantuan</h1>
+        <p class="bantuan__lead">Cari jawaban seputar akun, dataset, harvest, peta, dan tanggap darurat.</p>
+      </div>
+      {% if is_sysadmin %}
+      <a class="bantuan__kelola" href="/bantuan/kelola">Kelola FAQ</a>
+      {% endif %}
+      <div class="bantuan__toolbar">
+        <div class="bantuan__search">
+          <label class="sr-only" for="bantuan-q">Cari bantuan</label>
+          <svg class="bantuan__search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M15 15l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <input id="bantuan-q" type="search" placeholder="Cari pertanyaan atau jawaban..." autocomplete="off">
+        </div>
+        <button type="button" id="bantuan-reset" class="bantuan__reset" disabled>Tampilkan semua</button>
+        <p id="bantuan-count" class="bantuan__count" aria-live="polite"></p>
+      </div>
+    </header>
 
-    <div id="bantuan-list">
-      {% for category in faq_categories %}
-      <section class="bantuan__category" data-category="{{ category.id }}">
-        <h2>{{ category.title }}</h2>
-        {% for item in category.entries %}
-        <details class="bantuan__item" data-q="{{ item.q|e }}" data-a="{{ item.a|e }}">
-          <summary>{{ item.q }}</summary>
-          <div class="bantuan__answer">{{ item.a }}</div>
-        </details>
+    <div class="bantuan__body">
+      <nav class="bantuan__nav" aria-label="Kategori">
+        <p class="bantuan__nav-label">Kategori</p>
+        <button type="button" class="bantuan__chip is-active" data-category="" aria-pressed="true">Semua</button>
+        {% for category in faq_categories %}
+        <button type="button" class="bantuan__chip" data-category="{{ category.id }}" aria-pressed="false">{{ category.title }}</button>
         {% endfor %}
-      </section>
-      {% endfor %}
-    </div>
-    <p id="bantuan-empty" class="bantuan__empty" hidden>Tidak ada hasil untuk pencarian itu.</p>
-  </div>
-</article>
-<script src="/js/bantuan.js"></script>
-{% endblock %}
+      </nav>
 
-{% block secondary %}{% endblock %}
+      <div class="bantuan__panel">
+        <p id="bantuan-status" class="bantuan__status" hidden></p>
+        <div id="bantuan-list">
+          {% for category in faq_categories %}
+          <section class="bantuan__category" data-category="{{ category.id }}" data-title="{{ category.title|e }}">
+            <h2>{{ category.title }}</h2>
+            {% for item in category.entries %}
+            <details class="bantuan__item" data-q="{{ item.q|e }}" data-a="{{ item.a|e }}" data-category="{{ category.id }}">
+              <summary class="bantuan__q"><span class="bantuan__q-text">{{ item.q }}</span></summary>
+              <div class="bantuan__answer">{{ item.a }}</div>
+            </details>
+            {% endfor %}
+          </section>
+          {% endfor %}
+        </div>
+        <div id="bantuan-empty" class="bantuan__empty" hidden>
+          <p>Tidak ada pertanyaan yang cocok dengan filter ini.</p>
+          <button type="button" class="bantuan__reset bantuan__reset--panel" data-bantuan-reset>Tampilkan semua</button>
+        </div>
+      </div>
+    </div>
+  </article>
+  </div>
+</div>
+<script src="/js/bantuan.js?v=8"></script>
+{% endblock %}

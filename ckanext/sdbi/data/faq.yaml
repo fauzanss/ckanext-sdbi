@@ -21,9 +21,9 @@ categories:
     title: Harvest
     questions:
       - q: Apakah portal bisa harvest data dari portal non-CKAN seperti Satu Data Jakarta?
-        a: "Ya, lewat harvester JSON REST. Admin membuat Harvest Source di /harvest, memilih tipe JSON REST (non-CKAN), lalu mengisi konfigurasi daftar dataset dan template URL detail."
+        a: "Ya, lewat harvester JSON REST. Admin membuat Harvest Source di /harvest, memilih tipe JSON REST, menempel URL JSON detail, lalu mengisi konfigurasi opsional (title, default_tags). Frequency MANUAL memerlukan tombol Reharvest."
       - q: "Kenapa ckan_harvester tidak bisa dipakai untuk API Jakarta?"
-        a: "ckan_harvester hanya memahami CKAN Action API (/api/3/action/package_search). Endpoint ws.jakarta.go.id/gateway adalah REST JSON kustom, jadi harus memakai harvester JSON REST."
+        a: "ckan_harvester hanya memahami CKAN Action API (/api/3/action/package_search). Endpoint ws.jakarta.go.id/gateway adalah REST JSON kustom, jadi harus memakai harvester JSON REST. Worker harvest juga harus memuat plugin sdbi_json_harvester."
   - id: peta
     title: Peta BPBD
     questions:

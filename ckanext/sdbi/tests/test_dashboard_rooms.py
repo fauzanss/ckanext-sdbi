@@ -9,6 +9,8 @@ from ckanext.sdbi.lib.dashboard_rooms import (
     DashboardRoomsError,
     get_room,
     load_rooms,
+    parse_rooms,
+    rooms_payload,
 )
 
 
@@ -62,3 +64,34 @@ def test_get_room_returns_none_for_unknown_slug():
 def test_load_rooms_rejects_missing_file():
     with pytest.raises(DashboardRoomsError):
         load_rooms('/tmp/does-not-exist-sdbi-rooms.yaml')
+
+
+def test_parse_rooms_rejects_http_iframe():
+    with pytest.raises(DashboardRoomsError):
+        parse_rooms({
+            'rooms': [{
+                'slug': 'banjir',
+                'label': 'Banjir',
+                'dashboards': [{'iframe_url': 'http://example.com/dash'}],
+            }],
+        })
+
+
+def test_parse_rooms_rejects_javascript_url():
+    with pytest.raises(DashboardRoomsError):
+        parse_rooms({
+            'rooms': [{
+                'slug': 'banjir',
+                'label': 'Banjir',
+                'dashboards': [{'iframe_url': 'javascript:alert(1)'}],
+            }],
+        })
+
+
+def test_rooms_payload_wraps_list():
+    rooms = parse_rooms({
+        'rooms': [{'slug': 'banjir', 'label': 'Banjir', 'dashboards': []}],
+    })
+    assert rooms_payload(rooms) == {
+        'rooms': [{'slug': 'banjir', 'label': 'Banjir', 'dashboards': []}],
+    }
