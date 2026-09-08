@@ -4,6 +4,8 @@ import ckan.plugins.toolkit as toolkit
 from ckan.common import config
 import ckan.model as model
 
+from ckanext.sdbi.lib.json_rest import json_harvest_form_defaults
+
 def most_recent_datasets(num=4):
     """Get most recent datasets based on creation date using direct SQL query"""
     try:
@@ -544,7 +546,8 @@ class SDBIPlugin(plugins.SingletonPlugin):
                 'get_dataset_downloads': get_dataset_downloads,
                 'get_dataset_downloads_by_name': get_dataset_downloads_by_name,
                 'get_total_visitors': get_total_visitors,
-                'json_loads': json_loads}
+                'json_loads': json_loads,
+                'sdbi_json_harvest_form_defaults': json_harvest_form_defaults}
 
     def get_auth_functions(self):
         # CKAN 2.10 refuses a second implementation of the same auth

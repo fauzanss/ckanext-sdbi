@@ -136,4 +136,7 @@ file.
 {% endif %}
 {{ super() }}
 <script src="{{ h.url_for_static('js/exit-intent.js') }}"></script>
+{% if request.path.startswith('/harvest') %}
+{% snippet 'snippets/json_harvest_form_defaults.html' %}
+{% endif %}
 {% endblock -%}
