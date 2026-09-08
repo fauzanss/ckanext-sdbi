@@ -213,6 +213,20 @@ CKAN 2.9 memakai satu `apikey` per user. Integrasi yang mengirim `Authorization`
 
 Setelah cutover **2.10.11**, cabut lagi. 2.10 memakai banyak JWT per user (`api_token`); key 2.9 tidak boleh tetap valid.
 
+Jangan commit API key di skrip seed (`ckan-compose/seed_dummy_datasets.py`). Jika key itu pernah dipakai di produksi, cabut UUID itu bersama key lain.
+
+### Sumber harvest produksi (sekarang, 2.9.11)
+
+Harvest `ckan_harvester` / DCAT **bisa** menerbitkan dataset tanpa API key pengguna: job berjalan sebagai user harvest.
+
+Temuan 9 Sep 2026 (katalog publik): `package_search` dengan `harvest_source_title:*` ≈ **372** paket. Sumber **Data Integrasi-Kota Malang** menarik seluruh CKAN Malang, termasuk data **bukan** kebencanaan (BPJS/DTKS desil, data penduduk kelurahan). `sdbi_json_harvester` **tidak** ada di produksi 2.9; ini bukan harvest JSON REST Jakarta.
+
+**Tindakan**
+
+1. Di `/harvest`, jeda atau hapus sumber yang menelan **seluruh** katalog kota/CKAN lain.
+2. Hapus atau purge paket harvested yang bukan data bencana.
+3. Setelah 2.10, jangan harvest katalog remote tanpa daftar izinan. JSON REST memakai URL dataset eksplisit; `ckan_harvester` tidak.
+
 ### 0. Prasyarat
 
 - B0 sudah hidup: SQL search dimatikan dan container **ckan** sudah **di-recreate**.
@@ -296,6 +310,7 @@ Produksi **jangan** andalkan `pip install -e`. Plugin harvester harus ter-bake d
 - [ ] `datastore_search` tetap jalan
 - [ ] Jangan mengaktifkan kembali SQL search
 - [ ] API key pengguna sudah di-cycle; token DataPusher di env adalah token **baru**
+- [ ] Sumber harvest katalog penuh (contoh Integrasi Kota Malang) dijeda; paket non-bencana dihapus
 
 ### 3. Cutover produksi
 

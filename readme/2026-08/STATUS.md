@@ -72,6 +72,7 @@ Plugin produksi 2.9 yang **belum** di lokal: `dcat*`, `structured_data`, `resour
 | GeoJSON Kabupaten kosong | Layer kabupaten tanpa poligon | Tambah ADM2 yang disederhanakan nanti |
 | Kamar Tanggap kosong | Sesuai desain | Isi iframe di `/tanggap-darurat/kelola` |
 | API key produksi masih yang lama | Token lolos 2FA | Cabut semua key 2.9 sekarang; putar DataPusher; cabut JWT lagi setelah 2.10 |
+| Harvest katalog kota tanpa saring | Dataset tidak pantas / data pribadi di portal | ≈372 paket harvested; jeda sumber Integrasi Kota Malang; hapus BPJS/penduduk dll. |
 | Fase 0–4 belum di produksi | Celah fitur | Kirim bersama image 2.10 |
 | DCAT produksi tidak di 2.10 | RDF/JSON-LD katalog | Bukan pengganti `sdbi_json_harvester` |
 
@@ -80,10 +81,11 @@ Plugin produksi 2.9 yang **belum** di lokal: `dcat*`, `structured_data`, `resour
 ## 5. Langkah berikutnya (produksi)
 
 1. Cabut semua API key pengguna produksi 2.9; putar token DataPusher (lihat [`HOW-TO-IMPLEMENT.md`](HOW-TO-IMPLEMENT.md))
-2. Rebuild staging ke 2.10.11 memakai [`HOW-TO-IMPLEMENT.md`](HOW-TO-IMPLEMENT.md)
-3. Ulangi pemeriksaan lokal di staging (termasuk `harvesters_info` di **gather**)
-4. Jendela maintenance produksi: `db upgrade`, Solr 9, `security migrate`, reindex
-5. Recreate web **dan** worker harvest dari image yang sama; cabut JWT 2.10
-6. Jangan mengaktifkan kembali SQL search
+2. Jeda harvest katalog penuh; hapus paket non-bencana harvested (lihat HOW-TO *Sumber harvest produksi*)
+3. Rebuild staging ke 2.10.11 memakai [`HOW-TO-IMPLEMENT.md`](HOW-TO-IMPLEMENT.md)
+4. Ulangi pemeriksaan lokal di staging (termasuk `harvesters_info` di **gather**)
+5. Jendela maintenance produksi: `db upgrade`, Solr 9, `security migrate`, reindex
+6. Recreate web **dan** worker harvest dari image yang sama; cabut JWT 2.10
+7. Jangan mengaktifkan kembali SQL search
 
 Urutan: B0 (selesai) → B2 di tree (selesai) → B1 staging/produksi → Fase 0/1 di image web+worker → Fase 2–4 ikut image yang sama.

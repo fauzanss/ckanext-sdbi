@@ -44,7 +44,7 @@ Portal harus tetap berfungsi sebagai katalog data terbuka kebencanaan nasional, 
 | Editor / admin organisasi | Terbit dataset; 2FA saat login web |
 | Sysadmin | Sumber harvest, pembaruan data FAQ/peta, reset TOTP, panduan hosting iframe, admin Google Forms |
 
-2FA web **tidak** melindungi token API. Setelah kebocoran kredensial, token tetap harus dicabut. Langkah produksi: [`HOW-TO-IMPLEMENT.md`](HOW-TO-IMPLEMENT.md) bagian *Cabut API key produksi*.
+2FA web **tidak** melindungi token API. Setelah kebocoran kredensial, token tetap harus dicabut. Harvest CKAN tanpa saring juga bisa menelan dataset tidak pantas. Langkah: [`HOW-TO-IMPLEMENT.md`](HOW-TO-IMPLEMENT.md) *Cabut API key produksi* dan *Sumber harvest produksi*.
 
 ---
 
