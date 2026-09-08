@@ -461,6 +461,7 @@ class SDBIPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IFacets, inherit=True)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IBlueprint)
+    plugins.implements(plugins.IAuthFunctions)
 
     # IConfigurer
     def update_config(self, config_):
@@ -544,6 +545,11 @@ class SDBIPlugin(plugins.SingletonPlugin):
                 'get_dataset_downloads_by_name': get_dataset_downloads_by_name,
                 'get_total_visitors': get_total_visitors,
                 'json_loads': json_loads}
+
+    def get_auth_functions(self):
+        from ckanext.sdbi.auth import get_auth_functions as sql_auth
+
+        return sql_auth()
 
     # IBlueprint
     def get_blueprint(self):
