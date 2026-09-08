@@ -1,21 +1,21 @@
 {% extends "page.html" %}
 
-{% block subtitle %}Kelola kamar Tanggap Darurat{% endblock %}
+{% block subtitle %}Kelola Dashboard Tanggap Darurat{% endblock %}
 
 {% block primary %}
 <article class="module">
   <div class="module-content">
-    <h1 class="page-heading">Kelola kamar Tanggap Darurat</h1>
+    <h1 class="page-heading">Kelola Dashboard Tanggap Darurat</h1>
     <p>JSON disimpan di tabel <code>sdbi_settings</code> (key <code>tanggap_rooms</code>). URL iframe harus HTTPS. Perubahan langsung tampil di <a href="/tanggap-darurat">/tanggap-darurat</a> tanpa rebuild image.</p>
     {% if saved %}
-    <p class="flash-messages alert alert-success">Kamar tersimpan.</p>
+    <p class="flash-messages alert alert-success">Dashboard tersimpan.</p>
     {% endif %}
     {% if error %}
     <p class="alert alert-danger">{{ error }}</p>
     {% endif %}
     <form method="post" action="/tanggap-darurat/kelola">
       {{ h.csrf_input() }}
-      <label for="payload">JSON kamar</label>
+      <label for="payload">JSON Dashboard</label>
       <textarea id="payload" name="payload" rows="24" style="width:100%;font-family:monospace;font-size:13px;" required>{{ payload }}</textarea>
       <p class="help-block">Bentuk: <code>{"rooms":[{"slug":"...","label":"...","dashboards":[{"title":"...","iframe_url":"https://...","sumber":"..."}]}]}</code></p>
       <div class="form-actions">

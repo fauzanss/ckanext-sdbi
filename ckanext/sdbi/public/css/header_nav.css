@@ -1,0 +1,32 @@
+.masthead .navigation .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 2000;
+  min-width: 220px;
+  padding: 6px 0;
+  margin: 0;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #d0d7de;
+  box-shadow: 0 6px 16px rgba(9, 31, 47, 0.18);
+}
+.js .masthead .navigation .dropdown:hover > .dropdown-menu,
+.js .masthead .navigation .dropdown.open > .dropdown-menu {
+  display: block;
+}
+.masthead .navigation .nav-pills .dropdown-menu > li > a,
+.masthead .navigation .nav-pills .dropdown-menu > li > a:hover,
+.masthead .navigation .nav-pills .dropdown-menu > li > a:focus {
+  color: #091f2f;
+  background-color: transparent;
+  padding: 8px 16px;
+}
+.masthead .navigation .nav-pills .dropdown-menu > li > a:hover,
+.masthead .navigation .nav-pills .dropdown-menu > li > a:focus,
+.masthead .navigation .nav-pills .dropdown-menu > .active > a,
+.masthead .navigation .nav-pills .dropdown-menu > .active > a:hover,
+.masthead .navigation .nav-pills .dropdown-menu > .active > a:focus {
+  background-color: #206b82;
+  color: #fff;
+}

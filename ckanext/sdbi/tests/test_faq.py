@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Unit tests for FAQ YAML loader."""
+"""Unit tests for FAQ JSON/YAML loader."""
 import os
 import tempfile
 
@@ -41,6 +41,13 @@ def test_load_faq_reads_categories_and_items():
 def test_load_faq_rejects_missing_file():
     with pytest.raises(FaqError):
         load_faq('/tmp/does-not-exist-sdbi-faq.yaml')
+
+
+def test_load_faq_without_path_falls_back_to_empty(monkeypatch):
+    from ckanext.sdbi.lib import faq as faq_mod
+
+    monkeypatch.setattr(faq_mod, 'get_json', lambda key: None)
+    assert load_faq() == {'categories': []}
 
 
 def test_parse_faq_from_dict():

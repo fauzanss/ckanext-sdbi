@@ -1,32 +1,16 @@
 {% extends "page.html" %}
 
-{% block subtitle %}Tanggap Darurat{% endblock %}
+{% block subtitle %}{% if current_room.label %}{{ current_room.label }}{% else %}Tanggap Darurat{% endif %}{% endblock %}
 
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="/css/tanggap_darurat.css" />
+<link rel="stylesheet" href="/css/tanggap_darurat.css?v=3" />
 {% endblock %}
 
 {% block footer %}{% endblock %}
 
 {% block content %}
 <div class="tanggap-darurat">
-  <form class="tanggap-darurat__bar" method="get" action="/tanggap-darurat">
-    <label for="jenis-bencana">Jenis bencana</label>
-    <select id="jenis-bencana" name="jenis" onchange="this.form.submit()">
-      {% for room in rooms %}
-      <option value="{{ room.slug }}" {% if room.slug == current_room.slug %}selected{% endif %}>
-        {{ room.label }}
-      </option>
-      {% endfor %}
-    </select>
-    <span class="tanggap-darurat__room-label">Kamar: {{ current_room.label }}</span>
-    {% if c.userobj and c.userobj.sysadmin %}
-    <a class="tanggap-darurat__guide" href="/tanggap-darurat/kelola">Kelola kamar</a>
-    <a class="tanggap-darurat__guide" href="/tanggap-darurat/panduan">Panduan hosting</a>
-    {% endif %}
-  </form>
-
   {% if current_room.dashboards %}
     {% for dashboard in current_room.dashboards %}
     <div class="tanggap-darurat-iframe-wrap">
@@ -40,8 +24,13 @@
     {% endfor %}
   {% else %}
     <div class="tanggap-darurat__empty">
-      <h2>Belum ada dashboard di kamar {{ current_room.label }}</h2>
-      <p>Kamar ini sudah disiapkan. Dashboard produksi dapat di-embed setelah URL iframe tersedia.</p>
+      {% if current_room.label %}
+      <h2>Belum ada dashboard di {{ current_room.label }}!</h2>
+      <p>{{ current_room.label }} sudah disiapkan. Dashboard produksi dapat di-embed setelah URL iframe tersedia.</p>
+      {% else %}
+      <h2>Belum ada Dashboard Tanggap Darurat</h2>
+      <p>Sysadmin dapat menambah dashboard di <a href="/admin/tanggap_darurat/dashboards">Kelola dashboard</a>.</p>
+      {% endif %}
     </div>
   {% endif %}
 </div>
@@ -50,11 +39,9 @@
     function syncHeaderOffset() {
       var account = document.querySelector('.account-masthead');
       var masthead = document.querySelector('header.masthead');
-      var bar = document.querySelector('.tanggap-darurat__bar');
       var bottom = 0;
       if (account) bottom = Math.max(bottom, account.getBoundingClientRect().bottom);
       if (masthead) bottom = Math.max(bottom, masthead.getBoundingClientRect().bottom);
-      if (bar) bottom = Math.max(bottom, bar.getBoundingClientRect().bottom);
       if (bottom > 0) {
         document.documentElement.style.setProperty('--td-header-offset', Math.ceil(bottom) + 'px');
       }

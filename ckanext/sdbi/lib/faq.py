@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
-"""FAQ YAML/JSON loader and client-side search helper."""
+"""FAQ JSON loader and client-side search helper."""
 import os
 
 import yaml
 
 from ckanext.sdbi.lib.settings import KEY_FAQ, get_json, resolve_json
 
-DEFAULT_FAQ_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), 'data', 'faq.yaml'
-)
-
 
 class FaqError(ValueError):
     pass
+
+
+def _empty_faq():
+    return {'categories': []}
 
 
 def parse_faq(data):
@@ -20,7 +20,7 @@ def parse_faq(data):
         raise FaqError('FAQ must be a JSON object')
     categories = data.get('categories')
     if not isinstance(categories, list):
-        raise FaqError('FAQ YAML must contain a categories list')
+        raise FaqError('FAQ must contain a categories list')
     cleaned = []
     for category in categories:
         if not isinstance(category, dict):
@@ -51,14 +51,10 @@ def _read_yaml(path):
 
 
 def load_faq(path=None):
-    """Load FAQ from a YAML path, or from sdbi_settings then the seed YAML."""
+    """Load FAQ from a YAML path (tests), or from sdbi_settings."""
     if path:
         return parse_faq(_read_yaml(path))
-    return resolve_json(
-        parse_faq,
-        get_json(KEY_FAQ),
-        lambda: parse_faq(_read_yaml(DEFAULT_FAQ_PATH)),
-    )
+    return resolve_json(parse_faq, get_json(KEY_FAQ), _empty_faq)
 
 
 def search_faq(faq, query):

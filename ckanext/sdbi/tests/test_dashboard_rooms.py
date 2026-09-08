@@ -66,6 +66,13 @@ def test_load_rooms_rejects_missing_file():
         load_rooms('/tmp/does-not-exist-sdbi-rooms.yaml')
 
 
+def test_load_rooms_without_path_falls_back_to_empty(monkeypatch):
+    from ckanext.sdbi.lib import dashboard_rooms as rooms_mod
+
+    monkeypatch.setattr(rooms_mod, 'get_json', lambda key: None)
+    assert load_rooms() == []
+
+
 def test_parse_rooms_rejects_http_iframe():
     with pytest.raises(DashboardRoomsError):
         parse_rooms({

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Dashboard room YAML/JSON loader for Tanggap Darurat."""
+"""Dashboard room JSON loader for Tanggap Darurat."""
 import os
 
 try:
@@ -11,13 +11,13 @@ import yaml
 
 from ckanext.sdbi.lib.settings import KEY_TANGGAP_ROOMS, get_json, resolve_json
 
-DEFAULT_ROOMS_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), 'data', 'dashboard_rooms.yaml'
-)
-
 
 class DashboardRoomsError(ValueError):
     pass
+
+
+def _empty_rooms():
+    return []
 
 
 def _https_iframe_url(url):
@@ -84,14 +84,10 @@ def _read_yaml(path):
 
 
 def load_rooms(path=None):
-    """Load rooms from a YAML path, or from sdbi_settings then the seed YAML."""
+    """Load rooms from a YAML path (tests), or from sdbi_settings."""
     if path:
         return parse_rooms(_read_yaml(path))
-    return resolve_json(
-        parse_rooms,
-        get_json(KEY_TANGGAP_ROOMS),
-        lambda: parse_rooms(_read_yaml(DEFAULT_ROOMS_PATH)),
-    )
+    return resolve_json(parse_rooms, get_json(KEY_TANGGAP_ROOMS), _empty_rooms)
 
 
 def get_room(rooms, slug):
