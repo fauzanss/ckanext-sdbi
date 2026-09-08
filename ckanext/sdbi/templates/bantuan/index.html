@@ -1,0 +1,39 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Bantuan{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/css/bantuan.css" />
+{% endblock %}
+
+{% block primary %}
+<article class="module bantuan">
+  <div class="module-content">
+    <h1 class="page-heading">Bantuan</h1>
+    <p class="bantuan__lead">Pertanyaan yang sering diajukan seputar Portal Data BNPB.</p>
+    <label class="bantuan__search">
+      <span class="sr-only">Cari bantuan</span>
+      <input id="bantuan-q" type="search" placeholder="Cari pertanyaan..." autocomplete="off">
+    </label>
+
+    <div id="bantuan-list">
+      {% for category in faq_categories %}
+      <section class="bantuan__category" data-category="{{ category.id }}">
+        <h2>{{ category.title }}</h2>
+        {% for item in category.entries %}
+        <details class="bantuan__item" data-q="{{ item.q|e }}" data-a="{{ item.a|e }}">
+          <summary>{{ item.q }}</summary>
+          <div class="bantuan__answer">{{ item.a }}</div>
+        </details>
+        {% endfor %}
+      </section>
+      {% endfor %}
+    </div>
+    <p id="bantuan-empty" class="bantuan__empty" hidden>Tidak ada hasil untuk pencarian itu.</p>
+  </div>
+</article>
+<script src="/js/bantuan.js"></script>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

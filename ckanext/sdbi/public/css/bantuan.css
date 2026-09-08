@@ -1,0 +1,21 @@
+.bantuan__lead { color: #4a5568; }
+.bantuan__search input {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  margin: 0.75rem 0 1.25rem;
+}
+.bantuan__category { margin-bottom: 1.5rem; }
+.bantuan__category h2 { color: #206b82; font-size: 1.2rem; }
+.bantuan__item {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  margin: 0.45rem 0;
+  background: #fff;
+}
+.bantuan__item summary { cursor: pointer; font-weight: 600; }
+.bantuan__answer { margin-top: 0.5rem; color: #2d3748; }
+.bantuan__empty { color: #c53030; }

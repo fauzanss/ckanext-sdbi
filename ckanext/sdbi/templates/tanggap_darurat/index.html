@@ -2,61 +2,60 @@
 
 {% block subtitle %}Tanggap Darurat{% endblock %}
 
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/css/tanggap_darurat.css" />
+{% endblock %}
+
 {% block footer %}{% endblock %}
 
 {% block content %}
-<style>
-  .main {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+<div class="tanggap-darurat">
+  <form class="tanggap-darurat__bar" method="get" action="/tanggap-darurat">
+    <label for="jenis-bencana">Jenis bencana</label>
+    <select id="jenis-bencana" name="jenis" onchange="this.form.submit()">
+      {% for room in rooms %}
+      <option value="{{ room.slug }}" {% if room.slug == current_room.slug %}selected{% endif %}>
+        {{ room.label }}
+      </option>
+      {% endfor %}
+    </select>
+    <span class="tanggap-darurat__room-label">Kamar: {{ current_room.label }}</span>
+    {% if c.userobj and c.userobj.sysadmin %}
+    <a class="tanggap-darurat__guide" href="/tanggap-darurat/panduan">Panduan hosting</a>
+    {% endif %}
+  </form>
 
-  .tanggap-darurat-iframe-wrap {
-    position: fixed;
-    top: var(--td-header-offset, 120px);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 100;
-    width: 100%;
-    height: calc(100vh - var(--td-header-offset, 120px));
-  }
-
-  .tanggap-darurat-iframe-wrap iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
-</style>
-
-<div class="tanggap-darurat-iframe-wrap">
-  {# standalone=1: hide top nav Superset saja, filter bar tetap tampil #}
-  <iframe
-    src="https://dibi.bnpb.go.id/superset/dashboard/83/?standalone=1"
-    title="{{ _('Tanggap Darurat') }}"
-    loading="lazy"
-    allowfullscreen
-  ></iframe>
+  {% if current_room.dashboards %}
+    {% for dashboard in current_room.dashboards %}
+    <div class="tanggap-darurat-iframe-wrap">
+      <iframe
+        src="{{ dashboard.iframe_url }}"
+        title="{{ dashboard.title }}"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="tanggap-darurat__empty">
+      <h2>Belum ada dashboard di kamar {{ current_room.label }}</h2>
+      <p>Kamar ini sudah disiapkan. Dashboard produksi dapat di-embed setelah URL iframe tersedia.</p>
+    </div>
+  {% endif %}
 </div>
-
 <script>
   (function () {
     function syncHeaderOffset() {
       var account = document.querySelector('.account-masthead');
       var masthead = document.querySelector('header.masthead');
+      var bar = document.querySelector('.tanggap-darurat__bar');
       var bottom = 0;
-      if (account) {
-        bottom = Math.max(bottom, account.getBoundingClientRect().bottom);
-      }
-      if (masthead) {
-        bottom = Math.max(bottom, masthead.getBoundingClientRect().bottom);
-      }
+      if (account) bottom = Math.max(bottom, account.getBoundingClientRect().bottom);
+      if (masthead) bottom = Math.max(bottom, masthead.getBoundingClientRect().bottom);
+      if (bar) bottom = Math.max(bottom, bar.getBoundingClientRect().bottom);
       if (bottom > 0) {
-        document.documentElement.style.setProperty(
-          '--td-header-offset',
-          Math.ceil(bottom) + 'px'
-        );
+        document.documentElement.style.setProperty('--td-header-offset', Math.ceil(bottom) + 'px');
       }
     }
     syncHeaderOffset();

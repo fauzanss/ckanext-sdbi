@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, abort
 import ckan.model as model
 import logging
 import ckan.authz as authz
-import ckan.lib.base as base
+from ckan.plugins import toolkit
 
 # Create Flask Blueprint
 google_forms_blueprint = Blueprint('google_forms', __name__)
@@ -13,8 +13,8 @@ log.info("Google Forms blueprint created")
 
 def _check_admin():
     """Check if current user is admin"""
-    c = base.c
-    if not authz.is_sysadmin(c.user):
+    user = getattr(toolkit.current_user, 'name', None) or ''
+    if not authz.is_sysadmin(user):
         abort(403, description='Access denied. Admin privileges required.')
 
 @google_forms_blueprint.route('/google-forms')

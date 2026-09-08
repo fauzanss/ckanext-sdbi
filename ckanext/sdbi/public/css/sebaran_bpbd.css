@@ -1,0 +1,22 @@
+.sebaran-bpbd__header { margin-bottom: 1rem; }
+.sebaran-bpbd__lead { color: #4a5568; max-width: 52rem; }
+.sebaran-bpbd__meta { font-weight: 600; color: #206b82; }
+.sebaran-bpbd__toolbar {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin: 0 0 0.75rem;
+}
+.sebaran-bpbd__toggle { font-weight: 600; cursor: pointer; }
+#sebaran-bpbd-map {
+  width: 100%;
+  height: 70vh;
+  min-height: 420px;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+}
+.sebaran-bpbd__attrib { font-size: 12px; color: #6c757d; margin-top: 0.5rem; }
+.sebaran-bpbd__import { margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; }
+.sebaran-bpbd-popup h3 { margin: 0 0 0.4rem; color: #206b82; }
+.sebaran-bpbd-popup p { margin: 0.2rem 0; }
+.sebaran-bpbd-popup a { font-weight: 600; }

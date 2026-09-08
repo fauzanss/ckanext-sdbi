@@ -1,0 +1,58 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Peta Sebaran BPBD{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" />
+<link rel="stylesheet" href="/css/sebaran_bpbd.css" />
+{% endblock %}
+
+{% block primary %}
+<article class="module sebaran-bpbd">
+  <div class="module-content">
+    <header class="sebaran-bpbd__header">
+      <h1 class="page-heading">Peta Sebaran BPBD</h1>
+      <p class="sebaran-bpbd__lead">
+        Layer Provinsi dan Kabupaten/Kota (data batas open source BIG/Kemendagri via GeoJSON yang disederhanakan)
+        plus titik BPBD. Klik marker untuk informasi SDM dan tautan Google Maps.
+      </p>
+      <p class="sebaran-bpbd__meta">{{ bpbd_count }} lokasi BPBD terpetakan (placeholder sampai CSV resmi diunggah).</p>
+    </header>
+
+    <div class="sebaran-bpbd__toolbar">
+      <label class="sebaran-bpbd__toggle">
+        <input type="checkbox" id="layer-provinsi" checked>
+        Provinsi
+      </label>
+      <label class="sebaran-bpbd__toggle">
+        <input type="checkbox" id="layer-kabupaten" checked>
+        Kabupaten/Kota
+      </label>
+      <label class="sebaran-bpbd__toggle">
+        <input type="checkbox" id="layer-bpbd" checked>
+        Titik BPBD
+      </label>
+    </div>
+
+    <div id="sebaran-bpbd-map" role="application" aria-label="Peta sebaran BPBD seluruh Indonesia"></div>
+    <p class="sebaran-bpbd__attrib">
+      Batas wilayah disederhanakan untuk tampilan web. Sumber geometri: Badan Informasi Geospasial / Kemendagri.
+      Peta dasar: OpenFreeMap / OpenStreetMap.
+    </p>
+
+    {% if c.userobj and c.userobj.sysadmin %}
+    <form class="sebaran-bpbd__import" action="/sebaran-bpbd/import" method="post" enctype="multipart/form-data">
+      <h2>Unggah CSV BPBD (sysadmin)</h2>
+      <p>Kolom wajib: kode_wilayah, tingkat (provinsi|kabupaten), nama_instansi, alamat, lat, lng, telepon, email, jumlah_sdm, catatan_sdm.</p>
+      <input type="file" name="csv" accept=".csv,text/csv" required>
+      <button type="submit" class="btn btn-primary">Impor</button>
+    </form>
+    {% endif %}
+  </div>
+</article>
+<script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+<script src="/js/sebaran_bpbd.js"></script>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

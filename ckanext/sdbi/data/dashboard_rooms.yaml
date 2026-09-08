@@ -1,0 +1,37 @@
+rooms:
+  - slug: gempa-bumi
+    label: Gempa Bumi
+    dashboards:
+      - title: Dashboard Penanganan Darurat Gempa Bumi Cianjur 2022
+        iframe_url: https://gis.bnpb.go.id/cianjur2022
+        sumber: GIS BNPB
+  - slug: gunung-api
+    label: Gunung Api
+    dashboards:
+      - title: Dashboard Penanganan Darurat Erupsi Lewotobi Laki-Laki
+        iframe_url: https://gis.bnpb.go.id/lewotobi2024
+        sumber: GIS BNPB
+  - slug: banjir
+    label: Banjir
+    dashboards: []
+  - slug: tanah-longsor
+    label: Tanah Longsor
+    dashboards: []
+  - slug: kekeringan
+    label: Kekeringan
+    dashboards: []
+  - slug: cuaca-ekstrem
+    label: Cuaca Ekstrem
+    dashboards: []
+  - slug: tsunami
+    label: Tsunami
+    dashboards: []
+  - slug: karhutla
+    label: Karhutla
+    dashboards: []
+  - slug: lainnya
+    label: Lainnya
+    dashboards:
+      - title: Tanggap Darurat Nasional
+        iframe_url: https://dibi.bnpb.go.id/superset/dashboard/83/?standalone=1
+        sumber: DIBI Superset

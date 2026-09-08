@@ -547,9 +547,20 @@ class SDBIPlugin(plugins.SingletonPlugin):
                 'json_loads': json_loads}
 
     def get_auth_functions(self):
-        from ckanext.sdbi.auth import get_auth_functions as sql_auth
+        # CKAN 2.10 refuses a second implementation of the same auth
+        # function unless it is chained onto the existing one.
+        from ckanext.sdbi.auth import datastore_search_sql as sql_auth
 
-        return sql_auth()
+        @toolkit.chained_auth_function
+        def datastore_search_sql(next_auth, context, data_dict):
+            result = sql_auth(context, data_dict)
+            if result.get('success'):
+                return next_auth(context, data_dict)
+            return result
+
+        return {
+            'datastore_search_sql': datastore_search_sql,
+        }
 
     # IBlueprint
     def get_blueprint(self):
@@ -562,6 +573,8 @@ class SDBIPlugin(plugins.SingletonPlugin):
         from ckanext.sdbi.controllers.tracking import TrackingController
         from ckanext.sdbi.controllers.analytics import analytics_blueprint
         from ckanext.sdbi.controllers.tanggap_darurat import tanggap_darurat_blueprint
+        from ckanext.sdbi.controllers.sebaran_bpbd import sebaran_bpbd_blueprint
+        from ckanext.sdbi.controllers.bantuan import bantuan_blueprint
         
         # Create tracking blueprint
         from flask import Blueprint
@@ -573,6 +586,13 @@ class SDBIPlugin(plugins.SingletonPlugin):
         tracking_blueprint.add_url_rule('/sdbi/downloads/<dataset_name>', 'get_downloads', TrackingController().get_downloads, methods=['GET'])
         
         # Return list of blueprints
-        return [google_forms_blueprint, tracking_blueprint, analytics_blueprint, tanggap_darurat_blueprint]
+        return [
+            google_forms_blueprint,
+            tracking_blueprint,
+            analytics_blueprint,
+            tanggap_darurat_blueprint,
+            sebaran_bpbd_blueprint,
+            bantuan_blueprint,
+        ]
 
 
