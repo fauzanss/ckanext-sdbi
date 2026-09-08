@@ -1,0 +1,135 @@
+.mfa,
+.mfa * {
+  box-sizing: border-box;
+}
+.mfa__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f4c5c;
+  margin: 0 0 12px;
+  border: 0;
+  padding: 0;
+}
+.mfa__steps {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #2d3748;
+}
+.mfa__steps li {
+  margin: 0 0 6px;
+}
+.mfa__qr-wrap {
+  display: inline-block;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #d5e0e4;
+  border-radius: 4px;
+  margin: 0 0 16px;
+}
+#qr-code-container {
+  display: block;
+  width: 220px;
+  height: 220px;
+  background: #fff;
+}
+.mfa__secret {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 20px;
+}
+.mfa__secret-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a6670;
+  width: 100%;
+}
+.mfa__secret-value {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.3;
+  padding: 8px 10px;
+  background: #f4f7f8;
+  border: 1px solid #d5e0e4;
+  border-radius: 4px;
+  color: #14343c;
+  word-break: break-all;
+}
+.mfa__copy {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #206b82;
+  background: #fff;
+  color: #206b82;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.mfa__copy:hover,
+.mfa__copy:focus {
+  background: #206b82;
+  color: #fff;
+  outline: 0;
+}
+.mfa__copy.is-copied {
+  border-color: #276749;
+  color: #276749;
+}
+.mfa__prompt {
+  font-size: 15px;
+  margin: 0 0 12px;
+  color: #1a202c;
+}
+.mfa .controls input.mfa__code,
+input.mfa__code {
+  width: 200px !important;
+  max-width: 200px;
+  height: 44px;
+  font-size: 22px;
+  letter-spacing: 0.28em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  color: #0f4c5c;
+  caret-color: #0f4c5c;
+}
+.mfa__code:focus {
+  outline: 2px solid #206b82;
+  outline-offset: 2px;
+  border-color: #206b82;
+}
+.mfa label.control-label::after {
+  content: none;
+}
+.mfa__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.mfa__help {
+  font-size: 14px;
+}
+.mfa__hint {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #4a6670;
+}
+.mfa__regen {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8eb;
+}
+.mfa-admin {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8eb;
+}
+.mfa-admin .btn {
+  margin-top: 8px;
+}

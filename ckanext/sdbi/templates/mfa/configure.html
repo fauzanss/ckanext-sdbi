@@ -1,0 +1,81 @@
+{% extends 'page.html' %}
+
+{% block subtitle %}Atur autentikasi dua faktor{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/css/mfa.css?v=1" />
+{% endblock %}
+
+{% block breadcrumb_content %}
+  <li><a href="{{ h.url_for('user.index') }}">{{ _('Users') }}</a></li>
+  <li><a href="{{ h.url_for('user.read', id=c.user_dict.name) }}">{{ c.user_dict.display_name }}</a></li>
+  <li class="active">2FA</li>
+{% endblock %}
+
+{% block secondary_content %}
+  <section class="module module-narrow module-shallow">
+    <h2 class="module-heading"><i class="fa fa-lock"></i> Autentikasi dua faktor</h2>
+    <div class="module-content">
+      {% if c.is_myself %}
+      <p>Pindai QR dengan aplikasi authenticator di ponsel, lalu uji kode 6 digit.</p>
+      {% else %}
+      <p>Reset 2FA tidak menampilkan kunci rahasia pengguna. Mereka memindai QR baru saat login berikutnya.</p>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}
+
+{% block primary_content %}
+  {% if c.is_myself %}
+    {% asset 'security/mfa_configure' %}
+  {% endif %}
+  <article class="module mfa">
+    <div class="module-content">
+      {% if c.is_myself %}
+        <form id="mfa-form" method="POST">
+          {{ h.csrf_input() }}
+          <fieldset class="mfa__setup">
+            <legend class="mfa__title">Pasang authenticator</legend>
+            <ol class="mfa__steps">
+              <li>Buka Google Authenticator, Authy, atau aplikasi TOTP lain.</li>
+              <li>Pindai QR. Jika tidak bisa, salin kunci manual.</li>
+              <li>Masukkan kode 6 digit untuk menguji.</li>
+            </ol>
+            <input id="totp-uri" type="hidden" disabled value="{{ c.totp_challenger_uri or '' }}">
+            <div class="mfa__qr-wrap">
+              <canvas id="qr-code-container" width="250" height="250" aria-label="Kode QR authenticator"></canvas>
+            </div>
+            <div class="mfa__secret">
+              <p class="mfa__secret-label">Kunci manual</p>
+              <code id="totp-secret" class="mfa__secret-value">{{ c.totp_secret or '' }}</code>
+              <button type="button" class="mfa__copy" data-copy-secret>Salin</button>
+            </div>
+            <div class="control-group control-medium{% if c.mfa_test_invalid %} error{% endif %}">
+              <label class="control-label" for="field-mfa">Kode uji</label>
+              <div class="controls">
+                <input id="field-mfa" name="mfa" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" class="mfa__code" placeholder="000000" value="">
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Uji kode</button>
+          </fieldset>
+        </form>
+        <form class="mfa__regen" method="post" action="{{ h.url_for('sdbi_mfa.new_secret', id=c.totp_user_id) }}" onsubmit="return confirm('Buat kunci 2FA baru? Aplikasi authenticator lama tidak akan berlaku.');">
+          {{ h.csrf_input() }}
+          <button class="btn btn-danger" type="submit">Buat kunci 2FA baru</button>
+          <p class="mfa__hint">Pakai ini jika aplikasi authenticator terhapus atau ponsel diganti.</p>
+        </form>
+      {% elif c.is_sysadmin %}
+        <h1 class="page-heading">Reset 2FA {{ c.user_dict.name }}</h1>
+        <form method="post" action="{{ h.url_for('sdbi_mfa.reset_2fa', id=c.user_dict.name) }}" onsubmit="return confirm('Reset 2FA untuk {{ c.user_dict.name }}?');">
+          {{ h.csrf_input() }}
+          <input type="hidden" name="next" value="{{ h.url_for('user.read', id=c.user_dict.name) }}">
+          <button class="btn btn-danger" type="submit">Reset 2FA pengguna ini</button>
+        </form>
+      {% else %}
+        <p>Anda tidak berwenang mengatur 2FA pengguna ini.</p>
+      {% endif %}
+    </div>
+  </article>
+  <script src="/js/mfa.js?v=1"></script>
+{% endblock %}

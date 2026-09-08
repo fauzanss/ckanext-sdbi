@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/css/mfa.css?v=1" />
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="/js/mfa.js?v=1"></script>
+{% endblock %}
+
+{% block form %}
+  {% snippet "snippets/mfa_login_form.html", error_summary=error_summary %}
+{% endblock %}
