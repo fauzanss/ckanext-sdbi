@@ -1,0 +1,79 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Peta Sebaran BPBD{% endblock %}
+
+{% block skip %}
+<div class="sr-only sr-only-focusable"><a href="#sebaran-bpbd-map">{{ _('Skip to content') }}</a></div>
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" />
+<link rel="stylesheet" href="/css/sebaran_bpbd.css?v=8" />
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="sebaran-bpbd">
+  <div class="sebaran-bpbd__bar">
+    <a class="sebaran-bpbd__back" href="{{ h.url_for('home.index') }}">Portal Data</a>
+    <h1>Peta Sebaran BPBD</h1>
+    <p class="sebaran-bpbd__count"><strong>{{ bpbd_count }}</strong> lokasi terpetakan</p>
+    <div class="sebaran-bpbd__actions">
+      <a class="sebaran-bpbd__download" href="/sebaran-bpbd/data.csv" download="sebaran-bpbd.csv">Unduh data</a>
+      {% if c.userobj and c.userobj.sysadmin %}
+      <button type="button" class="sebaran-bpbd__upload-open" aria-haspopup="dialog" aria-controls="sebaran-bpbd-import">
+        Unggah CSV BPBD
+      </button>
+      <dialog class="sebaran-bpbd__dialog" id="sebaran-bpbd-import" aria-labelledby="sebaran-bpbd-import-title">
+        <div class="sebaran-bpbd__dialog-head">
+          <h2 id="sebaran-bpbd-import-title">Unggah CSV BPBD</h2>
+          <button type="button" class="sebaran-bpbd__dialog-close" aria-label="Tutup">Tutup</button>
+        </div>
+        <form class="sebaran-bpbd__dialog-form" action="/sebaran-bpbd/import" method="post" enctype="multipart/form-data">
+          <label class="sebaran-bpbd__drop">
+            <input type="file" name="csv" accept=".csv,text/csv" required>
+            <strong class="sebaran-bpbd__drop-title">Pilih atau jatuhkan berkas CSV</strong>
+            <span class="sebaran-bpbd__drop-file">Belum ada berkas dipilih</span>
+          </label>
+          <p class="sebaran-bpbd__dialog-hint">
+            Kolom: kode_wilayah, tingkat (provinsi atau kabupaten), nama_instansi, alamat, lat, lng, telepon, email, jumlah_sdm, catatan_sdm. Impor mengganti seluruh titik di peta.
+          </p>
+          <p class="sebaran-bpbd__dialog-status" role="status"></p>
+          <div class="sebaran-bpbd__dialog-actions">
+            <button type="button" class="sebaran-bpbd__dialog-cancel">Batal</button>
+            <button type="submit" class="sebaran-bpbd__dialog-submit" disabled>Impor ke peta</button>
+          </div>
+        </form>
+      </dialog>
+      {% endif %}
+    </div>
+    <fieldset class="sebaran-bpbd__layers">
+      <legend>Layer peta</legend>
+      <label class="sebaran-bpbd__chip sebaran-bpbd__chip--provinsi">
+        <input type="checkbox" id="layer-provinsi" checked>
+        <span>Provinsi</span>
+      </label>
+      <label class="sebaran-bpbd__chip sebaran-bpbd__chip--kabupaten">
+        <input type="checkbox" id="layer-kabupaten" checked>
+        <span>Kabupaten/Kota</span>
+      </label>
+      <label class="sebaran-bpbd__chip sebaran-bpbd__chip--bpbd">
+        <input type="checkbox" id="layer-bpbd" checked>
+        <span>Titik BPBD</span>
+      </label>
+    </fieldset>
+  </div>
+
+  <div id="sebaran-bpbd-map" role="application" aria-label="Peta sebaran BPBD seluruh Indonesia"></div>
+
+  <p class="sebaran-bpbd__attrib">
+    Klik titik merah untuk SDM dan Google Maps. Batas wilayah disederhanakan. Geometri: BIG / Kemendagri. Peta dasar: OpenFreeMap / OSM.
+  </p>
+</div>
+<script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+<script src="/js/sebaran_bpbd.js?v=8"></script>
+{% endblock %}

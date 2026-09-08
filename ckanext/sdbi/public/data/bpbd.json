@@ -1,0 +1,45 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.827153, -6.175392]
+      },
+      "properties": {
+        "kode_wilayah": "31",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD DKI Jakarta",
+        "alamat": "Jl. Medan Merdeka Selatan No. 8-9 Jakarta Pusat",
+        "lat": -6.175392,
+        "lng": 106.827153,
+        "telepon": "021-3822461",
+        "email": "bpbd@jakarta.go.id",
+        "jumlah_sdm": 120,
+        "catatan_sdm": "Placeholder sampai CSV resmi diterima",
+        "maps_url": "https://www.google.com/maps?q=-6.175392,106.827153"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [107.619123, -6.917464]
+      },
+      "properties": {
+        "kode_wilayah": "32",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Jawa Barat",
+        "alamat": "Jl. Kalimantan No. 14 Bandung",
+        "lat": -6.917464,
+        "lng": 107.619123,
+        "telepon": "022-87243060",
+        "email": "bpbd@jabarprov.go.id",
+        "jumlah_sdm": 150,
+        "catatan_sdm": "Placeholder sampai CSV resmi diterima",
+        "maps_url": "https://www.google.com/maps?q=-6.917464,107.619123"
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Panduan hosting dashboard{% endblock %}
+
+{% block primary %}
+<article class="module">
+  <div class="module-content">
+    <h1 class="page-heading">Panduan hosting dashboard Tanggap Darurat</h1>
+    <p>CKAN tidak menyimpan dashboard. Portal hanya meng-embed dashboard yang sudah diproduksi (Superset, GIS, ArcGIS, dll.) ke kamar jenis bencana.</p>
+
+    <h2>Syarat embed</h2>
+    <ol>
+      <li>URL dashboard memakai HTTPS.</li>
+      <li>Server dashboard mengizinkan iframe dari origin portal (hindari <code>X-Frame-Options: DENY</code>; preferensi CSP <code>frame-ancestors</code> yang memuat domain portal).</li>
+      <li>Untuk Apache Superset, tambahkan <code>standalone=1</code> agar navigasi Superset disembunyikan.</li>
+      <li>Ukuran iframe mengikuti tinggi viewport di bawah header portal.</li>
+    </ol>
+
+    <h2>Cara menambahkan ke kamar</h2>
+    <p>Sysadmin membuka <a href="/tanggap-darurat/kelola">/tanggap-darurat/kelola</a>, mengisi <code>title</code>, <code>iframe_url</code> (HTTPS), dan <code>sumber</code> pada kamar yang sesuai, lalu Simpan. Data kamar hanya ada di <code>sdbi_settings</code> (key <code>tanggap_rooms</code>).</p>
+
+    <h2>Kamar saat ini</h2>
+    <ul>
+      {% for room in rooms %}
+      <li>
+        <strong>{{ room.label }}</strong> ({{ room.slug }}) -
+        {% if room.dashboards %}{{ room.dashboards|length }} dashboard{% else %}kosong{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <p><a href="/tanggap-darurat">Kembali ke Tanggap Darurat</a></p>
+  </div>
+</article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

@@ -1,11 +1,22 @@
+import json
 import logging
 import re
 
-from flask import Blueprint, abort
+from flask import Blueprint, abort, redirect, request
 from sqlalchemy import text
 
+import ckan.authz as authz
 import ckan.model as model
 from ckan.plugins import toolkit
+
+from ckanext.sdbi.lib.dashboard_rooms import (
+    DashboardRoomsError,
+    get_room,
+    load_rooms,
+    parse_rooms,
+    rooms_payload,
+)
+from ckanext.sdbi.lib.settings import KEY_TANGGAP_ROOMS, set_json
 
 log = logging.getLogger(__name__)
 
@@ -13,6 +24,14 @@ tanggap_darurat_blueprint = Blueprint('tanggap_darurat', __name__)
 
 _LINK_RE = re.compile(r'^[A-Za-z0-9_-]{1,100}$')
 _TABLE_ENSURED = False
+
+
+def _rooms():
+    return load_rooms()
+
+
+def _current_username():
+    return getattr(toolkit.current_user, 'name', None) or ''
 
 
 def _ensure_embed_pages_table():
@@ -56,7 +75,60 @@ def _get_embed_page(link):
 
 @tanggap_darurat_blueprint.route('/tanggap-darurat', methods=['GET'])
 def index():
-    return toolkit.render('tanggap_darurat/index.html')
+    rooms = _rooms()
+    requested = request.args.get('jenis')
+    current = get_room(rooms, requested) if requested else None
+    if current is None:
+        current = rooms[0] if rooms else {'slug': '', 'label': '', 'dashboards': []}
+    return toolkit.render(
+        'tanggap_darurat/index.html',
+        extra_vars={
+            'rooms': rooms,
+            'current_room': current,
+        },
+    )
+
+
+@tanggap_darurat_blueprint.route('/tanggap-darurat/panduan', methods=['GET'])
+def panduan():
+    if not authz.is_sysadmin(_current_username()):
+        abort(403, description='Access denied. Admin privileges required.')
+    return toolkit.render(
+        'tanggap_darurat/panduan.html',
+        extra_vars={'rooms': _rooms()},
+    )
+
+
+@tanggap_darurat_blueprint.route('/tanggap-darurat/kelola', methods=['GET', 'POST'])
+def kelola():
+    if not authz.is_sysadmin(_current_username()):
+        abort(403, description='Access denied. Admin privileges required.')
+    error = None
+    saved = request.args.get('saved') == '1'
+    payload = ''
+    if request.method == 'POST':
+        payload = request.form.get('payload') or ''
+        try:
+            rooms = parse_rooms(json.loads(payload))
+            set_json(KEY_TANGGAP_ROOMS, rooms_payload(rooms), _current_username())
+            return redirect('/tanggap-darurat/kelola?saved=1')
+        except (ValueError, TypeError, DashboardRoomsError) as exc:
+            error = str(exc)
+            saved = False
+    if not payload:
+        try:
+            payload = json.dumps(rooms_payload(_rooms()), indent=2, ensure_ascii=False)
+        except DashboardRoomsError as exc:
+            error = error or str(exc)
+            payload = '{\n  "rooms": []\n}'
+    return toolkit.render(
+        'tanggap_darurat/kelola.html',
+        extra_vars={
+            'payload': payload,
+            'error': error,
+            'saved': saved,
+        },
+    )
 
 
 @tanggap_darurat_blueprint.route('/gempantt2026', methods=['GET'])

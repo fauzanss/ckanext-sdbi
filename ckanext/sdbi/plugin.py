@@ -4,6 +4,27 @@ import ckan.plugins.toolkit as toolkit
 from ckan.common import config
 import ckan.model as model
 
+from ckanext.sdbi.lib.json_rest import json_harvest_form_defaults
+
+
+def sdbi_tanggap_rooms():
+    """Rooms for the header Tanggap Darurat dropdown. Empty list if unset."""
+    try:
+        from ckanext.sdbi.lib.dashboard_rooms import load_rooms
+        return load_rooms() or []
+    except Exception:
+        return []
+
+
+def sdbi_totp_configured(username):
+    """True when the user has completed at least one successful TOTP login."""
+    try:
+        from ckanext.security.model import SecurityTOTP
+        record = SecurityTOTP.get_for_user(username)
+        return bool(record and record.last_successful_challenge)
+    except Exception:
+        return False
+
 def most_recent_datasets(num=4):
     """Get most recent datasets based on creation date using direct SQL query"""
     try:
@@ -461,6 +482,7 @@ class SDBIPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IFacets, inherit=True)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IBlueprint)
+    plugins.implements(plugins.IAuthFunctions)
 
     # IConfigurer
     def update_config(self, config_):
@@ -543,7 +565,26 @@ class SDBIPlugin(plugins.SingletonPlugin):
                 'get_dataset_downloads': get_dataset_downloads,
                 'get_dataset_downloads_by_name': get_dataset_downloads_by_name,
                 'get_total_visitors': get_total_visitors,
-                'json_loads': json_loads}
+                'json_loads': json_loads,
+                'sdbi_json_harvest_form_defaults': json_harvest_form_defaults,
+                'sdbi_tanggap_rooms': sdbi_tanggap_rooms,
+                'sdbi_totp_configured': sdbi_totp_configured}
+
+    def get_auth_functions(self):
+        # CKAN 2.10 refuses a second implementation of the same auth
+        # function unless it is chained onto the existing one.
+        from ckanext.sdbi.auth import datastore_search_sql as sql_auth
+
+        @toolkit.chained_auth_function
+        def datastore_search_sql(next_auth, context, data_dict):
+            result = sql_auth(context, data_dict)
+            if result.get('success'):
+                return next_auth(context, data_dict)
+            return result
+
+        return {
+            'datastore_search_sql': datastore_search_sql,
+        }
 
     # IBlueprint
     def get_blueprint(self):
@@ -556,6 +597,9 @@ class SDBIPlugin(plugins.SingletonPlugin):
         from ckanext.sdbi.controllers.tracking import TrackingController
         from ckanext.sdbi.controllers.analytics import analytics_blueprint
         from ckanext.sdbi.controllers.tanggap_darurat import tanggap_darurat_blueprint
+        from ckanext.sdbi.controllers.sebaran_bpbd import sebaran_bpbd_blueprint
+        from ckanext.sdbi.controllers.bantuan import bantuan_blueprint
+        from ckanext.sdbi.controllers.mfa import mfa_blueprint
         
         # Create tracking blueprint
         from flask import Blueprint
@@ -567,6 +611,14 @@ class SDBIPlugin(plugins.SingletonPlugin):
         tracking_blueprint.add_url_rule('/sdbi/downloads/<dataset_name>', 'get_downloads', TrackingController().get_downloads, methods=['GET'])
         
         # Return list of blueprints
-        return [google_forms_blueprint, tracking_blueprint, analytics_blueprint, tanggap_darurat_blueprint]
+        return [
+            google_forms_blueprint,
+            tracking_blueprint,
+            analytics_blueprint,
+            tanggap_darurat_blueprint,
+            sebaran_bpbd_blueprint,
+            bantuan_blueprint,
+            mfa_blueprint,
+        ]
 
 
