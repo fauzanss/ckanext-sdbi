@@ -42,11 +42,3 @@ coverage.xml
 docs/_build/
 
 ticket/*
-
-# Raw administrative SHP (hundreds of MB); regenerate GeoJSON instead
-ckanext/sdbi/data/maps/**/*.shp
-ckanext/sdbi/data/maps/**/*.shx
-ckanext/sdbi/data/maps/**/*.dbf
-ckanext/sdbi/data/maps/**/*.sbn
-ckanext/sdbi/data/maps/**/*.sbx
-ckanext/sdbi/data/maps/**/*.qmd
