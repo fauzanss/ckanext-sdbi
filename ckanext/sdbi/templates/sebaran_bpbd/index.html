@@ -11,7 +11,7 @@
 {% block styles %}
 {{ super() }}
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" />
-<link rel="stylesheet" href="/css/sebaran_bpbd.css?v=8" />
+<link rel="stylesheet" href="/css/sebaran_bpbd.css?v=20" />
 {% endblock %}
 
 {% block footer %}{% endblock %}
@@ -20,8 +20,10 @@
 <div class="sebaran-bpbd">
   <div class="sebaran-bpbd__bar">
     <a class="sebaran-bpbd__back" href="{{ h.url_for('home.index') }}">Portal Data</a>
-    <h1>Peta Sebaran BPBD</h1>
-    <p class="sebaran-bpbd__count"><strong>{{ bpbd_count }}</strong> lokasi terpetakan</p>
+    <div class="sebaran-bpbd__brand">
+      <h1>Peta Sebaran BPBD</h1>
+      <p class="sebaran-bpbd__count"><strong>{{ bpbd_count }}</strong> lokasi terpetakan</p>
+    </div>
     <div class="sebaran-bpbd__actions">
       <a class="sebaran-bpbd__download" href="/sebaran-bpbd/data.csv" download="sebaran-bpbd.csv">Unduh data</a>
       {% if c.userobj and c.userobj.sysadmin %}
@@ -51,6 +53,21 @@
       </dialog>
       {% endif %}
     </div>
+  </div>
+
+  <div class="sebaran-bpbd__float">
+    <div class="sebaran-bpbd__explore">
+      <label class="sebaran-bpbd__search">
+        <span class="sr-only">Cari BPBD</span>
+        <input id="sebaran-bpbd-search" type="search" placeholder="Cari nama atau alamat BPBD" autocomplete="off" disabled>
+      </label>
+      <ul id="sebaran-bpbd-search-results" class="sebaran-bpbd__search-results" hidden role="listbox"></ul>
+      <p id="sebaran-bpbd-search-status" class="sebaran-bpbd__search-status" role="status"></p>
+      <div class="sebaran-bpbd__float-actions">
+        <button type="button" id="sebaran-bpbd-fit-all" class="sebaran-bpbd__fit" disabled>Tampilkan semua titik</button>
+        <a id="sebaran-bpbd-open-gmaps" class="sebaran-bpbd__gmaps" href="https://www.google.com/maps/@-2.5,118,5z" target="_blank" rel="noopener">Buka di Google Maps</a>
+      </div>
+    </div>
     <fieldset class="sebaran-bpbd__layers">
       <legend>Layer peta</legend>
       <label class="sebaran-bpbd__chip sebaran-bpbd__chip--provinsi">
@@ -71,9 +88,10 @@
   <div id="sebaran-bpbd-map" role="application" aria-label="Peta sebaran BPBD seluruh Indonesia"></div>
 
   <p class="sebaran-bpbd__attrib">
-    Klik titik merah untuk SDM dan Google Maps. Batas wilayah disederhanakan. Geometri: BIG / Kemendagri. Peta dasar: OpenFreeMap / OSM.
+    Centang Provinsi/Kabupaten untuk batas wilayah dan titik BPBD sesuai tingkat. Titik BPBD adalah sakelar master. Peta dasar: OpenFreeMap Bright / OSM. Navigasi detail: Google Maps.
   </p>
 </div>
 <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
-<script src="/js/sebaran_bpbd.js?v=8"></script>
+<script src="/js/sebaran_bpbd_utils.js?v=20"></script>
+<script src="/js/sebaran_bpbd.js?v=20"></script>
 {% endblock %}
