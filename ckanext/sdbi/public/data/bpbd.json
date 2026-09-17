@@ -6,22 +6,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          106.827153,
-          -6.175392
+          95.3238,
+          5.5483
         ]
       },
       "properties": {
-        "kode_wilayah": "31",
+        "kode_wilayah": "11",
         "tingkat": "provinsi",
-        "nama_instansi": "BPBD DKI Jakarta",
-        "alamat": "Jl. Medan Merdeka Selatan No. 8-9 Jakarta Pusat",
-        "lat": -6.175392,
-        "lng": 106.827153,
-        "telepon": "021-3822461",
-        "email": "bpbd@jakarta.go.id",
-        "jumlah_sdm": 5,
-        "catatan_sdm": "Ini  terbaru",
-        "maps_url": "https://www.google.com/maps?q=-6.175392,106.827153"
+        "nama_instansi": "BPBD Provinsi Aceh",
+        "alamat": "Kantor BPBD Provinsi Aceh, Banda Aceh",
+        "lat": 5.5483,
+        "lng": 95.3238,
+        "telepon": "011-81705",
+        "email": "bpbd@11.go.id",
+        "jumlah_sdm": 51,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=5.5483,95.3238"
       }
     },
     {
@@ -29,22 +29,252 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          107.619123,
-          -6.917464
+          98.6722,
+          3.5952
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "12",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Sumatera Utara",
+        "alamat": "Kantor BPBD Provinsi Sumatera Utara, Medan",
+        "lat": 3.5952,
+        "lng": 98.6722,
+        "telepon": "012-69681",
+        "email": "bpbd@12.go.id",
+        "jumlah_sdm": 52,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=3.5952,98.6722"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.4172,
+          -0.9471
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "13",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Sumatera Barat",
+        "alamat": "Kantor BPBD Provinsi Sumatera Barat, Padang",
+        "lat": -0.9471,
+        "lng": 100.4172,
+        "telepon": "013-13149",
+        "email": "bpbd@13.go.id",
+        "jumlah_sdm": 53,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-0.9471,100.4172"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.4478,
+          0.5071
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "14",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Riau",
+        "alamat": "Kantor BPBD Provinsi Riau, Pekanbaru",
+        "lat": 0.5071,
+        "lng": 101.4478,
+        "telepon": "014-16412",
+        "email": "bpbd@14.go.id",
+        "jumlah_sdm": 54,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=0.5071,101.4478"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6131,
+          -1.6101
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "15",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Jambi",
+        "alamat": "Kantor BPBD Provinsi Jambi, Jambi",
+        "lat": -1.6101,
+        "lng": 103.6131,
+        "telepon": "015-36369",
+        "email": "bpbd@15.go.id",
+        "jumlah_sdm": 55,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-1.6101,103.6131"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7754,
+          -2.9761
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "16",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Sumatera Selatan",
+        "alamat": "Kantor BPBD Provinsi Sumatera Selatan, Palembang",
+        "lat": -2.9761,
+        "lng": 104.7754,
+        "telepon": "016-23328",
+        "email": "bpbd@16.go.id",
+        "jumlah_sdm": 56,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-2.9761,104.7754"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          102.2608,
+          -3.7928
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "17",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Bengkulu",
+        "alamat": "Kantor BPBD Provinsi Bengkulu, Bengkulu",
+        "lat": -3.7928,
+        "lng": 102.2608,
+        "telepon": "017-15503",
+        "email": "bpbd@17.go.id",
+        "jumlah_sdm": 57,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-3.7928,102.2608"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.2668,
+          -5.3971
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "18",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Lampung",
+        "alamat": "Kantor BPBD Provinsi Lampung, Bandar Lampung",
+        "lat": -5.3971,
+        "lng": 105.2668,
+        "telepon": "018-28068",
+        "email": "bpbd@18.go.id",
+        "jumlah_sdm": 58,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-5.3971,105.2668"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.1169,
+          -2.1316
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "19",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Kepulauan Bangka Belitung",
+        "alamat": "Kantor BPBD Provinsi Kepulauan Bangka Belitung, Pangkalpinang",
+        "lat": -2.1316,
+        "lng": 106.1169,
+        "telepon": "019-11117",
+        "email": "bpbd@19.go.id",
+        "jumlah_sdm": 59,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-2.1316,106.1169"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.4665,
+          0.9186
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "21",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Kepulauan Riau",
+        "alamat": "Kantor BPBD Provinsi Kepulauan Riau, Tanjung Pinang",
+        "lat": 0.9186,
+        "lng": 104.4665,
+        "telepon": "021-51263",
+        "email": "bpbd@21.go.id",
+        "jumlah_sdm": 61,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=0.9186,104.4665"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8272,
+          -6.1754
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "31",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi DKI Jakarta",
+        "alamat": "Kantor BPBD Provinsi DKI Jakarta, Jakarta Pusat",
+        "lat": -6.1754,
+        "lng": 106.8272,
+        "telepon": "031-18293",
+        "email": "bpbd@31.go.id",
+        "jumlah_sdm": 71,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-6.1754,106.8272"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.6191,
+          -6.9175
         ]
       },
       "properties": {
         "kode_wilayah": "32",
         "tingkat": "provinsi",
-        "nama_instansi": "BPBD Jawa Barat",
-        "alamat": "Jl. Kalimantan No. 14 Bandung",
-        "lat": -6.917464,
-        "lng": 107.619123,
-        "telepon": "022-87243060",
-        "email": "bpbd@jabarprov.go.id",
-        "jumlah_sdm": 2,
-        "catatan_sdm": "ini lama",
-        "maps_url": "https://www.google.com/maps?q=-6.917464,107.619123"
+        "nama_instansi": "BPBD Provinsi Jawa Barat",
+        "alamat": "Kantor BPBD Provinsi Jawa Barat, Bandung",
+        "lat": -6.9175,
+        "lng": 107.6191,
+        "telepon": "032-47005",
+        "email": "bpbd@32.go.id",
+        "jumlah_sdm": 72,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-6.9175,107.6191"
       }
     },
     {
@@ -59,14 +289,14 @@
       "properties": {
         "kode_wilayah": "33",
         "tingkat": "provinsi",
-        "nama_instansi": "BPBD Jawa Tengah",
-        "alamat": "Jl. Imam Bonjol Semarang",
+        "nama_instansi": "BPBD Provinsi Jawa Tengah",
+        "alamat": "Kantor BPBD Provinsi Jawa Tengah, Semarang",
         "lat": -6.9932,
         "lng": 110.4203,
-        "telepon": "024-3514413",
+        "telepon": "033-79083",
         "email": "bpbd@33.go.id",
-        "jumlah_sdm": 89,
-        "catatan_sdm": "Data sampel",
+        "jumlah_sdm": 73,
+        "catatan_sdm": "Data sampel sebaran BPBD",
         "maps_url": "https://www.google.com/maps?q=-6.9932,110.4203"
       }
     },
@@ -82,14 +312,14 @@
       "properties": {
         "kode_wilayah": "34",
         "tingkat": "provinsi",
-        "nama_instansi": "BPBD DI Yogyakarta",
-        "alamat": "Jl. Kenari Yogyakarta",
+        "nama_instansi": "BPBD Provinsi DI Yogyakarta",
+        "alamat": "Kantor BPBD Provinsi DI Yogyakarta, Yogyakarta",
         "lat": -7.7956,
         "lng": 110.3695,
-        "telepon": "0274-555585",
+        "telepon": "034-42612",
         "email": "bpbd@34.go.id",
-        "jumlah_sdm": 22,
-        "catatan_sdm": "Data sampel",
+        "jumlah_sdm": 74,
+        "catatan_sdm": "Data sampel sebaran BPBD",
         "maps_url": "https://www.google.com/maps?q=-7.7956,110.3695"
       }
     },
@@ -105,15 +335,38 @@
       "properties": {
         "kode_wilayah": "35",
         "tingkat": "provinsi",
-        "nama_instansi": "BPBD Jawa Timur",
-        "alamat": "Jl. Ahmad Yani Surabaya",
+        "nama_instansi": "BPBD Provinsi Jawa Timur",
+        "alamat": "Kantor BPBD Provinsi Jawa Timur, Surabaya",
         "lat": -7.2575,
         "lng": 112.7521,
-        "telepon": "031-8282243",
+        "telepon": "035-84930",
         "email": "bpbd@35.go.id",
-        "jumlah_sdm": 11,
-        "catatan_sdm": "Data sampel",
+        "jumlah_sdm": 75,
+        "catatan_sdm": "Data sampel sebaran BPBD",
         "maps_url": "https://www.google.com/maps?q=-7.2575,112.7521"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.1503,
+          -6.12
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "36",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Banten",
+        "alamat": "Kantor BPBD Provinsi Banten, Serang",
+        "lat": -6.12,
+        "lng": 106.1503,
+        "telepon": "036-73812",
+        "email": "bpbd@36.go.id",
+        "jumlah_sdm": 76,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-6.12,106.1503"
       }
     },
     {
@@ -128,14 +381,14 @@
       "properties": {
         "kode_wilayah": "51",
         "tingkat": "provinsi",
-        "nama_instansi": "BPBD Bali",
-        "alamat": "Jl. D.I. Panjaitan Denpasar",
+        "nama_instansi": "BPBD Provinsi Bali",
+        "alamat": "Kantor BPBD Provinsi Bali, Denpasar",
         "lat": -8.6705,
         "lng": 115.2126,
-        "telepon": "0361-264069",
+        "telepon": "051-11745",
         "email": "bpbd@51.go.id",
-        "jumlah_sdm": 102,
-        "catatan_sdm": "Data sampel",
+        "jumlah_sdm": 41,
+        "catatan_sdm": "Data sampel sebaran BPBD",
         "maps_url": "https://www.google.com/maps?q=-8.6705,115.2126"
       }
     },
@@ -144,68 +397,45 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          119.4327,
-          -5.1477
+          116.1167,
+          -8.5833
         ]
       },
       "properties": {
-        "kode_wilayah": "73",
+        "kode_wilayah": "52",
         "tingkat": "provinsi",
-        "nama_instansi": "BPBD Sulawesi Selatan",
-        "alamat": "Jl. Andi Pangerang Petta Rani Makassar",
-        "lat": -5.1477,
-        "lng": 119.4327,
-        "telepon": "0411-453728",
-        "email": "bpbd@73.go.id",
+        "nama_instansi": "BPBD Provinsi Nusa Tenggara Barat",
+        "alamat": "Kantor BPBD Provinsi Nusa Tenggara Barat, Mataram",
+        "lat": -8.5833,
+        "lng": 116.1167,
+        "telepon": "052-13866",
+        "email": "bpbd@52.go.id",
+        "jumlah_sdm": 42,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-8.5833,116.1167"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.607,
+          -10.1772
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "53",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Nusa Tenggara Timur",
+        "alamat": "Kantor BPBD Provinsi Nusa Tenggara Timur, Kupang",
+        "lat": -10.1772,
+        "lng": 123.607,
+        "telepon": "053-42651",
+        "email": "bpbd@53.go.id",
         "jumlah_sdm": 43,
-        "catatan_sdm": "Data sampel",
-        "maps_url": "https://www.google.com/maps?q=-5.1477,119.4327"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          98.6722,
-          3.5952
-        ]
-      },
-      "properties": {
-        "kode_wilayah": "12",
-        "tingkat": "provinsi",
-        "nama_instansi": "BPBD Sumatera Utara",
-        "alamat": "Jl. Sisingamangaraja Medan",
-        "lat": 3.5952,
-        "lng": 98.6722,
-        "telepon": "061-4537788",
-        "email": "bpbd@12.go.id",
-        "jumlah_sdm": 39,
-        "catatan_sdm": "Data sampel",
-        "maps_url": "https://www.google.com/maps?q=3.5952,98.6722"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          101.4478,
-          0.5071
-        ]
-      },
-      "properties": {
-        "kode_wilayah": "14",
-        "tingkat": "provinsi",
-        "nama_instansi": "BPBD Riau",
-        "alamat": "Jl. Jenderal Sudirman Pekanbaru",
-        "lat": 0.5071,
-        "lng": 101.4478,
-        "telepon": "0761-21502",
-        "email": "bpbd@14.go.id",
-        "jumlah_sdm": 36,
-        "catatan_sdm": "Data sampel",
-        "maps_url": "https://www.google.com/maps?q=0.5071,101.4478"
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-10.1772,123.607"
       }
     },
     {
@@ -220,14 +450,14 @@
       "properties": {
         "kode_wilayah": "61",
         "tingkat": "provinsi",
-        "nama_instansi": "BPBD Kalimantan Barat",
-        "alamat": "Jl. Ahmad Yani Pontianak",
+        "nama_instansi": "BPBD Provinsi Kalimantan Barat",
+        "alamat": "Kantor BPBD Provinsi Kalimantan Barat, Pontianak",
         "lat": -0.0263,
         "lng": 109.3425,
-        "telepon": "0561-736561",
+        "telepon": "061-38463",
         "email": "bpbd@61.go.id",
-        "jumlah_sdm": 25,
-        "catatan_sdm": "Data sampel",
+        "jumlah_sdm": 51,
+        "catatan_sdm": "Data sampel sebaran BPBD",
         "maps_url": "https://www.google.com/maps?q=-0.0263,109.3425"
       }
     },
@@ -236,22 +466,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          106.882272,
-          -6.443865
+          113.9108,
+          -2.2136
         ]
       },
       "properties": {
-        "kode_wilayah": "3201",
-        "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kabupaten Bogor",
-        "alamat": "Cibinong",
-        "lat": -6.443865,
-        "lng": 106.882272,
-        "telepon": "0251-8655011",
-        "email": "bpbd@3201.go.id",
-        "jumlah_sdm": 74,
-        "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-6.443865,106.882272"
+        "kode_wilayah": "62",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Kalimantan Tengah",
+        "alamat": "Kantor BPBD Provinsi Kalimantan Tengah, Palangka Raya",
+        "lat": -2.2136,
+        "lng": 113.9108,
+        "telepon": "062-10930",
+        "email": "bpbd@62.go.id",
+        "jumlah_sdm": 52,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-2.2136,113.9108"
       }
     },
     {
@@ -259,22 +489,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          107.597307,
-          -6.98079
+          114.5944,
+          -3.3186
         ]
       },
       "properties": {
-        "kode_wilayah": "3273",
-        "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kota Bandung",
-        "alamat": "Jl. Aceh Bandung",
-        "lat": -6.98079,
-        "lng": 107.597307,
-        "telepon": "022-4204491",
-        "email": "bpbd@3273.go.id",
-        "jumlah_sdm": 8,
-        "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-6.98079,107.597307"
+        "kode_wilayah": "63",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Kalimantan Selatan",
+        "alamat": "Kantor BPBD Provinsi Kalimantan Selatan, Banjarmasin",
+        "lat": -3.3186,
+        "lng": 114.5944,
+        "telepon": "063-63360",
+        "email": "bpbd@63.go.id",
+        "jumlah_sdm": 53,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-3.3186,114.5944"
       }
     },
     {
@@ -282,22 +512,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          110.373926,
-          -7.031709
+          117.1536,
+          -0.5022
         ]
       },
       "properties": {
-        "kode_wilayah": "3374",
-        "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kota Semarang",
-        "alamat": "Jl. Pemuda Semarang",
-        "lat": -7.031709,
-        "lng": 110.373926,
-        "telepon": "024-3545343",
-        "email": "bpbd@3374.go.id",
-        "jumlah_sdm": 8,
-        "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-7.031709,110.373926"
+        "kode_wilayah": "64",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Kalimantan Timur",
+        "alamat": "Kantor BPBD Provinsi Kalimantan Timur, Samarinda",
+        "lat": -0.5022,
+        "lng": 117.1536,
+        "telepon": "064-56282",
+        "email": "bpbd@64.go.id",
+        "jumlah_sdm": 54,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-0.5022,117.1536"
       }
     },
     {
@@ -305,22 +535,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          112.762363,
-          -7.265801
+          117.3651,
+          2.8364
         ]
       },
       "properties": {
-        "kode_wilayah": "3578",
-        "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kota Surabaya",
-        "alamat": "Jl. Raya Dukuh Kupang Surabaya",
-        "lat": -7.265801,
-        "lng": 112.762363,
-        "telepon": "031-5678111",
-        "email": "bpbd@3578.go.id",
-        "jumlah_sdm": 74,
-        "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-7.265801,112.762363"
+        "kode_wilayah": "65",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Kalimantan Utara",
+        "alamat": "Kantor BPBD Provinsi Kalimantan Utara, Tanjung Selor",
+        "lat": 2.8364,
+        "lng": 117.3651,
+        "telepon": "065-88467",
+        "email": "bpbd@65.go.id",
+        "jumlah_sdm": 55,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=2.8364,117.3651"
       }
     },
     {
@@ -328,22 +558,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          115.204473,
-          -8.683377
+          124.8421,
+          1.4748
         ]
       },
       "properties": {
-        "kode_wilayah": "5171",
-        "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kota Denpasar",
-        "alamat": "Jl. Mulawarman Denpasar",
-        "lat": -8.683377,
-        "lng": 115.204473,
-        "telepon": "0361-234567",
-        "email": "bpbd@5171.go.id",
-        "jumlah_sdm": 40,
-        "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-8.683377,115.204473"
+        "kode_wilayah": "71",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Sulawesi Utara",
+        "alamat": "Kantor BPBD Provinsi Sulawesi Utara, Manado",
+        "lat": 1.4748,
+        "lng": 124.8421,
+        "telepon": "071-29470",
+        "email": "bpbd@71.go.id",
+        "jumlah_sdm": 61,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=1.4748,124.8421"
       }
     },
     {
@@ -351,22 +581,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          119.35374,
-          -5.098191
+          119.8779,
+          -0.9003
         ]
       },
       "properties": {
-        "kode_wilayah": "7371",
-        "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kota Makassar",
-        "alamat": "Jl. Ahmad Yani Makassar",
-        "lat": -5.098191,
-        "lng": 119.35374,
-        "telepon": "0411-3614444",
-        "email": "bpbd@7371.go.id",
-        "jumlah_sdm": 25,
-        "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-5.098191,119.35374"
+        "kode_wilayah": "72",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Sulawesi Tengah",
+        "alamat": "Kantor BPBD Provinsi Sulawesi Tengah, Palu",
+        "lat": -0.9003,
+        "lng": 119.8779,
+        "telepon": "072-43169",
+        "email": "bpbd@72.go.id",
+        "jumlah_sdm": 62,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-0.9003,119.8779"
       }
     },
     {
@@ -374,22 +604,321 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          98.64664,
-          3.626902
+          119.4327,
+          -5.1477
         ]
       },
       "properties": {
-        "kode_wilayah": "1275",
+        "kode_wilayah": "73",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Sulawesi Selatan",
+        "alamat": "Kantor BPBD Provinsi Sulawesi Selatan, Makassar",
+        "lat": -5.1477,
+        "lng": 119.4327,
+        "telepon": "073-42489",
+        "email": "bpbd@73.go.id",
+        "jumlah_sdm": 63,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-5.1477,119.4327"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.512,
+          -3.9985
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "74",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Sulawesi Tenggara",
+        "alamat": "Kantor BPBD Provinsi Sulawesi Tenggara, Kendari",
+        "lat": -3.9985,
+        "lng": 122.512,
+        "telepon": "074-89503",
+        "email": "bpbd@74.go.id",
+        "jumlah_sdm": 64,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-3.9985,122.512"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.0595,
+          0.5435
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "75",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Gorontalo",
+        "alamat": "Kantor BPBD Provinsi Gorontalo, Gorontalo",
+        "lat": 0.5435,
+        "lng": 123.0595,
+        "telepon": "075-60119",
+        "email": "bpbd@75.go.id",
+        "jumlah_sdm": 65,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=0.5435,123.0595"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.889,
+          -2.674
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "76",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Sulawesi Barat",
+        "alamat": "Kantor BPBD Provinsi Sulawesi Barat, Mamuju",
+        "lat": -2.674,
+        "lng": 118.889,
+        "telepon": "076-50803",
+        "email": "bpbd@76.go.id",
+        "jumlah_sdm": 66,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-2.674,118.889"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.1814,
+          -3.6954
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "81",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Maluku",
+        "alamat": "Kantor BPBD Provinsi Maluku, Ambon",
+        "lat": -3.6954,
+        "lng": 128.1814,
+        "telepon": "081-61768",
+        "email": "bpbd@81.go.id",
+        "jumlah_sdm": 71,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-3.6954,128.1814"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.3773,
+          0.7896
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "82",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Maluku Utara",
+        "alamat": "Kantor BPBD Provinsi Maluku Utara, Ternate",
+        "lat": 0.7896,
+        "lng": 127.3773,
+        "telepon": "082-74332",
+        "email": "bpbd@82.go.id",
+        "jumlah_sdm": 72,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=0.7896,127.3773"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.669,
+          -2.5916
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "91",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Papua",
+        "alamat": "Kantor BPBD Provinsi Papua, Jayapura",
+        "lat": -2.5916,
+        "lng": 140.669,
+        "telepon": "091-89141",
+        "email": "bpbd@91.go.id",
+        "jumlah_sdm": 81,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-2.5916,140.669"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          134.062,
+          -0.8615
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "92",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Papua Barat",
+        "alamat": "Kantor BPBD Provinsi Papua Barat, Manokwari",
+        "lat": -0.8615,
+        "lng": 134.062,
+        "telepon": "092-52063",
+        "email": "bpbd@92.go.id",
+        "jumlah_sdm": 82,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-0.8615,134.062"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.4,
+          -8.496
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "93",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Papua Selatan",
+        "alamat": "Kantor BPBD Provinsi Papua Selatan, Merauke",
+        "lat": -8.496,
+        "lng": 140.4,
+        "telepon": "093-65154",
+        "email": "bpbd@93.go.id",
+        "jumlah_sdm": 83,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-8.496,140.4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.5,
+          -3.36
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "94",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Papua Tengah",
+        "alamat": "Kantor BPBD Provinsi Papua Tengah, Nabire",
+        "lat": -3.36,
+        "lng": 135.5,
+        "telepon": "094-70538",
+        "email": "bpbd@94.go.id",
+        "jumlah_sdm": 84,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-3.36,135.5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.95,
+          -4.1
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "95",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Papua Pegunungan",
+        "alamat": "Kantor BPBD Provinsi Papua Pegunungan, Wamena",
+        "lat": -4.1,
+        "lng": 138.95,
+        "telepon": "095-20620",
+        "email": "bpbd@95.go.id",
+        "jumlah_sdm": 85,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-4.1,138.95"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          131.255,
+          -0.876
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "96",
+        "tingkat": "provinsi",
+        "nama_instansi": "BPBD Provinsi Papua Barat Daya",
+        "alamat": "Kantor BPBD Provinsi Papua Barat Daya, Sorong",
+        "lat": -0.876,
+        "lng": 131.255,
+        "telepon": "096-71629",
+        "email": "bpbd@96.go.id",
+        "jumlah_sdm": 86,
+        "catatan_sdm": "Data sampel sebaran BPBD",
+        "maps_url": "https://www.google.com/maps?q=-0.876,131.255"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          95.3238,
+          5.5483
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1171",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kota Medan",
-        "alamat": "Jl. Capt. Muslim Medan",
-        "lat": 3.626902,
-        "lng": 98.64664,
-        "telepon": "061-4524805",
-        "email": "bpbd@1275.go.id",
+        "nama_instansi": "BPBD Banda Aceh",
+        "alamat": "Kantor BPBD Banda Aceh, Aceh",
+        "lat": 5.5483,
+        "lng": 95.3238,
+        "telepon": "011-79932",
+        "email": "bpbd@1171.go.id",
+        "jumlah_sdm": 23,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=5.5483,95.3238"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.6722,
+          3.5952
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1271",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Medan",
+        "alamat": "Kantor BPBD Medan, Sumatera Utara",
+        "lat": 3.5952,
+        "lng": 98.6722,
+        "telepon": "012-28281",
+        "email": "bpbd@1271.go.id",
         "jumlah_sdm": 24,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=3.626902,98.64664"
+        "maps_url": "https://www.google.com/maps?q=3.5952,98.6722"
       }
     },
     {
@@ -397,22 +926,45 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          101.489959,
-          0.46155
+          100.4172,
+          -0.9471
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1371",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Padang",
+        "alamat": "Kantor BPBD Padang, Sumatera Barat",
+        "lat": -0.9471,
+        "lng": 100.4172,
+        "telepon": "013-52941",
+        "email": "bpbd@1371.go.id",
+        "jumlah_sdm": 25,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-0.9471,100.4172"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.4478,
+          0.5071
         ]
       },
       "properties": {
         "kode_wilayah": "1471",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kota Pekanbaru",
-        "alamat": "Jl. Pepaya Pekanbaru",
-        "lat": 0.46155,
-        "lng": 101.489959,
-        "telepon": "0761-31234",
+        "nama_instansi": "BPBD Pekanbaru",
+        "alamat": "Kantor BPBD Pekanbaru, Riau",
+        "lat": 0.5071,
+        "lng": 101.4478,
+        "telepon": "014-28355",
         "email": "bpbd@1471.go.id",
-        "jumlah_sdm": 18,
+        "jumlah_sdm": 26,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=0.46155,101.489959"
+        "maps_url": "https://www.google.com/maps?q=0.5071,101.4478"
       }
     },
     {
@@ -420,22 +972,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          106.911075,
-          -6.303461
+          103.6131,
+          -1.6101
         ]
       },
       "properties": {
-        "kode_wilayah": "3275",
+        "kode_wilayah": "1571",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kota Bekasi",
-        "alamat": "Jl. Afrizal Baharudin Bekasi",
-        "lat": -6.303461,
-        "lng": 106.911075,
-        "telepon": "021-88960209",
-        "email": "bpbd@3275.go.id",
-        "jumlah_sdm": 49,
+        "nama_instansi": "BPBD Jambi",
+        "alamat": "Kantor BPBD Jambi, Jambi",
+        "lat": -1.6101,
+        "lng": 103.6131,
+        "telepon": "015-65422",
+        "email": "bpbd@1571.go.id",
+        "jumlah_sdm": 27,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-6.303461,106.911075"
+        "maps_url": "https://www.google.com/maps?q=-1.6101,103.6131"
       }
     },
     {
@@ -443,22 +995,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          107.224141,
-          -6.266704
+          104.7754,
+          -2.9761
         ]
       },
       "properties": {
-        "kode_wilayah": "3216",
+        "kode_wilayah": "1671",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kabupaten Bekasi",
-        "alamat": "Cikarang",
-        "lat": -6.266704,
-        "lng": 107.224141,
-        "telepon": "021-89100123",
-        "email": "bpbd@3216.go.id",
-        "jumlah_sdm": 63,
+        "nama_instansi": "BPBD Palembang",
+        "alamat": "Kantor BPBD Palembang, Sumatera Selatan",
+        "lat": -2.9761,
+        "lng": 104.7754,
+        "telepon": "016-43276",
+        "email": "bpbd@1671.go.id",
+        "jumlah_sdm": 28,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-6.266704,107.224141"
+        "maps_url": "https://www.google.com/maps?q=-2.9761,104.7754"
       }
     },
     {
@@ -466,22 +1018,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          109.310099,
-          -7.415604
+          102.2608,
+          -3.7928
         ]
       },
       "properties": {
-        "kode_wilayah": "3302",
+        "kode_wilayah": "1771",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kabupaten Banyumas",
-        "alamat": "Purwokerto",
-        "lat": -7.415604,
-        "lng": 109.310099,
-        "telepon": "0281-635123",
-        "email": "bpbd@3302.go.id",
-        "jumlah_sdm": 53,
+        "nama_instansi": "BPBD Bengkulu",
+        "alamat": "Kantor BPBD Bengkulu, Bengkulu",
+        "lat": -3.7928,
+        "lng": 102.2608,
+        "telepon": "017-39642",
+        "email": "bpbd@1771.go.id",
+        "jumlah_sdm": 29,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-7.415604,109.310099"
+        "maps_url": "https://www.google.com/maps?q=-3.7928,102.2608"
       }
     },
     {
@@ -489,22 +1041,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          112.685209,
-          -7.515192
+          105.2668,
+          -5.3971
         ]
       },
       "properties": {
-        "kode_wilayah": "3515",
+        "kode_wilayah": "1871",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kabupaten Sidoarjo",
-        "alamat": "Sidoarjo",
-        "lat": -7.515192,
-        "lng": 112.685209,
-        "telepon": "031-8961234",
-        "email": "bpbd@3515.go.id",
-        "jumlah_sdm": 51,
+        "nama_instansi": "BPBD Bandar Lampung",
+        "alamat": "Kantor BPBD Bandar Lampung, Lampung",
+        "lat": -5.3971,
+        "lng": 105.2668,
+        "telepon": "018-83311",
+        "email": "bpbd@1871.go.id",
+        "jumlah_sdm": 30,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-7.515192,112.685209"
+        "maps_url": "https://www.google.com/maps?q=-5.3971,105.2668"
       }
     },
     {
@@ -512,22 +1064,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          123.639731,
-          -10.164824
+          106.1169,
+          -2.1316
         ]
       },
       "properties": {
-        "kode_wilayah": "5301",
+        "kode_wilayah": "1971",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kabupaten Kupang",
-        "alamat": "Kupang",
-        "lat": -10.164824,
-        "lng": 123.639731,
-        "telepon": "0380-821234",
-        "email": "bpbd@5301.go.id",
-        "jumlah_sdm": 10,
+        "nama_instansi": "BPBD Pangkalpinang",
+        "alamat": "Kantor BPBD Pangkalpinang, Kepulauan Bangka Belitung",
+        "lat": -2.1316,
+        "lng": 106.1169,
+        "telepon": "019-66455",
+        "email": "bpbd@1971.go.id",
+        "jumlah_sdm": 31,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-10.164824,123.639731"
+        "maps_url": "https://www.google.com/maps?q=-2.1316,106.1169"
       }
     },
     {
@@ -535,22 +1087,298 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.343691,
-          0.592502
+          104.4665,
+          0.9186
         ]
       },
       "properties": {
-        "kode_wilayah": "7501",
+        "kode_wilayah": "2172",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kabupaten Boalemo",
-        "alamat": "Tilamuta",
-        "lat": 0.592502,
-        "lng": 122.343691,
-        "telepon": "0435-21012",
-        "email": "bpbd@7501.go.id",
+        "nama_instansi": "BPBD Tanjung Pinang",
+        "alamat": "Kantor BPBD Tanjung Pinang, Kepulauan Riau",
+        "lat": 0.9186,
+        "lng": 104.4665,
+        "telepon": "021-47105",
+        "email": "bpbd@2172.go.id",
+        "jumlah_sdm": 13,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=0.9186,104.4665"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8106,
+          -6.2615
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3174",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Jakarta Selatan",
+        "alamat": "Kantor BPBD Jakarta Selatan, DKI Jakarta",
+        "lat": -6.2615,
+        "lng": 106.8106,
+        "telepon": "031-74069",
+        "email": "bpbd@3174.go.id",
+        "jumlah_sdm": 23,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-6.2615,106.8106"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.6191,
+          -6.9175
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3273",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Bandung",
+        "alamat": "Kantor BPBD Bandung, Jawa Barat",
+        "lat": -6.9175,
+        "lng": 107.6191,
+        "telepon": "032-70603",
+        "email": "bpbd@3273.go.id",
+        "jumlah_sdm": 24,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-6.9175,107.6191"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.4203,
+          -6.9932
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3374",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Semarang",
+        "alamat": "Kantor BPBD Semarang, Jawa Tengah",
+        "lat": -6.9932,
+        "lng": 110.4203,
+        "telepon": "033-70235",
+        "email": "bpbd@3374.go.id",
+        "jumlah_sdm": 25,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-6.9932,110.4203"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.3695,
+          -7.7956
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3471",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Yogyakarta",
+        "alamat": "Kantor BPBD Yogyakarta, DI Yogyakarta",
+        "lat": -7.7956,
+        "lng": 110.3695,
+        "telepon": "034-58809",
+        "email": "bpbd@3471.go.id",
+        "jumlah_sdm": 26,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-7.7956,110.3695"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.7521,
+          -7.2575
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3578",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Surabaya",
+        "alamat": "Kantor BPBD Surabaya, Jawa Timur",
+        "lat": -7.2575,
+        "lng": 112.7521,
+        "telepon": "035-25804",
+        "email": "bpbd@3578.go.id",
+        "jumlah_sdm": 27,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-7.2575,112.7521"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.1503,
+          -6.12
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3673",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Serang",
+        "alamat": "Kantor BPBD Serang, Banten",
+        "lat": -6.12,
+        "lng": 106.1503,
+        "telepon": "036-10869",
+        "email": "bpbd@3673.go.id",
+        "jumlah_sdm": 28,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-6.12,106.1503"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.2126,
+          -8.6705
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "5171",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Denpasar",
+        "alamat": "Kantor BPBD Denpasar, Bali",
+        "lat": -8.6705,
+        "lng": 115.2126,
+        "telepon": "051-34353",
+        "email": "bpbd@5171.go.id",
+        "jumlah_sdm": 23,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-8.6705,115.2126"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.1167,
+          -8.5833
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "5271",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Mataram",
+        "alamat": "Kantor BPBD Mataram, Nusa Tenggara Barat",
+        "lat": -8.5833,
+        "lng": 116.1167,
+        "telepon": "052-52748",
+        "email": "bpbd@5271.go.id",
+        "jumlah_sdm": 24,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-8.5833,116.1167"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.607,
+          -10.1772
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "5371",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Kupang",
+        "alamat": "Kantor BPBD Kupang, Nusa Tenggara Timur",
+        "lat": -10.1772,
+        "lng": 123.607,
+        "telepon": "053-19588",
+        "email": "bpbd@5371.go.id",
+        "jumlah_sdm": 25,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-10.1772,123.607"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.3425,
+          -0.0263
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6171",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Pontianak",
+        "alamat": "Kantor BPBD Pontianak, Kalimantan Barat",
+        "lat": -0.0263,
+        "lng": 109.3425,
+        "telepon": "061-32998",
+        "email": "bpbd@6171.go.id",
+        "jumlah_sdm": 13,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-0.0263,109.3425"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.9108,
+          -2.2136
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6271",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Palangka Raya",
+        "alamat": "Kantor BPBD Palangka Raya, Kalimantan Tengah",
+        "lat": -2.2136,
+        "lng": 113.9108,
+        "telepon": "062-63685",
+        "email": "bpbd@6271.go.id",
+        "jumlah_sdm": 14,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-2.2136,113.9108"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.5944,
+          -3.3186
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6371",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Banjarmasin",
+        "alamat": "Kantor BPBD Banjarmasin, Kalimantan Selatan",
+        "lat": -3.3186,
+        "lng": 114.5944,
+        "telepon": "063-27589",
+        "email": "bpbd@6371.go.id",
         "jumlah_sdm": 15,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=0.592502,122.343691"
+        "maps_url": "https://www.google.com/maps?q=-3.3186,114.5944"
       }
     },
     {
@@ -558,22 +1386,919 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          134.120637,
-          -0.804649
+          117.1536,
+          -0.5022
         ]
       },
       "properties": {
-        "kode_wilayah": "9201",
+        "kode_wilayah": "6472",
         "tingkat": "kabupaten",
-        "nama_instansi": "BPBD Kabupaten Manokwari",
-        "alamat": "Manokwari",
-        "lat": -0.804649,
-        "lng": 134.120637,
-        "telepon": "0986-211234",
-        "email": "bpbd@9201.go.id",
-        "jumlah_sdm": 53,
+        "nama_instansi": "BPBD Samarinda",
+        "alamat": "Kantor BPBD Samarinda, Kalimantan Timur",
+        "lat": -0.5022,
+        "lng": 117.1536,
+        "telepon": "064-32571",
+        "email": "bpbd@6472.go.id",
+        "jumlah_sdm": 16,
         "catatan_sdm": "Data sampel kabupaten/kota",
-        "maps_url": "https://www.google.com/maps?q=-0.804649,134.120637"
+        "maps_url": "https://www.google.com/maps?q=-0.5022,117.1536"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.5785,
+          3.3273
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6571",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Tarakan",
+        "alamat": "Kantor BPBD Tarakan, Kalimantan Utara",
+        "lat": 3.3273,
+        "lng": 117.5785,
+        "telepon": "065-68513",
+        "email": "bpbd@6571.go.id",
+        "jumlah_sdm": 17,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=3.3273,117.5785"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.8421,
+          1.4748
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "7171",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Manado",
+        "alamat": "Kantor BPBD Manado, Sulawesi Utara",
+        "lat": 1.4748,
+        "lng": 124.8421,
+        "telepon": "071-69221",
+        "email": "bpbd@7171.go.id",
+        "jumlah_sdm": 23,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=1.4748,124.8421"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.8779,
+          -0.9003
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "7271",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Palu",
+        "alamat": "Kantor BPBD Palu, Sulawesi Tengah",
+        "lat": -0.9003,
+        "lng": 119.8779,
+        "telepon": "072-77177",
+        "email": "bpbd@7271.go.id",
+        "jumlah_sdm": 24,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-0.9003,119.8779"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.4327,
+          -5.1477
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "7371",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Makassar",
+        "alamat": "Kantor BPBD Makassar, Sulawesi Selatan",
+        "lat": -5.1477,
+        "lng": 119.4327,
+        "telepon": "073-47112",
+        "email": "bpbd@7371.go.id",
+        "jumlah_sdm": 25,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-5.1477,119.4327"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.512,
+          -3.9985
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "7471",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Kendari",
+        "alamat": "Kantor BPBD Kendari, Sulawesi Tenggara",
+        "lat": -3.9985,
+        "lng": 122.512,
+        "telepon": "074-70840",
+        "email": "bpbd@7471.go.id",
+        "jumlah_sdm": 26,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-3.9985,122.512"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.0595,
+          0.5435
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "7571",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Gorontalo",
+        "alamat": "Kantor BPBD Gorontalo, Gorontalo",
+        "lat": 0.5435,
+        "lng": 123.0595,
+        "telepon": "075-48140",
+        "email": "bpbd@7571.go.id",
+        "jumlah_sdm": 27,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=0.5435,123.0595"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.889,
+          -2.674
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "7601",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Mamuju",
+        "alamat": "Kantor BPBD Mamuju, Sulawesi Barat",
+        "lat": -2.674,
+        "lng": 118.889,
+        "telepon": "076-17760",
+        "email": "bpbd@7601.go.id",
+        "jumlah_sdm": 28,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-2.674,118.889"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.1814,
+          -3.6954
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "8171",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Ambon",
+        "alamat": "Kantor BPBD Ambon, Maluku",
+        "lat": -3.6954,
+        "lng": 128.1814,
+        "telepon": "081-65875",
+        "email": "bpbd@8171.go.id",
+        "jumlah_sdm": 13,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-3.6954,128.1814"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.3773,
+          0.7896
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "8271",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Ternate",
+        "alamat": "Kantor BPBD Ternate, Maluku Utara",
+        "lat": 0.7896,
+        "lng": 127.3773,
+        "telepon": "082-51196",
+        "email": "bpbd@8271.go.id",
+        "jumlah_sdm": 14,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=0.7896,127.3773"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.669,
+          -2.5916
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "9171",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Jayapura",
+        "alamat": "Kantor BPBD Jayapura, Papua",
+        "lat": -2.5916,
+        "lng": 140.669,
+        "telepon": "091-67961",
+        "email": "bpbd@9171.go.id",
+        "jumlah_sdm": 23,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-2.5916,140.669"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          134.062,
+          -0.8615
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "9202",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Manokwari",
+        "alamat": "Kantor BPBD Manokwari, Papua Barat",
+        "lat": -0.8615,
+        "lng": 134.062,
+        "telepon": "092-61359",
+        "email": "bpbd@9202.go.id",
+        "jumlah_sdm": 24,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-0.8615,134.062"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.4,
+          -8.496
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "9301",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Merauke",
+        "alamat": "Kantor BPBD Merauke, Papua Selatan",
+        "lat": -8.496,
+        "lng": 140.4,
+        "telepon": "093-18704",
+        "email": "bpbd@9301.go.id",
+        "jumlah_sdm": 25,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-8.496,140.4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.5,
+          -3.36
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "9404",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Nabire",
+        "alamat": "Kantor BPBD Nabire, Papua Tengah",
+        "lat": -3.36,
+        "lng": 135.5,
+        "telepon": "094-47049",
+        "email": "bpbd@9404.go.id",
+        "jumlah_sdm": 26,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-3.36,135.5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.95,
+          -4.1
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "9502",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Jayawijaya",
+        "alamat": "Kantor BPBD Jayawijaya, Papua Pegunungan",
+        "lat": -4.1,
+        "lng": 138.95,
+        "telepon": "095-56045",
+        "email": "bpbd@9502.go.id",
+        "jumlah_sdm": 27,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-4.1,138.95"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          131.255,
+          -0.876
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "9671",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Sorong",
+        "alamat": "Kantor BPBD Sorong, Papua Barat Daya",
+        "lat": -0.876,
+        "lng": 131.255,
+        "telepon": "096-60343",
+        "email": "bpbd@9671.go.id",
+        "jumlah_sdm": 28,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-0.876,131.255"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          95.3193,
+          5.4529
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1106",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Aceh Besar",
+        "alamat": "Kantor BPBD Aceh Besar, Aceh",
+        "lat": 5.4529,
+        "lng": 95.3193,
+        "telepon": "011-27934",
+        "email": "bpbd@1106.go.id",
+        "jumlah_sdm": 26,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=5.4529,95.3193"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.85,
+          3.55
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1207",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Deli Serdang",
+        "alamat": "Kantor BPBD Deli Serdang, Sumatera Utara",
+        "lat": 3.55,
+        "lng": 98.85,
+        "telepon": "012-75197",
+        "email": "bpbd@1207.go.id",
+        "jumlah_sdm": 27,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=3.55,98.85"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.283,
+          -0.286
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1306",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Agam",
+        "alamat": "Kantor BPBD Agam, Sumatera Barat",
+        "lat": -0.286,
+        "lng": 100.283,
+        "telepon": "013-57358",
+        "email": "bpbd@1306.go.id",
+        "jumlah_sdm": 28,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-0.286,100.283"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.25,
+          0.34
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1401",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Kampar",
+        "alamat": "Kantor BPBD Kampar, Riau",
+        "lat": 0.34,
+        "lng": 101.25,
+        "telepon": "014-25703",
+        "email": "bpbd@1401.go.id",
+        "jumlah_sdm": 29,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=0.34,101.25"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.3,
+          -1.85
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1501",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Kerinci",
+        "alamat": "Kantor BPBD Kerinci, Jambi",
+        "lat": -1.85,
+        "lng": 101.3,
+        "telepon": "015-38817",
+        "email": "bpbd@1501.go.id",
+        "jumlah_sdm": 30,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-1.85,101.3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.85,
+          -2.9
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1606",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Musi Banyuasin",
+        "alamat": "Kantor BPBD Musi Banyuasin, Sumatera Selatan",
+        "lat": -2.9,
+        "lng": 103.85,
+        "telepon": "016-45168",
+        "email": "bpbd@1606.go.id",
+        "jumlah_sdm": 31,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-2.9,103.85"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          102.55,
+          -3.45
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1702",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Rejang Lebong",
+        "alamat": "Kantor BPBD Rejang Lebong, Bengkulu",
+        "lat": -3.45,
+        "lng": 102.55,
+        "telepon": "017-38808",
+        "email": "bpbd@1702.go.id",
+        "jumlah_sdm": 32,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-3.45,102.55"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.4,
+          -5.56
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1801",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Lampung Selatan",
+        "alamat": "Kantor BPBD Lampung Selatan, Lampung",
+        "lat": -5.56,
+        "lng": 105.4,
+        "telepon": "018-47200",
+        "email": "bpbd@1801.go.id",
+        "jumlah_sdm": 33,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-5.56,105.4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.9,
+          -1.9
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "1901",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Bangka",
+        "alamat": "Kantor BPBD Bangka, Kepulauan Bangka Belitung",
+        "lat": -1.9,
+        "lng": 105.9,
+        "telepon": "019-14141",
+        "email": "bpbd@1901.go.id",
+        "jumlah_sdm": 34,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-1.9,105.9"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.0305,
+          1.0456
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "2171",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Batam",
+        "alamat": "Kantor BPBD Batam, Kepulauan Riau",
+        "lat": 1.0456,
+        "lng": 104.0305,
+        "telepon": "021-73493",
+        "email": "bpbd@2171.go.id",
+        "jumlah_sdm": 16,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=1.0456,104.0305"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9,
+          -6.225
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3175",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Jakarta Timur",
+        "alamat": "Kantor BPBD Jakarta Timur, DKI Jakarta",
+        "lat": -6.225,
+        "lng": 106.9,
+        "telepon": "031-69643",
+        "email": "bpbd@3175.go.id",
+        "jumlah_sdm": 26,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-6.225,106.9"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.806,
+          -6.5971
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3201",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Bogor",
+        "alamat": "Kantor BPBD Bogor, Jawa Barat",
+        "lat": -6.5971,
+        "lng": 106.806,
+        "telepon": "032-14952",
+        "email": "bpbd@3201.go.id",
+        "jumlah_sdm": 27,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-6.5971,106.806"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.8243,
+          -7.5755
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3372",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Surakarta",
+        "alamat": "Kantor BPBD Surakarta, Jawa Tengah",
+        "lat": -7.5755,
+        "lng": 110.8243,
+        "telepon": "033-83153",
+        "email": "bpbd@3372.go.id",
+        "jumlah_sdm": 28,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-7.5755,110.8243"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.3558,
+          -7.7156
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3404",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Sleman",
+        "alamat": "Kantor BPBD Sleman, DI Yogyakarta",
+        "lat": -7.7156,
+        "lng": 110.3558,
+        "telepon": "034-61758",
+        "email": "bpbd@3404.go.id",
+        "jumlah_sdm": 29,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-7.7156,110.3558"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.6326,
+          -7.9666
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3573",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Malang",
+        "alamat": "Kantor BPBD Malang, Jawa Timur",
+        "lat": -7.9666,
+        "lng": 112.6326,
+        "telepon": "035-62443",
+        "email": "bpbd@3573.go.id",
+        "jumlah_sdm": 30,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-7.9666,112.6326"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6319,
+          -6.1783
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "3671",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Tangerang",
+        "alamat": "Kantor BPBD Tangerang, Banten",
+        "lat": -6.1783,
+        "lng": 106.6319,
+        "telepon": "036-28832",
+        "email": "bpbd@3671.go.id",
+        "jumlah_sdm": 31,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-6.1783,106.6319"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.1771,
+          -8.5819
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "5103",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Badung",
+        "alamat": "Kantor BPBD Badung, Bali",
+        "lat": -8.5819,
+        "lng": 115.1771,
+        "telepon": "051-40922",
+        "email": "bpbd@5103.go.id",
+        "jumlah_sdm": 26,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-8.5819,115.1771"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.1,
+          -8.65
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "5201",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Lombok Barat",
+        "alamat": "Kantor BPBD Lombok Barat, Nusa Tenggara Barat",
+        "lat": -8.65,
+        "lng": 116.1,
+        "telepon": "052-28789",
+        "email": "bpbd@5201.go.id",
+        "jumlah_sdm": 27,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-8.65,116.1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.662,
+          -8.843
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "5308",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Ende",
+        "alamat": "Kantor BPBD Ende, Nusa Tenggara Timur",
+        "lat": -8.843,
+        "lng": 121.662,
+        "telepon": "053-65547",
+        "email": "bpbd@5308.go.id",
+        "jumlah_sdm": 28,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-8.843,121.662"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          108.989,
+          0.906
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6172",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Singkawang",
+        "alamat": "Kantor BPBD Singkawang, Kalimantan Barat",
+        "lat": 0.906,
+        "lng": 108.989,
+        "telepon": "061-40862",
+        "email": "bpbd@6172.go.id",
+        "jumlah_sdm": 16,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=0.906,108.989"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.95,
+          -2.5
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6202",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Kotawaringin Timur",
+        "alamat": "Kantor BPBD Kotawaringin Timur, Kalimantan Tengah",
+        "lat": -2.5,
+        "lng": 112.95,
+        "telepon": "062-40855",
+        "email": "bpbd@6202.go.id",
+        "jumlah_sdm": 17,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-2.5,112.95"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.8103,
+          -3.4572
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6372",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Banjarbaru",
+        "alamat": "Kantor BPBD Banjarbaru, Kalimantan Selatan",
+        "lat": -3.4572,
+        "lng": 114.8103,
+        "telepon": "063-29983",
+        "email": "bpbd@6372.go.id",
+        "jumlah_sdm": 18,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-3.4572,114.8103"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.8529,
+          -1.2379
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6471",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Balikpapan",
+        "alamat": "Kantor BPBD Balikpapan, Kalimantan Timur",
+        "lat": -1.2379,
+        "lng": 116.8529,
+        "telepon": "064-76951",
+        "email": "bpbd@6471.go.id",
+        "jumlah_sdm": 19,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=-1.2379,116.8529"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.35,
+          2.85
+        ]
+      },
+      "properties": {
+        "kode_wilayah": "6501",
+        "tingkat": "kabupaten",
+        "nama_instansi": "BPBD Bulungan",
+        "alamat": "Kantor BPBD Bulungan, Kalimantan Utara",
+        "lat": 2.85,
+        "lng": 117.35,
+        "telepon": "065-52747",
+        "email": "bpbd@6501.go.id",
+        "jumlah_sdm": 20,
+        "catatan_sdm": "Data sampel kabupaten/kota",
+        "maps_url": "https://www.google.com/maps?q=2.85,117.35"
       }
     }
   ]

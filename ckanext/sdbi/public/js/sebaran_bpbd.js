@@ -390,15 +390,12 @@
   }
 
   function syncBpbdPointFilter() {
-    var pointLayers = ['bpbd-clusters', 'bpbd-cluster-count', 'bpbd-points'];
     var showPoints = !!(document.getElementById('layer-bpbd') || {}).checked;
     var showProv = !!(document.getElementById('layer-provinsi') || {}).checked;
     var showKab = !!(document.getElementById('layer-kabupaten') || {}).checked;
     var visible = showPoints && (showProv || showKab);
 
-    pointLayers.forEach(function (id) {
-      setVisibility(id, visible);
-    });
+    setVisibility('bpbd-points', visible);
 
     if (!map.getSource('bpbd')) {
       return;
@@ -407,191 +404,62 @@
   }
 
   function beforePoints() {
-    if (map.getLayer('bpbd-clusters')) {
-      return 'bpbd-clusters';
-    }
     if (map.getLayer('bpbd-points')) {
       return 'bpbd-points';
     }
     return undefined;
   }
 
-  function loadBpbdMarker(done) {
-    if (map.hasImage('bpbd-marker')) {
-      done();
-      return;
-    }
-    map.loadImage('/img/bpbd-marker.png', function (err, image) {
-      if (!err && image && !map.hasImage('bpbd-marker')) {
-        try {
-          map.addImage('bpbd-marker', image, { pixelRatio: 1 });
-        } catch (e) {
-          // ignore; circle fallback will be used
-        }
-      }
-      done();
-    });
-  }
-
   var bpbdEventsBound = false;
 
   function addBpbdLayers() {
-    try {
-      if (!map.getSource('bpbd')) {
-        map.addSource('bpbd', {
-          type: 'geojson',
-          data: filteredBpbdGeojson(),
-          cluster: true,
-          // Cluster only when zoomed OUT. At default Indonesia zoom (~5),
-          // show individual icons (same as pre-cluster behavior).
-          clusterMaxZoom: 4,
-          clusterRadius: 50,
-          clusterMinPoints: 2
-        });
-      } else {
-        map.getSource('bpbd').setData(filteredBpbdGeojson());
-      }
-
-      if (!map.getLayer('bpbd-clusters')) {
-        map.addLayer({
-          id: 'bpbd-clusters',
-          type: 'circle',
-          source: 'bpbd',
-          filter: ['has', 'point_count'],
-          paint: {
-            'circle-color': [
-              'step',
-              ['get', 'point_count'],
-              '#1a73e8',
-              5, '#188038',
-              12, '#d93025'
-            ],
-            'circle-radius': [
-              'step',
-              ['get', 'point_count'],
-              18,
-              5, 22,
-              12, 28
-            ],
-            'circle-stroke-width': 2,
-            'circle-stroke-color': '#ffffff'
-          }
-        });
-      }
-
-      if (!map.getLayer('bpbd-cluster-count')) {
-        try {
-          map.addLayer({
-            id: 'bpbd-cluster-count',
-            type: 'symbol',
-            source: 'bpbd',
-            filter: ['has', 'point_count'],
-            layout: {
-              'text-field': ['get', 'point_count_abbreviated'],
-              'text-size': 12,
-              'text-allow-overlap': true
-            },
-            paint: {
-              'text-color': '#ffffff'
-            }
-          });
-        } catch (e) {
-          // count labels optional
-        }
-      }
-
-      if (!map.getLayer('bpbd-points')) {
-        if (map.hasImage('bpbd-marker')) {
-          map.addLayer({
-            id: 'bpbd-points',
-            type: 'symbol',
-            source: 'bpbd',
-            filter: ['!', ['has', 'point_count']],
-            layout: {
-              'icon-image': 'bpbd-marker',
-              'icon-size': 1,
-              'icon-anchor': 'bottom',
-              'icon-allow-overlap': true,
-              'icon-ignore-placement': true
-            }
-          });
-        } else {
-          map.addLayer({
-            id: 'bpbd-points',
-            type: 'circle',
-            source: 'bpbd',
-            filter: ['!', ['has', 'point_count']],
-            paint: {
-              'circle-radius': 9,
-              'circle-color': '#d93025',
-              'circle-stroke-width': 2,
-              'circle-stroke-color': '#ffffff'
-            }
-          });
-        }
-      }
-
-      syncBpbdPointFilter();
-    } catch (err) {
-      // last-resort: unclustered circles so markers are never fully missing
-      try {
-        if (!map.getSource('bpbd')) {
-          map.addSource('bpbd', {
-            type: 'geojson',
-            data: filteredBpbdGeojson()
-          });
-        }
-        if (!map.getLayer('bpbd-points')) {
-          map.addLayer({
-            id: 'bpbd-points',
-            type: 'circle',
-            source: 'bpbd',
-            paint: {
-              'circle-radius': 9,
-              'circle-color': '#d93025',
-              'circle-stroke-width': 2,
-              'circle-stroke-color': '#ffffff'
-            }
-          });
-        }
-      } catch (e2) {}
+    // Native MapLibre GeoJSON clustering drops most of this dataset in 3.6.2
+    // (tiles expose only a handful of unclustered points, zero clusters).
+    // Keep an unclustered circle layer so markers stay visible.
+    if (!map.getSource('bpbd')) {
+      map.addSource('bpbd', {
+        type: 'geojson',
+        data: filteredBpbdGeojson()
+      });
+    } else {
+      map.getSource('bpbd').setData(filteredBpbdGeojson());
     }
+
+    if (!map.getLayer('bpbd-points')) {
+      map.addLayer({
+        id: 'bpbd-points',
+        type: 'circle',
+        source: 'bpbd',
+        paint: {
+          'circle-radius': [
+            'interpolate', ['linear'], ['zoom'],
+            3, 7,
+            6, 9,
+            10, 11
+          ],
+          'circle-color': '#d93025',
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#ffffff'
+        }
+      });
+    }
+
+    syncBpbdPointFilter();
 
     if (bpbdEventsBound) {
       return;
     }
     bpbdEventsBound = true;
 
-    map.on('click', 'bpbd-clusters', function (e) {
-      var features = map.queryRenderedFeatures(e.point, { layers: ['bpbd-clusters'] });
-      if (!features.length) {
-        return;
-      }
-      var clusterId = features[0].properties.cluster_id;
-      var source = map.getSource('bpbd');
-      source.getClusterExpansionZoom(clusterId, function (err, zoom) {
-        if (err) {
-          return;
-        }
-        map.easeTo({
-          center: features[0].geometry.coordinates,
-          zoom: zoom
-        });
-      });
-    });
-
     map.on('click', 'bpbd-points', function (e) {
-      var feature = e.features[0];
-      openFeaturePopup(feature);
+      openFeaturePopup(e.features[0]);
     });
 
-    ['bpbd-clusters', 'bpbd-points'].forEach(function (layerId) {
-      map.on('mouseenter', layerId, function () {
-        map.getCanvas().style.cursor = 'pointer';
-      });
-      map.on('mouseleave', layerId, function () {
-        map.getCanvas().style.cursor = '';
-      });
+    map.on('mouseenter', 'bpbd-points', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', 'bpbd-points', function () {
+      map.getCanvas().style.cursor = '';
     });
   }
 
@@ -667,10 +535,7 @@
       .then(function (res) { return res.json(); })
       .then(function (geojson) {
         applyBpbdData(geojson);
-        loadBpbdMarker(function () {
-          addBpbdLayers();
-          syncBpbdPointFilter();
-        });
+        addBpbdLayers();
       })
       .catch(function () {});
   });
