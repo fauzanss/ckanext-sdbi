@@ -6,6 +6,7 @@ Dokumen upgrade ada di folder ini (`readme/2026-08/`). Prefiks tiket: `SCOL-1234
 | --- | --- |
 | [`PRD.md`](PRD.md) | Persyaratan: masalah, pengguna, Fase 0–4, CVE B0–B2, kriteria lulus, di luar lingkup |
 | [`STATUS.md`](STATUS.md) | Laporan status: lokal vs produksi, verifikasi, risiko, langkah berikutnya |
+| [`HASIL.md`](HASIL.md) | Screenshot hasil lokal (peta, bantuan, harvest, `status_show`, dll.) |
 | [`HOW-TO-IMPLEMENT.md`](HOW-TO-IMPLEMENT.md) | Cara lokal, harvest, cabut API key, sumber harvest produksi, cutover 2.10 |
 
 **Lokal (9 Sep 2026):** CKAN **2.10.11** di http://localhost:8080. Fase 0–4 + harvest JSON REST sudah jalan. Kamar Tanggap Darurat dipilih dari **dropdown navbar**. FAQ dan kamar di Postgres `sdbi_settings` (tanpa YAML). **Gempa NTT 2026** tidak di navbar; `/gempantt2026` masih terbuka lewat URL.
