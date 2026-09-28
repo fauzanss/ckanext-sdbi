@@ -233,6 +233,9 @@ def records_to_geojson(records):
         properties = {}
         for field in BPBD_CSV_FIELDS:
             properties[field] = record.get(field)
+        website = (record.get('website') or '').strip()
+        if website:
+            properties['website'] = website
         properties['maps_url'] = build_google_maps_url(record)
         features.append({
             'type': 'Feature',
