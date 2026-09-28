@@ -33,7 +33,7 @@ Update ringkas sejak laporan 9 Sep: titik BPBD Kab/Kota masuk Postgres (`sdbi_bp
 | B1 | CKAN 2.10.11 | **Selesai** | **Belum dimulai** | Lokal `ckan --version` 2.10.11 |
 | Fase 0 | 2FA TOTP | **Selesai** | Perlu rebuild image + `security migrate` | security 4.1.1, Redis DB 2, QR di login pertama |
 | Fase 1 | Harvester JSON REST | **Selesai*** | Perlu image produksi + worker yang sama | Tipe **JSON REST**; *lihat catatan di bawah |
-| Fase 2 | `/sebaran-bpbd` | **Selesai*** | Belum di-deploy | Peta MapLibre; data Kab/Kota di Postgres; *lihat catatan di bawah |
+| Fase 2 | `/sebaran-bpbd` | **Selesai** | Belum di-deploy | Peta MapLibre; Kab/Kota + Provinsi di Postgres |
 | Fase 3 | `/bantuan` | **Selesai** | Belum di-deploy | Chip + cari; JSON `sdbi_settings.faq` (tanpa YAML) |
 | Fase 4 | Kamar `/tanggap-darurat` | **Selesai** | Perlu cutover 2.10 | Dropdown **navbar**; JSON `tanggap_rooms`; `/kelola` sysadmin; iframe HTTPS |
 
@@ -45,10 +45,11 @@ Update ringkas sejak laporan 9 Sep: titik BPBD Kab/Kota masuk Postgres (`sdbi_bp
 
 ### Catatan Fase 2 — `/sebaran-bpbd`
 
-- Titik BPBD **Kabupaten/Kota** sudah diimpor dari CSV kontak resmi ke tabel `sdbi_bpbd` (~514 baris; ~443 tampil di peta karena punya koordinat).
+- Titik BPBD **Kabupaten/Kota** diimpor ke `sdbi_bpbd` (~514 baris; ~443 berkoordinat).
+- Titik BPBD **Provinsi** diimpor dari CSV kontak resmi (~38 baris; ~34 berkoordinat).
 - Popup menampilkan telepon, email, website (jika ada), SDM, Maps.
-- **Belum ada data BPBD tingkat Provinsi** di sumber yang diimpor (CSV kontak = Kab/Kota saja). Layer/titik provinsi belum dilengkapi data resmi.
 - GeoJSON batas Kabupaten masih interim (boleh kosong / disederhanakan sesuai PRD rilis pertama).
+- Skill impor ulang: `.cursor/skills/peta-sebaran` (`/peta-sebaran`).
 
 ---
 
@@ -58,7 +59,7 @@ Update ringkas sejak laporan 9 Sep: titik BPBD Kab/Kota masuk Postgres (`sdbi_bp
 | --- | --- |
 | Beranda, `/dataset`, detail dataset | 200 |
 | `status_show` | 2.10.11; plugin termasuk `activity`, `sdbi_json_harvester`; `sdbi` terakhir |
-| `/sebaran-bpbd` | 200; peta layar penuh; ~443 titik Kab/Kota dari DB; unduh CSV; **tanpa titik Provinsi** |
+| `/sebaran-bpbd` | 200; peta layar penuh; ~477 titik (443 kab + 34 prov berkoordinat); unduh CSV |
 | `/sebaran-bpbd` popup | Telepon / email / website (bila ada) |
 | `/bantuan` | 200; chip kategori; cari |
 | `/bantuan/kelola` | 403 anonim; sysadmin menyimpan JSON `faq` |
@@ -78,7 +79,7 @@ Plugin produksi 2.9 yang **belum** di lokal: `dcat*`, `structured_data`, `resour
 | --- | --- | --- |
 | Produksi masih 2.9.11 | CVE sampai cutover B1 | B0 adalah kunci produksi saat ini |
 | Image produksi belum di-bake 2.10 | Worker/web bisa beda plugin | Lokal sudah: image compose + `CKAN__PLUGINS` di start worker |
-| **BPBD Provinsi belum ada** | Peta sebaran tidak lengkap di tingkat provinsi | Perlu sumber data / CSV Provinsi terpisah lalu impor ke `sdbi_bpbd` (`tingkat=provinsi`) |
+| **BPBD Provinsi belum lengkap koordinat** | Sebagian titik Provinsi tidak di peta | 4 baris Provinsi tanpa koordinat di CSV; lengkapi via SQL |
 | **JSON REST bukan harvester generik** | Hanya API dengan pola URL mirip CKAN | Integrasi portal kota lain perlu sesuaikan config / template URL |
 | Harvest MANUAL tanpa Reharvest | Sumber ada, `job_count=0`, tidak ada dataset | Harus Reharvest atau `ckan harvester job` |
 | Harvest hanya metadata + tautan JSON | Tabel `data[]` tidak di DataStore | Sesuai Fase 1; salin ke DataStore belum diminta |

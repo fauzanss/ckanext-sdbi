@@ -167,6 +167,26 @@ def normalize_kabupaten_name(name):
     return text_value.strip()
 
 
+def _squash_whitespace(value):
+    text_value = _blank_to_empty(value)
+    return re.sub(r'\s+', ' ', text_value).strip()
+
+
+def detect_kontak_csv_kind(fieldnames):
+    """Return 'provinsi', 'kabupaten', or raise."""
+    names = set(fieldnames or [])
+    if 'id_kab' in names and 'Kabupaten/Kota' in names:
+        return 'kabupaten'
+    if 'id_prov' in names and 'Provinsi' in names and 'id_kab' not in names:
+        return 'provinsi'
+    if 'id_prov' in names and 'Provinsi' in names and 'Status_BPBD' in names:
+        return 'provinsi'
+    raise BpbdImportError(
+        'Unrecognized contact CSV columns. Need Kab/Kota (id_kab, Kabupaten/Kota) '
+        'or Provinsi (id_prov, Provinsi).'
+    )
+
+
 def kontak_csv_to_records(handle):
     """Map official Kab/Kota contact CSV into sdbi_bpbd records."""
     reader = csv.DictReader(handle)
@@ -202,7 +222,7 @@ def kontak_csv_to_records(handle):
             'alamat': _blank_to_empty(row.get('Alamat')),
             'lat': lat,
             'lng': lng,
-            'telepon': _blank_to_empty(row.get('Kontak BPBD')),
+            'telepon': _squash_whitespace(row.get('Kontak BPBD')),
             'email': _blank_to_empty(row.get('Email')),
             'jumlah_sdm': 0,
             'catatan_sdm': catatan,
@@ -214,6 +234,70 @@ def kontak_csv_to_records(handle):
             'id_prov': str(row.get('id_prov') or '').strip(),
         })
     return records
+
+
+def kontak_provinsi_csv_to_records(handle):
+    """Map official Provinsi contact CSV into sdbi_bpbd records."""
+    reader = csv.DictReader(handle)
+    if not reader.fieldnames:
+        raise BpbdImportError('CSV is empty')
+    required = ['id_prov', 'Provinsi']
+    missing = [field for field in required if field not in reader.fieldnames]
+    if missing:
+        raise BpbdImportError('CSV missing columns: %s' % ', '.join(missing))
+
+    records = []
+    for index, row in enumerate(reader, start=2):
+        kode = str(row.get('id_prov') or '').strip()
+        if not kode:
+            raise BpbdImportError('Row %s: id_prov is required' % index)
+        wilayah = _blank_to_empty(row.get('Provinsi'))
+        if not wilayah:
+            raise BpbdImportError('Row %s: Provinsi is required' % index)
+
+        status = _blank_to_empty(row.get('Status_BPBD') or row.get('Status BPBD'))
+        jumlah_bpbd = _blank_to_empty(row.get('Jumlah BPBD'))
+        catatan = status
+        if jumlah_bpbd:
+            catatan = (
+                '%s; Jumlah BPBD kab/kota: %s' % (status, jumlah_bpbd)
+                if status else 'Jumlah BPBD kab/kota: %s' % jumlah_bpbd
+            )
+
+        lat, lng = parse_lat_lng(row.get('koordinat latitude dan longitude'))
+        records.append({
+            'kode_wilayah': kode,
+            'tingkat': 'provinsi',
+            'nama_instansi': 'BPBD Provinsi %s' % wilayah,
+            'alamat': _blank_to_empty(row.get('Alamat')),
+            'lat': lat,
+            'lng': lng,
+            'telepon': _squash_whitespace(row.get('Kontak BPBD')),
+            'email': _blank_to_empty(row.get('Email')),
+            'jumlah_sdm': 0,
+            'catatan_sdm': catatan,
+            'status_bpbd': status,
+            'keterangan_status': '',
+            'nama_kepala': _blank_to_empty(row.get('Nama Kalaksa') or row.get('Nama Kepala BPBD')),
+            'nama_staf': '',
+            'website': _blank_to_empty(row.get('Website')),
+            'id_prov': kode,
+        })
+    return records
+
+
+def kontak_csv_to_records_auto(handle):
+    """Detect Kab/Kota vs Provinsi CSV and map to records."""
+    sample = handle.read()
+    if hasattr(sample, 'decode'):
+        sample = sample.decode('utf-8-sig')
+    buffer = io.StringIO(sample)
+    reader = csv.DictReader(buffer)
+    kind = detect_kontak_csv_kind(reader.fieldnames)
+    buffer.seek(0)
+    if kind == 'provinsi':
+        return kind, kontak_provinsi_csv_to_records(buffer)
+    return kind, kontak_csv_to_records(buffer)
 
 
 def build_google_maps_url(record):
@@ -319,12 +403,29 @@ _INSERT_SQL = """
 """
 
 
-def _replace_on_connection(conn, records):
+def _replace_on_connection(conn, records, tingkat=None):
+    """Replace rows. If tingkat is set, only delete that tingkat; else wipe all."""
     normalized = [_normalize_record(record) for record in records]
+    if tingkat is not None:
+        tingkat = tingkat.strip().lower()
+        if tingkat not in VALID_TINGKAT:
+            raise BpbdImportError('tingkat must be provinsi or kabupaten')
+        for record in normalized:
+            if record['tingkat'] != tingkat:
+                raise BpbdImportError(
+                    'Record kode_wilayah=%s has tingkat=%s, expected %s'
+                    % (record['kode_wilayah'], record['tingkat'], tingkat)
+                )
     conn.execute(text(_CREATE_TABLE))
     conn.execute(text(_CREATE_UNIQUE_INDEX))
     conn.execute(text(_CREATE_TINGKAT_INDEX))
-    conn.execute(text('DELETE FROM sdbi_bpbd'))
+    if tingkat is None:
+        conn.execute(text('DELETE FROM sdbi_bpbd'))
+    else:
+        conn.execute(
+            text('DELETE FROM sdbi_bpbd WHERE tingkat = :tingkat'),
+            {'tingkat': tingkat},
+        )
     insert_sql = text(_INSERT_SQL)
     for record in normalized:
         conn.execute(insert_sql, record)
@@ -340,14 +441,27 @@ def replace_records(records):
     return normalized
 
 
-def replace_records_via_url(sqlalchemy_url, records):
-    """Replace all rows using a SQLAlchemy URL (CLI / scripts)."""
+def replace_records_by_tingkat(records, tingkat):
+    """Replace only rows for one tingkat; leave the other tingkat intact."""
+    ensure_table()
+    import ckan.model as model
+    normalized = _replace_on_connection(model.Session, records, tingkat=tingkat)
+    model.Session.commit()
+    return normalized
+
+
+def replace_records_via_url(sqlalchemy_url, records, tingkat=None):
+    """Replace rows using a SQLAlchemy URL (CLI / scripts).
+
+    tingkat=None → replace entire table
+    tingkat='provinsi'|'kabupaten' → replace only that tingkat
+    """
     from sqlalchemy import create_engine
     engine = create_engine(sqlalchemy_url)
     connection = engine.connect()
     transaction = connection.begin()
     try:
-        stored = _replace_on_connection(connection, records)
+        stored = _replace_on_connection(connection, records, tingkat=tingkat)
         transaction.commit()
         return stored
     except Exception:

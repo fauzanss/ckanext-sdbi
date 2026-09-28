@@ -89,3 +89,25 @@ def test_kontak_csv_to_records_maps_official_columns():
     geojson = records_to_geojson(records)
     assert len(geojson['features']) == 1
 
+
+def test_kontak_provinsi_csv_to_records():
+    from ckanext.sdbi.lib.bpbd import (
+        kontak_csv_to_records_auto,
+        kontak_provinsi_csv_to_records,
+    )
+    sample = u"""id_prov,Provinsi,Status_BPBD,Alamat,Nama Kalaksa,Kontak BPBD,Website,Email,Facebook,Instagram,Twitter,Jumlah BPBD,koordinat latitude dan longitude
+11,Aceh,Terbentuk,Jl. A,Kepala,0811,https://a.id/,a@b.com,-,-,-,23,"5.55, 95.32"
+99,X,Belum Terbentuk,-,-,-,-,-,-,-,-,0,
+"""
+    records = kontak_provinsi_csv_to_records(io.StringIO(sample))
+    assert len(records) == 2
+    assert records[0]['tingkat'] == 'provinsi'
+    assert records[0]['kode_wilayah'] == '11'
+    assert records[0]['nama_instansi'] == 'BPBD Provinsi Aceh'
+    assert records[0]['lat'] == pytest.approx(5.55)
+    assert records[1]['lat'] is None
+    kind, auto = kontak_csv_to_records_auto(io.StringIO(sample))
+    assert kind == 'provinsi'
+    assert len(auto) == 2
+    assert len(records_to_geojson(records)['features']) == 1
+

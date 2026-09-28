@@ -65,8 +65,8 @@ Navbar: **Peta BPBD**, **Tanggap Darurat** (dropdown), **Bantuan**.
 
 ## Fase 2 — `/sebaran-bpbd`
 
-**443 lokasi terpetakan** (Kab/Kota dari Postgres).  
-**Catatan:** data BPBD **Provinsi** belum ada di sumber impor.
+**~477 lokasi terpetakan** (443 Kab/Kota + 34 Provinsi berkoordinat, dari Postgres).  
+4 baris Provinsi di CSV belum punya koordinat (tidak tampil di peta).
 
 ![Sebaran BPBD](screenshots/01-sebaran-bpbd.png)
 
