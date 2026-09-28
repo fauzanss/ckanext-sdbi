@@ -70,11 +70,22 @@ def test_records_to_geojson_skips_rows_without_coordinates():
     assert BPBD_CSV_FIELDS
 
 
-def test_geojson_to_csv_roundtrip_keeps_import_columns():
-    records = csv_to_records(io.StringIO(SAMPLE_CSV))
-    csv_text = geojson_to_csv(records_to_geojson(records))
-    exported = csv_to_records(io.StringIO(csv_text))
-    assert len(exported) == 2
-    assert exported[0]['nama_instansi'] == 'BPBD DKI Jakarta'
-    assert exported[0]['kode_wilayah'] == '31'
-    assert exported[1]['tingkat'] == 'kabupaten'
+def test_kontak_csv_to_records_maps_official_columns():
+    from ckanext.sdbi.lib.bpbd import kontak_csv_to_records
+    sample = u"""id_prov,id_kab,Status BPBD,Keterangan Status,Provinsi,Kabupaten/Kota,Nama Kepala BPBD,Nama Staf,Kontak BPBD,Email,Alamat,Website,Facebook,Instagram,Twitter,koordinat latitude dan longitude
+11,1101,Terbentuk,Terbentuk,Aceh,Kab. Aceh Selatan,Kepala,Staf,0811,a@b.com,Jl. Contoh,-,-,-,-,"3.26, 97.19"
+31,3173,Belum Terbentuk,Belum Terbentuk,DKI Jakarta,Jakarta Barat,-,-,-,-,-,-,-,-,-,
+"""
+    records = kontak_csv_to_records(io.StringIO(sample))
+    assert len(records) == 2
+    assert records[0]['kode_wilayah'] == '1101'
+    assert records[0]['tingkat'] == 'kabupaten'
+    assert records[0]['nama_instansi'] == 'BPBD Aceh Selatan'
+    assert records[0]['lat'] == pytest.approx(3.26)
+    assert records[0]['lng'] == pytest.approx(97.19)
+    assert records[0]['status_bpbd'] == 'Terbentuk'
+    assert records[1]['lat'] is None
+    assert records[1]['nama_instansi'] == 'BPBD Jakarta Barat'
+    geojson = records_to_geojson(records)
+    assert len(geojson['features']) == 1
+
