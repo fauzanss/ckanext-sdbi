@@ -32,6 +32,7 @@
     return [
       item.getAttribute('data-q') || '',
       item.getAttribute('data-a') || '',
+      item.getAttribute('data-file-label') || '',
     ].join(' ').toLowerCase();
   }
 
@@ -95,12 +96,12 @@
     var q = item.getAttribute('data-q') || '';
     var a = item.getAttribute('data-a') || '';
     var qText = item.querySelector('.bantuan__q-text');
-    var answer = item.querySelector('.bantuan__answer');
+    var answerText = item.querySelector('.bantuan__answer-text');
     if (qText) {
       qText.innerHTML = highlight(q, tokens);
     }
-    if (answer) {
-      answer.innerHTML = highlight(a, tokens);
+    if (answerText) {
+      answerText.innerHTML = highlight(a, tokens);
     }
   }
 

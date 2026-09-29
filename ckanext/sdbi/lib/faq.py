@@ -11,8 +11,32 @@ class FaqError(ValueError):
     pass
 
 
+DEFAULT_FILE_LABEL = u'Referensi File'
+
+
 def _empty_faq():
     return {'categories': []}
+
+
+def _http_url(url, field='file_url'):
+    raw = (url or '').strip()
+    if not raw:
+        return ''
+    if not (raw.startswith('http://') or raw.startswith('https://')):
+        raise FaqError('%s must be http or https' % field)
+    return raw
+
+
+def _parse_faq_item(item):
+    if not isinstance(item, dict) or not item.get('q') or not item.get('a'):
+        raise FaqError('Each FAQ item needs q and a')
+    entry = {'q': item['q'], 'a': item['a']}
+    file_url = _http_url(item.get('file_url') or '')
+    if file_url:
+        label = (item.get('file_label') or '').strip() or DEFAULT_FILE_LABEL
+        entry['file_url'] = file_url
+        entry['file_label'] = label
+    return entry
 
 
 def parse_faq(data):
@@ -30,11 +54,7 @@ def parse_faq(data):
         questions = category.get('questions') or category.get('items') or []
         if not isinstance(questions, list):
             raise FaqError('FAQ category questions must be a list')
-        entries = []
-        for item in questions:
-            if not isinstance(item, dict) or not item.get('q') or not item.get('a'):
-                raise FaqError('Each FAQ item needs q and a')
-            entries.append({'q': item['q'], 'a': item['a']})
+        entries = [_parse_faq_item(item) for item in questions]
         cleaned.append({
             'id': category['id'],
             'title': category['title'],
@@ -67,13 +87,19 @@ def search_faq(faq, query):
             haystack = u' '.join([
                 item.get('q') or '',
                 item.get('a') or '',
+                item.get('file_label') or '',
+                item.get('file_url') or '',
                 category.get('title') or '',
             ]).lower()
             if needle in haystack:
-                matches.append({
+                match = {
                     'category_id': category.get('id'),
                     'category_title': category.get('title'),
                     'q': item.get('q'),
                     'a': item.get('a'),
-                })
+                }
+                if item.get('file_url'):
+                    match['file_url'] = item.get('file_url')
+                    match['file_label'] = item.get('file_label') or DEFAULT_FILE_LABEL
+                matches.append(match)
     return matches
