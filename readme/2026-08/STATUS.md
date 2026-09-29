@@ -1,6 +1,8 @@
 # Laporan status — Upgrade Portal Data BNPB
 
-Laporan kondisi terhadap [`PRD.md`](PRD.md). Cara implementasi dan cutover: [`HOW-TO-IMPLEMENT.md`](HOW-TO-IMPLEMENT.md).
+**Dokumen paparan gabungan (status + screenshot + how-to + justifikasi embed):** [`DOC-2026-09-29.md`](DOC-2026-09-29.md).
+
+Laporan kondisi terhadap [`PRD.md`](PRD.md). Cara implementasi detail: [`HOW-TO-IMPLEMENT.md`](HOW-TO-IMPLEMENT.md).
 
 | Field | Nilai |
 | --- | --- |
@@ -11,7 +13,7 @@ Laporan kondisi terhadap [`PRD.md`](PRD.md). Cara implementasi dan cutover: [`HO
 
 Update ringkas sejak laporan 9 Sep: titik BPBD Kab/Kota + Provinsi sudah di Postgres (`sdbi_bpbd`) dan tampil di `/sebaran-bpbd`; popup website; impor CSV kontak resmi; clustering Supercluster. Commit terkait: sdbi `faec4d2` / `c962097` / `2ed84c2` / `6199c61`, compose `65d2a3b`.
 
-**Hasil visual (screenshot):** lihat [`HASIL.md`](HASIL.md) dan folder [`screenshots/`](screenshots/).
+**Hasil visual (screenshot):** lihat [`DOC-2026-09-29.md`](DOC-2026-09-29.md) §3 dan folder [`screenshots/`](screenshots/).
 
 ---
 
@@ -29,7 +31,7 @@ Update ringkas sejak laporan 9 Sep: titik BPBD Kab/Kota + Provinsi sudah di Post
 | ID | Persyaratan | Lokal | Produksi | Bukti / celah |
 | --- | --- | --- | --- | --- |
 | B0 | `CKAN__DATASTORE__SQLSEARCH__ENABLED=false` | **Selesai** | **Selesai** | Flag env. Tetap false setelah 2.10. |
-| B2 | Auth SQL default tolak (`sdbi` terakhir) | **Selesai** | Belum di-deploy | `ckanext/sdbi/auth.py`; IAuthFunctions berantai di 2.10 |
+| B2 | Auth SQL default tolak (`sdbi` terakhir) | **Selesai** | **Selesai** | `ckanext/sdbi/auth.py`; `sdbi` terakhir di plugins produksi |
 | B1 | CKAN 2.10.11 | **Selesai** | **Belum dimulai** | Lokal `ckan --version` 2.10.11 |
 | Fase 0 | 2FA TOTP | **Selesai** | Perlu rebuild image + `security migrate` | security 4.1.1, Redis DB 2, QR di login pertama |
 | Fase 1 | Harvester JSON REST | **Selesai*** | Perlu image produksi + worker yang sama | Tipe **JSON REST**; *lihat catatan di bawah |
@@ -105,4 +107,4 @@ Plugin produksi 2.9 yang **belum** di lokal: `dcat*`, `structured_data`, `resour
 8. **(Lokal / data, opsional)** Lengkapi 4 BPBD Provinsi tanpa koordinat bila lat/lng resmi tersedia
 9. **(Lokal / harvest)** Dokumentasikan contoh URL yang didukung JSON REST saat onboarding sumber baru
 
-Urutan: B0 (selesai) → B2 di tree (selesai) → B1 staging/produksi → Fase 0/1 di image web+worker → Fase 2–4 ikut image yang sama.
+Urutan: B0 (selesai) → B2 produksi (selesai) → B1 staging/produksi → Fase 0/1 di image web+worker → Fase 2–4 ikut image yang sama.
