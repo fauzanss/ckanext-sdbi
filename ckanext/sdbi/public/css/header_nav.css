@@ -35,6 +35,28 @@
   border-bottom-left-radius: 0;
 }
 
+/* Brand: official BNPB navbar logo (white lockup) on dark plate;
+   site title only via title= tooltip on hover — not shown under the logo. */
+.masthead .site-header__brand,
+.masthead hgroup.navbar-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.masthead .site-header__brand .logo {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #044085;
+}
+.masthead .site-header__brand .logo img,
+.masthead hgroup .logo img {
+  display: block;
+  max-height: 40px;
+  width: auto;
+}
+
 /* Header: logo left, nav + search to the right (desktop) */
 @media (min-width: 768px) {
   .masthead > .container {
@@ -49,12 +71,6 @@
     flex: 0 0 auto;
     margin: 0 20px 0 0;
     padding: 0;
-  }
-  .masthead .site-header__brand .logo img,
-  .masthead hgroup .logo img {
-    display: block;
-    max-height: 56px;
-    width: auto;
   }
   .masthead .navbar-collapse {
     float: none !important;
