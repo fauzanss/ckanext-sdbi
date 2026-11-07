@@ -1,3 +1,88 @@
+/* CKAN 2.10 search_form puts <button> next to <input> without .input-group-btn;
+   Bootstrap 3 then drops the button under the field (form-control width:100%). */
+.search-form .input-group.search-input-group {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+.search-form .search-input-group > .form-control {
+  float: none;
+  width: auto;
+  flex: 1 1 auto;
+}
+.search-form .search-input-group > .btn {
+  flex: 0 0 auto;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Header: logo left, nav + search to the right (desktop) */
+@media (min-width: 768px) {
+  .masthead > .container {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .masthead .site-header__brand,
+  .masthead hgroup.navbar-left {
+    float: none !important;
+    order: 1;
+    flex: 0 0 auto;
+    margin: 0 20px 0 0;
+    padding: 0;
+  }
+  .masthead .site-header__brand .logo img,
+  .masthead hgroup .logo img {
+    display: block;
+    max-height: 56px;
+    width: auto;
+  }
+  .masthead .navbar-collapse {
+    float: none !important;
+    order: 2;
+    flex: 1 1 auto;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0;
+  }
+  .masthead .navigation {
+    float: none !important;
+  }
+  .masthead .navigation .nav-pills {
+    float: none !important;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+  }
+  .masthead .site-search {
+    float: none !important;
+    margin-left: 12px;
+  }
+  .masthead .navbar-right {
+    order: 3;
+    float: none !important;
+    margin: 0;
+  }
+  .masthead .navbar-toggle {
+    display: none;
+  }
+}
+
+/* Tanggap Darurat: only one caret (BS/FA often add ::after as a second arrow) */
+.masthead .navigation .dropdown-toggle::after,
+.masthead .navigation .dropdown-toggle::before {
+  display: none !important;
+  content: none !important;
+  border: 0 !important;
+}
+.masthead .navigation .dropdown-toggle .caret {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
 .masthead .navigation .dropdown-menu {
   position: absolute;
   top: 100%;

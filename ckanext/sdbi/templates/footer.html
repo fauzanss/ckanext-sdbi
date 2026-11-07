@@ -47,26 +47,27 @@
             <button><i class="fab fa-telegram-plane"></i></button>
           </form>
         </div>
-      </div>
-      <div class="col-xs-6 col-md-3" style="margin-top: 20px;">
-        <h6>STATISTIK PENGUNJUNG</h6>
-        <div class="visitor-stats" style="font-size: 12px; color: #666;">
-          {% set visitor_stats = h.get_total_visitors() %}
-          <div style="margin-bottom: 8px;">
-            <i class="fas fa-circle" style="color: #28a745; font-size: 8px;"></i>
-            <span style="margin-left: 5px;">Online: {{ visitor_stats.online_visitors }}</span>
-          </div>
-          <div style="margin-bottom: 8px;">
-            <i class="fas fa-sun" style="color: #007bff;"></i>
-            <span style="margin-left: 5px;">Hari Ini: {{ visitor_stats.today_visitors }}</span>
-          </div>
-          <div style="margin-bottom: 8px;">
-            <i class="fas fa-calendar-minus" style="color: #ffc107;"></i>
-            <span style="margin-left: 5px;">Kemarin: {{ visitor_stats.yesterday_visitors }}</span>
-          </div>
-          <div style="margin-bottom: 8px;">
-            <i class="fas fa-users" style="color: #dc3545;"></i>
-            <span style="margin-left: 5px;">Total: {{ visitor_stats.unique_visitors }}</span>
+        {# Nested under BERLANGGANAN — a 5th col-md-3 wraps to the left under the logo #}
+        <div class="footer-visitor-stats" style="margin-top: 20px;">
+          <h6>STATISTIK PENGUNJUNG</h6>
+          <div class="visitor-stats" style="font-size: 12px; color: #666;">
+            {% set visitor_stats = h.get_total_visitors() %}
+            <div style="margin-bottom: 8px;">
+              <i class="fas fa-circle" style="color: #28a745; font-size: 8px;"></i>
+              <span style="margin-left: 5px;">Online: {{ visitor_stats.online_visitors }}</span>
+            </div>
+            <div style="margin-bottom: 8px;">
+              <i class="fas fa-sun" style="color: #007bff;"></i>
+              <span style="margin-left: 5px;">Hari Ini: {{ visitor_stats.today_visitors }}</span>
+            </div>
+            <div style="margin-bottom: 8px;">
+              <i class="fas fa-calendar-minus" style="color: #ffc107;"></i>
+              <span style="margin-left: 5px;">Kemarin: {{ visitor_stats.yesterday_visitors }}</span>
+            </div>
+            <div style="margin-bottom: 8px;">
+              <i class="fas fa-users" style="color: #dc3545;"></i>
+              <span style="margin-left: 5px;">Total: {{ visitor_stats.unique_visitors }}</span>
+            </div>
           </div>
         </div>
       </div>

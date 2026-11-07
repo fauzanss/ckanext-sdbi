@@ -13,8 +13,9 @@
 {% set tanggap_active = request.path.startswith('/tanggap-darurat') %}
 {% if tanggap_rooms or tanggap_sysadmin %}
 <li class="dropdown{% if tanggap_active %} active{% endif %}">
+  {# No title= (avoids floating duplicate label); one caret only — hide BS/FA ::after in CSS #}
   <a href="/tanggap-darurat" class="site-header__menu-item menu-item dropdown-toggle" data-toggle="dropdown"
-    role="button" aria-haspopup="true" aria-expanded="false" title="Tanggap Darurat">
+    role="button" aria-haspopup="true" aria-expanded="false" aria-label="Tanggap Darurat">
     Tanggap Darurat <span class="caret"></span>
   </a>
   <ul class="dropdown-menu">
