@@ -1,3 +1,22 @@
+/*
+ * Root cause (Isi Survey “not showing”):
+ * CKAN webassets ship Bootstrap 5 JS (adds class .show) with Bootstrap 3 CSS
+ * (visible state is .in → opacity:1). Modal gets .show but stays opacity:0.
+ */
+.fade.show {
+  opacity: 1;
+}
+.modal.fade.show .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.modal-backdrop.fade.show {
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
 /* CKAN 2.10 search_form puts <button> next to <input> without .input-group-btn;
    Bootstrap 3 then drops the button under the field (form-control width:100%). */
 .search-form .input-group.search-input-group {

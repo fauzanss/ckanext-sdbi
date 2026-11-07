@@ -109,7 +109,7 @@
         <h5 class="modal-title" id="surveyModalLabel">
           <i class="fa fa-clipboard"></i> Survey Kepuasan Pengguna
         </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+        <button type="button" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close" style="color: white;">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -139,7 +139,7 @@
           </div>
           <div class="col-md-6 text-right">
             <div class="btn-group" role="group">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin-right: 8px;">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bs-dismiss="modal" style="margin-right: 8px;">
                 <i class="fa fa-times"></i> Tutup
               </button>
               <a href="#" id="openSurveyNewTab" class="btn btn-primary" target="_blank"
@@ -171,13 +171,12 @@
               <h5 style="color: #333; margin-bottom: 10px;">${survey.title}</h5>
               <p style="color: #666; font-size: 14px; margin-bottom: 0;">${survey.description || 'Mohon berikan feedback Anda untuk membantu kami meningkatkan layanan portal data bencana.'}</p>
             </div>
-            <div class="form-iframe-container" style="position: relative; height: 500px; border: 1px solid #e9ecef; border-radius: 8px; overflow: hidden;">
-              <iframe 
-                src="${survey.form_url}" 
-                style="width: 100%; height: 100%; border: none;"
-                frameborder="0" 
-                allowfullscreen>
-              </iframe>
+            <div class="text-center" style="padding: 28px 16px; border: 1px solid #e9ecef; border-radius: 8px;">
+              <p style="color: #666; margin-bottom: 16px;">Google Forms tidak bisa di-embed (CSP). Buka survey di tab baru.</p>
+              <a href="${survey.form_url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary"
+                style="background: #ff5e14; border-color: #ff5e14;">
+                <i class="fa fa-external-link"></i> Isi Survey
+              </a>
             </div>
           </div>
         `;
