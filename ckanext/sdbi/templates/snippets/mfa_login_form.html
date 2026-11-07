@@ -1,0 +1,66 @@
+{% import 'macros/form.html' as form %}
+
+{% set username_error = true if error_summary %}
+{% set password_error = true if error_summary %}
+
+{% if h.security_enable_totp() %}
+  {% asset 'security/mfa_login' %}
+{% endif %}
+
+<form id="mfa-login-form" action="{{ action }}" method="post" class="form-horizontal">
+  {{ h.csrf_input() }}
+  <div class="error-explanation alert alert-error" style="display: none;">
+    <p id="invalid-entries">{{ _('The form contains invalid entries:') }}</p>
+    <ul>
+      <li id="login-error" data-field-label>{{ _('Login failed. Incorrect username or password.') }}</li>
+      <li id="mfa-error" data-field-label>Kode 6 digit tidak valid. Coba lagi.</li>
+      <li id="unknown-error" data-field-label>{{ _('An unknown error occurred.') }}</li>
+    </ul>
+  </div>
+
+  <div id="login-form">
+    <div id="login-fields">
+      {{ form.input('login', label=_("Username"), id='field-login', value="", error=username_error, classes=["control-medium"]) }}
+      {{ form.input('password', label=_("Password"), id='field-password', type="password", value="", error=password_error, classes=["control-medium"]) }}
+    </div>
+    {{ form.checkbox('remember', label=_("Remember me"), id='field-remember', checked=true, value="63072000") }}
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit">{{ _('Next') }}</button>
+    </div>
+  </div>
+
+  {% if h.security_enable_totp() %}
+    <div id="mfa-form" class="mfa" style="display: none;">
+      <fieldset id="mfa-setup" class="mfa__setup" style="display: none;">
+        <legend class="mfa__title">Pasang authenticator</legend>
+        <ol class="mfa__steps">
+          <li>Buka Google Authenticator, Authy, atau aplikasi TOTP lain.</li>
+          <li>Pindai QR di bawah. Jika tidak bisa, salin kunci manual.</li>
+          <li>Masukkan kode 6 digit yang muncul di aplikasi.</li>
+        </ol>
+        <div class="mfa__qr-wrap">
+          <canvas id="qr-code-container" width="250" height="250" aria-label="Kode QR authenticator"></canvas>
+        </div>
+        <div class="mfa__secret">
+          <p class="mfa__secret-label">Kunci manual</p>
+          <code id="totp-secret" class="mfa__secret-value"></code>
+          <button type="button" class="mfa__copy" data-copy-secret>Salin</button>
+        </div>
+      </fieldset>
+
+      <p class="mfa__prompt">Masukkan kode 6 digit dari aplikasi authenticator.</p>
+      <div class="control-group control-medium">
+        <label class="control-label" for="field-mfa">Kode verifikasi</label>
+        <div class="controls">
+          <input id="field-mfa" name="mfa" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" class="mfa__code" placeholder="000000" value="">
+        </div>
+      </div>
+
+      <input id="mfa-form-active" name="mfa-form-active" type="hidden" value="" />
+      <div class="form-actions mfa__actions">
+        <a id="mfa-help-link" class="mfa__help" href="/bantuan" style="display: none;">Butuh bantuan?</a>
+        <button class="btn btn-primary" type="submit">Masuk</button>
+      </div>
+    </div>
+  {% endif %}
+</form>

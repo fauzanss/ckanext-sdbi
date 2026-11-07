@@ -2,10 +2,11 @@
 ckanext-sdbi
 =============
 
-.. Put a description of your extension here:
-   What does it do? What features does it have?
-   Consider including some screenshots or embedding a video!
+Portal Data BNPB theme, routes, and harvesters.
 
+Upgrade / cutover docs (PRD, status, how-to)::
+
+    readme/2026-08/README.md
 
 ------------
 Requirements

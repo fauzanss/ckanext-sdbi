@@ -81,6 +81,7 @@ setup(
     entry_points='''
         [ckan.plugins]
         sdbi=ckanext.sdbi.plugin:SDBIPlugin
+        sdbi_json_harvester=ckanext.sdbi.harvesters.json_rest:JSONRestHarvester
 
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan

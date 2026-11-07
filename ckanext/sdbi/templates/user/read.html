@@ -1,0 +1,20 @@
+{% ckan_extends %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/css/mfa.css?v=1" />
+{% endblock %}
+
+{% block page_primary_action %}
+  {{ super() }}
+  {% if g.userobj and g.userobj.sysadmin %}
+    <form class="mfa-admin" method="post" action="{{ h.url_for('sdbi_mfa.reset_2fa', id=user.name) }}" onsubmit="return confirm('Reset 2FA untuk {{ user.name }}? Pengguna harus memindai QR baru saat login berikutnya.');">
+      {{ h.csrf_input() }}
+      <input type="hidden" name="next" value="{{ h.url_for('user.read', id=user.name) }}">
+      <p class="mfa__hint">{% if h.sdbi_totp_configured(user.name) %}2FA aktif.{% else %}2FA belum terpasang atau menunggu pindai ulang.{% endif %}</p>
+      <button class="btn btn-danger" type="submit">Reset 2FA</button>
+    </form>
+  {% elif is_myself %}
+    <a class="btn btn-default" href="{{ h.url_for('sdbi_mfa.configure', id=user.id) }}">Kelola 2FA</a>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Bantuan{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/css/bantuan.css?v=39" />
+{% endblock %}
+
+{% block content %}
+<div id="content" class="bantuan-main">
+  <div class="container">
+  <article class="bantuan">
+    <h1 class="sr-only">Bantuan</h1>
+
+    <section class="bantuan__welcome" aria-hidden="true">
+      <img
+        class="bantuan__welcome-logo"
+        src="/img/bnpb-logo-2.png?v=39"
+        alt=""
+        width="480"
+        height="320"
+      />
+      {% if is_sysadmin %}
+      <a class="bantuan__kelola" href="/bantuan/kelola">Kelola FAQ</a>
+      {% endif %}
+    </section>
+
+    <div class="bantuan__panel">
+      <div id="bantuan-list">
+        {% for category in faq_categories %}
+        <details class="bantuan__category" data-category="{{ category.id }}" data-title="{{ category.title|e }}">
+          <summary class="bantuan__category-summary">
+            <span class="bantuan__category-title">{{ category.title }}</span>
+          </summary>
+          <div class="bantuan__category-body">
+            {% for item in category.entries %}
+            <details class="bantuan__item" data-q="{{ item.q|e }}" data-a="{{ item.a|e }}" data-category="{{ category.id }}">
+              <summary class="bantuan__q"><span class="bantuan__q-text">{{ item.q }}</span></summary>
+              <div class="bantuan__answer">{{ item.a }}</div>
+            </details>
+            {% endfor %}
+          </div>
+        </details>
+        {% endfor %}
+      </div>
+    </div>
+  </article>
+  </div>
+</div>
+{% endblock %}

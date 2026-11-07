@@ -1,0 +1,53 @@
+{% set defaults = h.sdbi_json_harvest_form_defaults() %}
+<script>
+  (function () {
+    var form = document.getElementById('source-new');
+    if (!form) {
+      return;
+    }
+    var defaultConfig = {{ defaults.config | tojson }};
+    var defaultUrl = {{ defaults.url | tojson }};
+    var defaultType = {{ defaults.source_type | tojson }};
+    var configEl = document.getElementById('field-config');
+    var urlEl = document.getElementById('field-url');
+    var helpId = 'sdbi-json-harvest-config-help';
+
+    function selectedType() {
+      var selected = form.querySelector('input[name="source_type"]:checked');
+      return selected ? selected.value : '';
+    }
+
+    function fillIfEmpty() {
+      if (configEl && !String(configEl.value || '').trim()) {
+        configEl.value = defaultConfig;
+      }
+      if (urlEl && !String(urlEl.value || '').trim()) {
+        urlEl.value = defaultUrl;
+      }
+    }
+
+    function ensureHelp() {
+      if (!configEl || document.getElementById(helpId)) {
+        return;
+      }
+      var help = document.createElement('span');
+      help.id = helpId;
+      help.className = 'info-block';
+      help.textContent =
+        'Same form as CKAN and CSW: URL is the JSON dataset endpoint. Configuration is optional (title, default_tags as [{"name": "tag"}], default_extras). For many datasets, add datasets[] plus detail_url_template, or list_url. Organization on this form owns imported datasets when owner_org is omitted.';
+      configEl.parentNode.appendChild(help);
+    }
+
+    function syncType() {
+      if (selectedType() === defaultType) {
+        fillIfEmpty();
+        ensureHelp();
+      }
+    }
+
+    form.querySelectorAll('input[name="source_type"]').forEach(function (el) {
+      el.addEventListener('change', syncType);
+    });
+    syncType();
+  })();
+</script>

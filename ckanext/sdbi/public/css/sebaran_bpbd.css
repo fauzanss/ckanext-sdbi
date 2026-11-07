@@ -1,0 +1,641 @@
+.sebaran-bpbd {
+  --sb-ink: #202124;
+  --sb-teal: #1a73e8;
+  --sb-kab: #e37400;
+  --sb-point: #d93025;
+  --sb-paper: #ffffff;
+  --sb-header-offset: 56px;
+  --sb-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+}
+
+.sebaran-bpbd,
+.sebaran-bpbd * {
+  box-sizing: border-box;
+}
+
+/* CKAN/Bootstrap adds label::after { content: ":" } — hide on map UI */
+.sebaran-bpbd label::after {
+  content: none !important;
+}
+
+.sebaran-bpbd__search-status:empty {
+  display: none;
+}
+
+body:has(.sebaran-bpbd) {
+  overflow: hidden;
+}
+
+body:has(.sebaran-bpbd) .account-masthead,
+body:has(.sebaran-bpbd) header.masthead {
+  display: none;
+}
+
+.sebaran-bpbd__bar {
+  position: relative;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: 12px 16px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  font-size: 16px;
+  color: var(--sb-ink);
+  background: #fff;
+  border-bottom: 1px solid #dadce0;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08);
+}
+
+.sebaran-bpbd__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sebaran-bpbd__back,
+.sebaran-bpbd__download,
+.sebaran-bpbd__upload-open {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #3c4043;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid #dadce0;
+  border-radius: 999px;
+  background: #fff;
+  transition: background 160ms ease-out, box-shadow 160ms ease-out;
+}
+
+.sebaran-bpbd__back:hover,
+.sebaran-bpbd__download:hover,
+.sebaran-bpbd__upload-open:hover,
+.sebaran-bpbd__back:focus-visible,
+.sebaran-bpbd__download:focus-visible,
+.sebaran-bpbd__upload-open:focus-visible {
+  color: #202124;
+  text-decoration: none;
+  background: #f8f9fa;
+  box-shadow: var(--sb-shadow);
+}
+
+.sebaran-bpbd__back:focus-visible,
+.sebaran-bpbd__download:focus-visible,
+.sebaran-bpbd__upload-open:focus-visible {
+  outline: 2px solid var(--sb-teal);
+  outline-offset: 2px;
+}
+
+.sebaran-bpbd__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.sebaran-bpbd__bar h1 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--sb-ink);
+  background: none;
+}
+
+.sebaran-bpbd__count {
+  margin: 0;
+  font-size: 13px;
+  color: #5f6368;
+}
+
+.sebaran-bpbd__count strong {
+  font-variant-numeric: tabular-nums;
+  color: var(--sb-ink);
+}
+
+.sebaran-bpbd__float {
+  position: fixed;
+  top: calc(var(--sb-header-offset) + 12px);
+  left: 12px;
+  z-index: 125;
+  display: grid;
+  gap: 10px;
+  width: min(360px, calc(100vw - 24px));
+}
+
+.sebaran-bpbd__explore {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: var(--sb-shadow);
+}
+
+.sebaran-bpbd__search {
+  margin: 0;
+}
+
+.sebaran-bpbd__search input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 24px;
+  font-size: 15px;
+  color: var(--sb-ink);
+  background: #f1f3f4;
+}
+
+.sebaran-bpbd__search input:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: inset 0 0 0 2px var(--sb-teal);
+}
+
+.sebaran-bpbd__search input:disabled {
+  opacity: 0.7;
+}
+
+.sebaran-bpbd__search-results {
+  position: absolute;
+  top: calc(100% - 4px);
+  left: 0;
+  right: 0;
+  z-index: 130;
+  max-height: 260px;
+  margin: 0;
+  padding: 6px 0;
+  overflow: auto;
+  list-style: none;
+  background: #fff;
+  color: var(--sb-ink);
+  border-radius: 8px;
+  box-shadow: var(--sb-shadow);
+}
+
+.sebaran-bpbd__search-results button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font-size: 14px;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sebaran-bpbd__search-results button:hover,
+.sebaran-bpbd__search-results button:focus-visible {
+  background: #f1f3f4;
+}
+
+.sebaran-bpbd__search-results strong {
+  display: block;
+}
+
+.sebaran-bpbd__search-results span {
+  display: block;
+  font-size: 12px;
+  color: #5f6368;
+}
+
+.sebaran-bpbd__search-status {
+  margin: 0;
+  min-height: 1em;
+  font-size: 12px;
+  color: #5f6368;
+}
+
+.sebaran-bpbd__float-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sebaran-bpbd__fit,
+.sebaran-bpbd__gmaps {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.sebaran-bpbd__fit {
+  color: #fff;
+  border: 0;
+  background: var(--sb-teal);
+}
+
+.sebaran-bpbd__fit:hover:not(:disabled),
+.sebaran-bpbd__fit:focus-visible:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.sebaran-bpbd__fit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.sebaran-bpbd__gmaps {
+  color: #188038;
+  border: 1px solid #dadce0;
+  background: #fff;
+}
+
+.sebaran-bpbd__gmaps:hover,
+.sebaran-bpbd__gmaps:focus-visible {
+  background: #e6f4ea;
+  text-decoration: none;
+}
+
+.sebaran-bpbd__layers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 10px;
+  border: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: var(--sb-shadow);
+}
+
+.sebaran-bpbd__layers legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.sebaran-bpbd__chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3c4043;
+  cursor: pointer;
+  border-radius: 999px;
+  background: #f1f3f4;
+  transition: background 160ms ease-out;
+}
+
+.sebaran-bpbd__chip:hover {
+  background: #e8eaed;
+}
+
+.sebaran-bpbd__chip:has(input:focus-visible) {
+  outline: 2px solid var(--sb-teal);
+  outline-offset: 2px;
+}
+
+.sebaran-bpbd__chip input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--sb-teal);
+}
+
+.sebaran-bpbd__chip span::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 99px;
+  vertical-align: 1px;
+  background: #1a73e8;
+}
+
+.sebaran-bpbd__chip--kabupaten span::before {
+  background: #e37400;
+}
+
+.sebaran-bpbd__chip--bpbd span::before {
+  background: #d93025;
+}
+
+#sebaran-bpbd-map {
+  position: fixed;
+  top: var(--sb-header-offset);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.sebaran-bpbd .maplibregl-ctrl-top-right {
+  top: 12px;
+  right: 12px;
+}
+
+.sebaran-bpbd .maplibregl-ctrl-bottom-right {
+  right: 12px;
+  bottom: 36px;
+}
+
+.sebaran-bpbd .maplibregl-ctrl-group {
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--sb-shadow);
+}
+
+.sebaran-bpbd .maplibregl-ctrl-scale {
+  background: #fff;
+  border-color: #dadce0;
+  color: #3c4043;
+}
+
+.sebaran-bpbd__attrib {
+  position: fixed;
+  left: 12px;
+  bottom: 10px;
+  z-index: 120;
+  max-width: min(42rem, calc(100vw - 140px));
+  margin: 0;
+  padding: 6px 8px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: #3c4043;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 8px;
+  box-shadow: var(--sb-shadow);
+}
+
+.sebaran-bpbd__dialog {
+  width: min(420px, calc(100vw - 32px));
+  padding: 20px 20px 18px;
+  color: var(--sb-ink);
+  background: var(--sb-paper);
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 18px 48px rgba(15, 58, 74, 0.28);
+  font-size: 16px;
+}
+
+.sebaran-bpbd__dialog::backdrop {
+  background: color-mix(in srgb, var(--sb-ink) 48%, transparent);
+}
+
+.sebaran-bpbd__dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+
+.sebaran-bpbd__dialog-head h2 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--sb-ink);
+  background: none;
+}
+
+.sebaran-bpbd__dialog-close,
+.sebaran-bpbd__dialog-cancel,
+.sebaran-bpbd__dialog-submit {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  border-radius: 999px;
+}
+
+.sebaran-bpbd__dialog-close {
+  padding: 6px 10px;
+  color: var(--sb-teal);
+  background: transparent;
+  border: 0;
+}
+
+.sebaran-bpbd__dialog-close:hover,
+.sebaran-bpbd__dialog-close:focus-visible {
+  background: color-mix(in srgb, var(--sb-teal) 12%, white);
+}
+
+.sebaran-bpbd__dialog-close:focus-visible,
+.sebaran-bpbd__dialog-cancel:focus-visible,
+.sebaran-bpbd__dialog-submit:focus-visible,
+.sebaran-bpbd__drop:has(input:focus-visible) {
+  outline: 2px solid var(--sb-teal);
+  outline-offset: 2px;
+}
+
+.sebaran-bpbd__drop {
+  display: grid;
+  gap: 4px;
+  position: relative;
+  margin: 0 0 12px;
+  padding: 22px 16px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 12px;
+  background: color-mix(in srgb, white 70%, var(--sb-paper));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sb-teal) 28%, transparent);
+}
+
+.sebaran-bpbd__drop.is-active {
+  background: color-mix(in srgb, var(--sb-teal) 10%, white);
+}
+
+.sebaran-bpbd__drop input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.sebaran-bpbd__drop-title {
+  font-size: 15px;
+  color: var(--sb-teal);
+}
+
+.sebaran-bpbd__drop-file {
+  font-size: 13px;
+  color: color-mix(in srgb, var(--sb-ink) 78%, white);
+}
+
+.sebaran-bpbd__dialog-hint {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--sb-ink) 78%, white);
+}
+
+.sebaran-bpbd__dialog-status {
+  min-height: 1.3em;
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sebaran-bpbd__dialog-status.is-error {
+  color: #9b2c2c;
+}
+
+.sebaran-bpbd__dialog-status.is-ok {
+  color: var(--sb-teal);
+}
+
+.sebaran-bpbd__dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.sebaran-bpbd__dialog-cancel,
+.sebaran-bpbd__dialog-submit {
+  padding: 8px 14px;
+  border: 0;
+}
+
+.sebaran-bpbd__dialog-cancel {
+  color: var(--sb-ink);
+  background: color-mix(in srgb, var(--sb-ink) 8%, white);
+}
+
+.sebaran-bpbd__dialog-submit {
+  color: #fff;
+  background: var(--sb-teal);
+}
+
+.sebaran-bpbd__dialog-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.sebaran-bpbd__dialog-cancel:hover,
+.sebaran-bpbd__dialog-submit:hover:not(:disabled) {
+  filter: brightness(0.97);
+}
+
+.sebaran-bpbd-popup {
+  min-width: 220px;
+  font-size: 16px;
+  color: var(--sb-ink);
+}
+
+.sebaran-bpbd-popup h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: #202124;
+}
+
+.sebaran-bpbd-popup p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.sebaran-bpbd-popup__meta {
+  margin: 0 0 0.4em;
+  font-size: 12px;
+  color: #5f6368;
+}
+
+.sebaran-bpbd-popup__actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.sebaran-bpbd-popup__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+  color: #fff !important;
+  background: #1a73e8;
+}
+
+.sebaran-bpbd-popup__btn--ghost {
+  color: #188038 !important;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #dadce0;
+}
+
+.sebaran-bpbd-popup__btn:hover,
+.sebaran-bpbd-popup__btn:focus-visible {
+  filter: brightness(1.05);
+  text-decoration: none;
+}
+
+.sebaran-bpbd .maplibregl-popup-content {
+  padding: 14px 16px;
+  border-radius: 8px;
+  box-shadow: var(--sb-shadow);
+}
+
+.sebaran-bpbd ::selection {
+  background: color-mix(in srgb, var(--sb-teal) 28%, white);
+  color: var(--sb-ink);
+}
+
+@media (max-width: 720px) {
+  .sebaran-bpbd__bar {
+    align-items: flex-start;
+    padding: 10px 12px 12px;
+  }
+
+  .sebaran-bpbd__actions {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .sebaran-bpbd__float {
+    width: calc(100vw - 24px);
+  }
+
+  .sebaran-bpbd .maplibregl-ctrl-top-right {
+    top: auto;
+    right: 10px;
+    bottom: 52px;
+  }
+
+  .sebaran-bpbd .maplibregl-ctrl-bottom-right {
+    display: none;
+  }
+
+  .sebaran-bpbd__attrib {
+    left: 10px;
+    right: 10px;
+    max-width: none;
+  }
+}
