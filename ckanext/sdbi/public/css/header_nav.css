@@ -35,79 +35,327 @@
   border-bottom-left-radius: 0;
 }
 
-/* Brand: official BNPB navbar logo (white lockup) on dark plate;
-   site title only via title= tooltip on hover — not shown under the logo. */
-.masthead .site-header__brand,
-.masthead hgroup.navbar-left {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+/* ========== Unified BNPB-style header ========== */
+.account-masthead {
+  display: none !important;
 }
-.masthead .site-header__brand .logo {
-  display: flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 6px;
+
+header.masthead.site-header,
+header.navbar.masthead.site-header {
+  margin: 0;
+  padding: 0;
+  color: #fff;
   background: #044085;
+  border: 0;
+  border-bottom: 2px solid #c4a35a;
+  min-height: 56px;
+  box-shadow: none;
 }
-.masthead .site-header__brand .logo img,
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.site-header__brand,
+.masthead hgroup.navbar-left {
+  float: none !important;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header__brand .logo {
+  display: flex;
+  align-items: center;
+}
+
+.site-header__brand .logo img,
 .masthead hgroup .logo img {
   display: block;
   max-height: 40px;
   width: auto;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  padding: 0 !important;
 }
 
-/* Header: logo left, nav + search to the right (desktop) */
-@media (min-width: 768px) {
-  .masthead > .container {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-  .masthead .site-header__brand,
-  .masthead hgroup.navbar-left {
-    float: none !important;
-    order: 1;
-    flex: 0 0 auto;
-    margin: 0 20px 0 0;
-    padding: 0;
-  }
-  .masthead .navbar-collapse {
-    float: none !important;
-    order: 2;
-    flex: 1 1 auto;
-    display: flex !important;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0;
-  }
-  .masthead .navigation {
-    float: none !important;
-  }
-  .masthead .navigation .nav-pills {
-    float: none !important;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin: 0;
-  }
-  .masthead .site-search {
-    float: none !important;
-    margin-left: 12px;
-  }
-  .masthead .navbar-right {
-    order: 3;
-    float: none !important;
-    margin: 0;
-  }
-  .masthead .navbar-toggle {
-    display: none;
-  }
+/* Kill CKAN/theme leftovers that print site title next to the logo */
+.site-header__brand .site-title,
+.site-header__brand h1,
+.masthead hgroup .site-title,
+.masthead hgroup h1 {
+  display: none !important;
 }
 
-/* Tanggap Darurat: only one caret (BS/FA often add ::after as a second arrow) */
+.site-header__toggle {
+  order: 3;
+  margin-left: 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: #fff;
+  padding: 6px 10px;
+}
+
+.site-header__toggle .fa-bars {
+  color: #fff;
+}
+
+.site-header__collapse {
+  float: none !important;
+  order: 4;
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+.site-header__tools {
+  order: 2;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.site-header__nav {
+  float: none !important;
+  overflow: visible !important;
+}
+
+.site-header__nav .nav-pills {
+  float: none !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 4px;
+  margin: 0;
+  overflow: visible !important;
+}
+
+.site-header__nav .nav-pills > li {
+  float: none;
+}
+
+.site-header__nav .nav-pills > li > a,
+.site-header__menu-item {
+  color: #fff !important;
+  background: transparent !important;
+  border-radius: 0;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.site-header__nav .nav-pills > li > a:hover,
+.site-header__nav .nav-pills > li > a:focus,
+.site-header__nav .nav-pills > li.active > a,
+.site-header__nav .nav-pills > .open > a {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.site-header__search {
+  float: none !important;
+  position: relative;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.site-header__search-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.site-header__search-toggle:hover,
+.site-header__search-toggle:focus,
+.site-header__search.is-open .site-header__search-toggle {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  outline: none;
+}
+
+.site-header__search-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 2200;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 8px;
+  padding: 8px;
+  min-width: min(320px, 90vw);
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(9, 31, 47, 0.2);
+}
+
+.site-header__search-panel[hidden] {
+  display: none !important;
+}
+
+.site-header__search-panel .form-control {
+  flex: 1 1 auto;
+  height: 36px;
+  margin: 0;
+  border: 1px solid #d0d7de;
+  border-radius: 4px 0 0 4px;
+  box-shadow: none;
+  color: #091f2f;
+}
+
+.site-header__search-submit {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #044085;
+  border-left: 0;
+  border-radius: 0;
+  background: #044085;
+  color: #fff;
+  cursor: pointer;
+}
+
+.site-header__search-close {
+  height: 36px;
+  padding: 0 10px;
+  margin-left: 4px;
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  background: #f8f9fa;
+  color: #091f2f;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.site-header__account {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+}
+
+.site-header__auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.site-header__auth a,
+.site-header__login,
+.site-header__register {
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 6px 10px;
+}
+
+.site-header__auth a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  text-decoration: none;
+}
+
+.site-header__user {
+  position: relative;
+}
+
+.site-header__user-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff !important;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.site-header__user-toggle:hover,
+.site-header__user-toggle:focus,
+.site-header__user.open > .site-header__user-toggle {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.site-header__avatar,
+.site-header__user-toggle img.user-image {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+  background: #fff;
+}
+
+.site-header__user-name {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.site-header__user-toggle .caret {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+}
+
+.site-header__user-menu {
+  right: 0;
+  left: auto;
+  z-index: 2100;
+  min-width: 180px;
+  margin-top: 4px;
+  padding: 6px 0;
+  background: #fff;
+  border: 1px solid #d0d7de;
+  box-shadow: 0 6px 16px rgba(9, 31, 47, 0.18);
+}
+
+.site-header__user-menu > li > a {
+  color: #091f2f;
+  padding: 8px 16px;
+}
+
+.site-header__user-menu > li > a:hover,
+.site-header__user-menu > li > a:focus {
+  background: #044085;
+  color: #fff;
+}
+
+.js .site-header__user:hover > .dropdown-menu,
+.js .site-header__user.open > .dropdown-menu {
+  display: block;
+}
+
+/* Tanggap / nav dropdowns */
 .masthead .navigation .dropdown-toggle::after,
-.masthead .navigation .dropdown-toggle::before {
+.masthead .navigation .dropdown-toggle::before,
+.site-header__user-toggle::after {
   display: none !important;
   content: none !important;
   border: 0 !important;
@@ -116,13 +364,14 @@
   display: inline-block;
   margin-left: 6px;
   vertical-align: middle;
+  border-top-color: #fff;
 }
 
 .masthead .navigation .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 2000;
+  z-index: 2300;
   min-width: 220px;
   padding: 6px 0;
   margin: 0;
@@ -130,10 +379,33 @@
   background-color: #fff;
   border: 1px solid #d0d7de;
   box-shadow: 0 6px 16px rgba(9, 31, 47, 0.18);
+  text-transform: none;
 }
-.js .masthead .navigation .dropdown:hover > .dropdown-menu,
-.js .masthead .navigation .dropdown.open > .dropdown-menu {
-  display: block;
+
+/* Beat CKAN theme (.js .dropdown:hover .dropdown-menu { display:none }) */
+.js .site-header .navigation .dropdown:hover > .dropdown-menu,
+.js .site-header .navigation .dropdown.open > .dropdown-menu,
+.site-header .navigation .dropdown:hover > .dropdown-menu,
+.site-header .navigation .dropdown.open > .dropdown-menu {
+  display: block !important;
+}
+
+/* Manage / Tanggap: keep menu under the trigger; bridge the hover gap */
+.site-header__nav .nav-pills > li.dropdown {
+  position: relative;
+}
+.site-header__nav .nav-pills > li.dropdown > .dropdown-menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -14px;
+  height: 14px;
+}
+.site-header__manage > .dropdown-menu {
+  right: 0;
+  left: auto;
+  z-index: 2400;
 }
 .masthead .navigation .nav-pills .dropdown-menu > li > a,
 .masthead .navigation .nav-pills .dropdown-menu > li > a:hover,
@@ -141,12 +413,83 @@
   color: #091f2f;
   background-color: transparent;
   padding: 8px 16px;
+  text-transform: none;
+  font-weight: 500;
 }
 .masthead .navigation .nav-pills .dropdown-menu > li > a:hover,
 .masthead .navigation .nav-pills .dropdown-menu > li > a:focus,
 .masthead .navigation .nav-pills .dropdown-menu > .active > a,
 .masthead .navigation .nav-pills .dropdown-menu > .active > a:hover,
 .masthead .navigation .nav-pills .dropdown-menu > .active > a:focus {
-  background-color: #206b82;
+  background-color: #044085;
   color: #fff;
+}
+
+/* Wide nav needs room — hamburger earlier than BS default */
+@media (min-width: 1200px) {
+  .site-header__inner {
+    flex-wrap: nowrap;
+  }
+  .site-header__toggle {
+    display: none;
+  }
+  .site-header__collapse {
+    order: 2;
+    display: flex !important;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    width: auto;
+    height: auto !important;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: visible;
+  }
+  .site-header__tools {
+    order: 3;
+    margin-left: 0;
+  }
+  .site-header__nav {
+    flex: 1 1 auto;
+    width: auto;
+  }
+  .site-header__nav .nav-pills {
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+  }
+  .site-header__nav .nav-pills > li > a,
+  .site-header__menu-item {
+    padding: 8px 8px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .site-header__search,
+  .site-header__account {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 1199px) {
+  .site-header__inner {
+    flex-wrap: wrap;
+  }
+  .site-header__collapse {
+    margin-top: 8px;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .site-header__nav .nav-pills {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .site-header__search-panel {
+    right: 0;
+    left: auto;
+    min-width: min(320px, 90vw);
+  }
+  .site-header__user-name {
+    max-width: 100px;
+  }
 }
