@@ -35,6 +35,85 @@
   border-bottom-left-radius: 0;
 }
 
+/*
+ * Resource "Add data" upload UI broken on CKAN 2.10 LTR main.css:
+ * stale rules set .resource-upload-field { overflow:hidden } and hide ALL
+ * inputs with opacity:0 / absolute positioning. Correct styles exist in
+ * _forms.scss / main-rtl.css but were not compiled into LTR main.css.
+ */
+.resource-upload-field {
+  position: static !important;
+  overflow: visible !important;
+  display: block !important;
+  vertical-align: baseline !important;
+}
+.resource-upload-field label {
+  z-index: auto !important;
+}
+/* Undo stale CKAN LTR main.css that hid every input inside this widget */
+.resource-upload-field input:not([type="radio"]):not(#field-clear-upload) {
+  filter: none !important;
+  opacity: 1 !important;
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  z-index: auto !important;
+  margin: revert;
+  border: initial;
+  cursor: auto;
+  direction: ltr;
+  -moz-transform: none !important;
+  transform: none !important;
+}
+.resource-upload-field > input[type="radio"] {
+  display: none !important;
+}
+.resource-upload-field > div.select-type {
+  position: relative;
+  display: none;
+}
+.resource-upload-field > input[type="radio"]:checked + div.select-type {
+  display: block !important;
+}
+.resource-upload-field label.btn::after {
+  content: "";
+}
+.resource-upload-field .btn-remove-url {
+  position: absolute;
+  margin-right: 0;
+  margin-top: 11px;
+  top: 1.5rem;
+  right: 0.25rem;
+  padding: 0 12px;
+  border-radius: 100px;
+}
+.resource-upload-field .btn-remove-url .icon-remove {
+  margin-right: 0;
+}
+.resource-upload-field input#field-clear-upload {
+  display: none !important;
+}
+.resource-upload-field input#field-clear-upload + div.upload-type {
+  display: block;
+}
+.resource-upload-field input#field-clear-upload ~ .upload-type {
+  display: none;
+}
+.resource-upload-field input#field-clear-upload:checked + div.upload-type {
+  display: none;
+}
+.resource-upload-field input#field-clear-upload:checked ~ .upload-type {
+  display: block;
+}
+.resource-upload-field #field-resource-upload {
+  display: block !important;
+  width: 100% !important;
+  opacity: 1 !important;
+  position: static !important;
+  transform: none !important;
+  cursor: pointer !important;
+}
+
 /* ========== Unified BNPB-style header ========== */
 .account-masthead {
   display: none !important;
@@ -75,23 +154,31 @@ header.navbar.masthead.site-header {
   padding: 0;
 }
 
-.site-header__brand .logo {
+.site-header__brand .logo,
+.site-header__logo-lockup {
   display: flex;
   align-items: center;
+  gap: 10px;
+  text-decoration: none !important;
+  color: #fff !important;
 }
 
 .site-header__brand .logo img,
+.site-header__logo-img,
 .masthead hgroup .logo img {
   display: block;
-  max-height: 40px;
+  height: 40px;
   width: auto;
+  max-width: min(241px, 46vw);
+  flex: 0 0 auto;
+  object-fit: contain;
   background: transparent !important;
   box-shadow: none !important;
   border: 0 !important;
   padding: 0 !important;
 }
 
-/* Kill CKAN/theme leftovers that print site title next to the logo */
+/* Kill CKAN/theme leftovers that print a second site title next to the logo */
 .site-header__brand .site-title,
 .site-header__brand h1,
 .masthead hgroup .site-title,

@@ -5,7 +5,7 @@
   ckanext-pages / activity cannot re-inject a second account bar.
 #}
 {% block header_wrapper %}
-<link rel="stylesheet" href="/css/header_nav.css?v=22" />
+<link rel="stylesheet" href="/css/header_nav.css?v=26" />
 <header class="navbar navbar-static-top masthead site-header">
   {% block header_debug %} {% if g.debug and not g.debug_supress_header %}
   <div class="debug">Controller : {{ c.controller }}<br />Action : {{ c.action }}</div>
@@ -13,9 +13,15 @@
   <div class="container site-header__inner">
     <hgroup class="{{ g.header_class }} navbar-left site-header__brand">
       {% block header_logo %}
-      {# Always local asset — never g.site_logo / bnpb.go.id (CF hotlink 403). #}
-      <a class="logo" href="{{ h.url_for('home.index') }}" title="{{ g.site_title }}">
-        <img src="{{ h.url_for_static('/img/Logo-BNPB_bulat.png') }}?v=2" alt="" width="40" height="40" />
+      {# Local mirror of bnpb.go.id/.../logo.png (CF blocks hotlink from localhost). #}
+      <a class="logo site-header__logo-lockup" href="{{ h.url_for('home.index') }}" title="{{ g.site_title }}">
+        <img
+          class="site-header__logo-img"
+          src="{{ h.url_for_static('/img/logo-bnpb-header.png') }}?v=1"
+          alt="BNPB — Badan Nasional Penanggulangan Bencana"
+          width="241"
+          height="50"
+        />
       </a>
       {% endblock %}
     </hgroup>
