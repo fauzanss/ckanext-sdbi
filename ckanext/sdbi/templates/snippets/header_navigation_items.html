@@ -44,7 +44,7 @@
   or request.path.startswith('/analytics')
   or request.path.startswith('/ckan-admin')
   or request.path.startswith('/google-forms')
-  or request.path.startswith('/harvest') %}
+  or (c.userobj.sysadmin and request.path.startswith('/harvest')) %}
 <li class="dropdown site-header__manage{% if manage_active %} active{% endif %}">
   <a href="#" class="site-header__menu-item menu-item dropdown-toggle" data-toggle="dropdown"
     role="button" aria-haspopup="true" aria-expanded="false" aria-label="Manage">
@@ -55,9 +55,9 @@
     <li><a href="{{ h.url_for('pages.pages_index') }}">{{ _('Pages') }}</a></li>
     <li><a href="{{ h.url_for('pages.blog_index') }}">{{ _('Blog') }}</a></li>
     <li><a href="/analytics">Analytics</a></li>
-    <li><a href="/harvest">Harvest</a></li>
     {% if c.userobj.sysadmin %}
     <li class="divider" role="separator"></li>
+    <li><a href="/harvest">Harvest</a></li>
     <li><a href="{{ h.url_for('admin.index') }}">{{ _('Admin') }}</a></li>
     <li><a href="/google-forms">Google Forms</a></li>
     {% endif %}
