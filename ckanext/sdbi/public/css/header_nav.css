@@ -50,6 +50,10 @@ header.navbar.masthead.site-header {
   border-bottom: 2px solid #c4a35a;
   min-height: 56px;
   box-shadow: none;
+  /* Above .module-resource (z-index:5) so nav dropdowns aren't covered on resource pages */
+  position: relative;
+  z-index: 1030;
+  overflow: visible;
 }
 
 .site-header__inner {
