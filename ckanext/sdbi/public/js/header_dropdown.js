@@ -1,37 +1,50 @@
 (function () {
-  function init() {
-    var items = document.querySelectorAll('.site-header .navigation li.dropdown');
-    if (!items.length) return;
+  var CLOSE_MS = 320;
 
-    Array.prototype.forEach.call(items, function (li) {
-      var timer = null;
-      var toggle = li.querySelector(':scope > .dropdown-toggle') || li.querySelector('.dropdown-toggle');
+  function bindHoverDropdown(root) {
+    var timer = null;
+    var toggle =
+      root.querySelector(':scope > .dropdown-toggle') ||
+      root.querySelector('.dropdown-toggle');
 
-      function open() {
-        if (timer) {
-          window.clearTimeout(timer);
-          timer = null;
-        }
-        li.classList.add('open');
-        if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    function open() {
+      if (timer) {
+        window.clearTimeout(timer);
+        timer = null;
       }
+      root.classList.add('open');
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    }
 
-      function scheduleClose() {
-        if (timer) window.clearTimeout(timer);
-        timer = window.setTimeout(function () {
-          li.classList.remove('open');
-          if (toggle) toggle.setAttribute('aria-expanded', 'false');
-          timer = null;
-        }, 180);
-      }
+    function scheduleClose() {
+      if (timer) window.clearTimeout(timer);
+      timer = window.setTimeout(function () {
+        root.classList.remove('open');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        timer = null;
+      }, CLOSE_MS);
+    }
 
-      li.addEventListener('mouseenter', open);
-      li.addEventListener('mouseleave', scheduleClose);
-      li.addEventListener('focusin', open);
-      li.addEventListener('focusout', function (e) {
-        if (!li.contains(e.relatedTarget)) scheduleClose();
-      });
+    root.addEventListener('mouseenter', open);
+    root.addEventListener('mouseleave', scheduleClose);
+    root.addEventListener('focusin', open);
+    root.addEventListener('focusout', function (e) {
+      if (!root.contains(e.relatedTarget)) scheduleClose();
     });
+
+    // Keep open while pointer is on the menu (absolute, may sit outside li box).
+    var menu = root.querySelector(':scope > .dropdown-menu');
+    if (menu) {
+      menu.addEventListener('mouseenter', open);
+      menu.addEventListener('mouseleave', scheduleClose);
+    }
+  }
+
+  function init() {
+    var items = document.querySelectorAll(
+      '.site-header .navigation li.dropdown, .site-header__user.dropdown'
+    );
+    Array.prototype.forEach.call(items, bindHoverDropdown);
   }
 
   if (document.readyState === 'loading') {

@@ -415,16 +415,28 @@ header.navbar.masthead.site-header {
   border-bottom-color: #fff;
 }
 
+.site-header__user {
+  position: relative;
+}
 .site-header__user-menu {
   right: 0;
   left: auto;
+  top: calc(100% - 2px);
   z-index: 2100;
   min-width: 180px;
-  margin-top: 4px;
+  margin-top: 0;
   padding: 6px 0;
   background: #fff;
   border: 1px solid #d0d7de;
   box-shadow: 0 6px 16px rgba(9, 31, 47, 0.18);
+}
+.site-header__user-menu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -18px;
+  height: 20px;
 }
 
 .site-header__user-menu > li > a {
@@ -460,12 +472,13 @@ header.navbar.masthead.site-header {
 
 .masthead .navigation .dropdown-menu {
   position: absolute;
-  top: 100%;
+  /* Overlap trigger slightly so pointer never hits a dead gap */
+  top: calc(100% - 2px);
   left: 0;
   z-index: 2300;
   min-width: 220px;
   padding: 6px 0;
-  margin: 0;
+  margin: 0 !important;
   font-size: 14px;
   background-color: #fff;
   border: 1px solid #d0d7de;
@@ -490,8 +503,8 @@ header.navbar.masthead.site-header {
   position: absolute;
   left: 0;
   right: 0;
-  top: -14px;
-  height: 14px;
+  top: -20px;
+  height: 22px;
 }
 .site-header__manage > .dropdown-menu {
   right: 0;
