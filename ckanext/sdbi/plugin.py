@@ -483,12 +483,79 @@ class SDBIPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IAuthFunctions)
+    plugins.implements(plugins.IResourceController, inherit=True)
 
     # IConfigurer
     def update_config(self, config_):
+        # Local/dev MFA bypass flag (ckanext-envvars + CKAN 2.10 may not stick undeclared keys).
+        import os
+        from ckantoolkit import asbool
+        raw = os.environ.get('CKANEXT__SECURITY__ENABLE_TOTP')
+        if raw is not None:
+            config_['ckanext.security.enable_totp'] = raw
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'sdbi')
+        # Only api_info needs to beat ckanext-datastore. Putting the whole
+        # templates/ tree on extra_template_paths breaks {% ckan_extends %}
+        # (e.g. user/read.html extends itself → RecursionError).
+        priority_tpl = os.path.join(
+            os.path.dirname(__file__), 'templates_priority'
+        )
+        existing = [
+            p for p in (config_.get('extra_template_paths') or '').split(',')
+            if p and os.path.abspath(p) != os.path.abspath(priority_tpl)
+        ]
+        config_['extra_template_paths'] = ','.join([priority_tpl] + existing)
+        # ckanext-security monkeypatches user schemas and drops image_url,
+        # so profile photo uploads write to disk then get stripped on validate.
+        self._restore_user_image_url_schema()
+
+    @staticmethod
+    def _restore_user_image_url_schema():
+        # IConfigurer runs in reverse plugin order, so security.update_config
+        # reassigns schemas AFTER us. Patch ckanext.security.schema itself so
+        # that reassignment still keeps image_url / image_display_url.
+        from ckan.lib.navl.validators import ignore_missing, unicode_safe
+        from ckan.logic import schema as core_schema
+
+        try:
+            from ckanext.security import schema as sec_schema
+        except ImportError:
+            sec_schema = None
+
+        targets = (
+            'default_user_schema',
+            'user_new_form_schema',
+            'user_edit_form_schema',
+            'default_update_user_schema',
+        )
+
+        def _with_image_url(schema_func):
+            if getattr(schema_func, '_sdbi_image_url_restored', False):
+                return schema_func
+
+            def wrapped(*args, **kwargs):
+                schema = schema_func(*args, **kwargs)
+                schema['image_url'] = [ignore_missing, unicode_safe]
+                schema['image_display_url'] = [ignore_missing, unicode_safe]
+                return schema
+
+            wrapped.__name__ = getattr(schema_func, '__name__', 'wrapped')
+            wrapped.__module__ = getattr(schema_func, '__module__', __name__)
+            wrapped._sdbi_image_url_restored = True
+            return wrapped
+
+        if sec_schema is not None:
+            for name in targets:
+                fn = getattr(sec_schema, name, None)
+                if callable(fn):
+                    setattr(sec_schema, name, _with_image_url(fn))
+
+        for name in targets:
+            fn = getattr(core_schema, name, None)
+            if callable(fn):
+                setattr(core_schema, name, _with_image_url(fn))
 
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
@@ -573,7 +640,14 @@ class SDBIPlugin(plugins.SingletonPlugin):
     def get_auth_functions(self):
         # CKAN 2.10 refuses a second implementation of the same auth
         # function unless it is chained onto the existing one.
-        from ckanext.sdbi.auth import datastore_search_sql as sql_auth
+        from ckanext.sdbi.auth import (
+            HARVEST_SYSADMIN_ONLY_ACTIONS,
+            datastore_search_sql as sql_auth,
+            harvest_manage,
+            package_create_harvest_guard,
+            package_delete_harvest_guard,
+            package_update_harvest_guard,
+        )
 
         @toolkit.chained_auth_function
         def datastore_search_sql(next_auth, context, data_dict):
@@ -582,9 +656,68 @@ class SDBIPlugin(plugins.SingletonPlugin):
                 return next_auth(context, data_dict)
             return result
 
-        return {
+        # Harvest sources are package type "harvest"; UI uses package_create/update.
+        @toolkit.chained_auth_function
+        def package_create(next_auth, context, data_dict):
+            denied = package_create_harvest_guard(context, data_dict)
+            if denied is not None:
+                return denied
+            return next_auth(context, data_dict)
+
+        @toolkit.chained_auth_function
+        def package_update(next_auth, context, data_dict):
+            denied = package_update_harvest_guard(context, data_dict)
+            if denied is not None:
+                return denied
+            return next_auth(context, data_dict)
+
+        @toolkit.chained_auth_function
+        def package_delete(next_auth, context, data_dict):
+            denied = package_delete_harvest_guard(context, data_dict)
+            if denied is not None:
+                return denied
+            return next_auth(context, data_dict)
+
+        auth = {
             'datastore_search_sql': datastore_search_sql,
+            'package_create': package_create,
+            'package_update': package_update,
+            'package_delete': package_delete,
         }
+
+        # Harvest API actions — sysadmins never hit these (authz bypass).
+        def _make_harvest_deny():
+            @toolkit.chained_auth_function
+            def _deny(next_auth, context, data_dict):
+                return harvest_manage(context, data_dict)
+
+            return _deny
+
+        for action in HARVEST_SYSADMIN_ONLY_ACTIONS:
+            auth[action] = _make_harvest_deny()
+
+        return auth
+
+    # IResourceController — remote CSV/Excel links → DataStore table view
+    def after_resource_create(self, context, resource):
+        self._maybe_sync_remote_table(context, resource)
+
+    def after_resource_update(self, context, resource):
+        self._maybe_sync_remote_table(context, resource)
+
+    @staticmethod
+    def _maybe_sync_remote_table(context, resource):
+        try:
+            from ckanext.sdbi.lib.datastore_table import (
+                sync_remote_tabular_resource,
+            )
+            sync_remote_tabular_resource(resource, context=context)
+        except Exception:
+            import logging
+            logging.getLogger(__name__).exception(
+                'Remote tabular sync failed for resource %s',
+                (resource or {}).get('id'),
+            )
 
     # IBlueprint
     def get_blueprint(self):
