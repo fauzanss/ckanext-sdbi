@@ -496,15 +496,17 @@ class SDBIPlugin(plugins.SingletonPlugin):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'sdbi')
-        # sdbi is last in ckan.plugins, so IConfigurer (reversed) runs us
-        # first and datastore later buries our ajax_snippets/api_info.html.
-        # extra_template_paths are prepended after all plugin paths.
-        tpl_dir = os.path.join(os.path.dirname(__file__), 'templates')
+        # Only api_info needs to beat ckanext-datastore. Putting the whole
+        # templates/ tree on extra_template_paths breaks {% ckan_extends %}
+        # (e.g. user/read.html extends itself → RecursionError).
+        priority_tpl = os.path.join(
+            os.path.dirname(__file__), 'templates_priority'
+        )
         existing = [
             p for p in (config_.get('extra_template_paths') or '').split(',')
-            if p and os.path.abspath(p) != os.path.abspath(tpl_dir)
+            if p and os.path.abspath(p) != os.path.abspath(priority_tpl)
         ]
-        config_['extra_template_paths'] = ','.join([tpl_dir] + existing)
+        config_['extra_template_paths'] = ','.join([priority_tpl] + existing)
         # ckanext-security monkeypatches user schemas and drops image_url,
         # so profile photo uploads write to disk then get stripped on validate.
         self._restore_user_image_url_schema()
