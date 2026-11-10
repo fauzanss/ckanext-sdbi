@@ -4,12 +4,13 @@
   <div class="site-header__user dropdown">
     <a href="#" class="site-header__user-toggle dropdown-toggle" data-toggle="dropdown"
       role="button" aria-haspopup="true" aria-expanded="false"
-      title="{{ c.userobj.display_name }}">
+      title="{{ c.userobj.display_name }}"
+      aria-label="{{ _('Account menu') }}: {{ c.userobj.display_name }}">
       {% set profile_img = h.url_for_static_or_external(c.userobj.image_display_url) if c.userobj.image_display_url else h.url_for_static('/base/images/placeholder-user.png') %}
       <img src="{{ profile_img }}" class="user-image site-header__avatar" width="28" height="28" alt=""
         onerror="this.onerror=null;this.src='{{ h.url_for_static('/base/images/placeholder-user.png') }}';" />
       <span class="site-header__user-name">{{ c.userobj.display_name }}</span>
-      <span class="caret"></span>
+      <span class="caret" aria-hidden="true"></span>
     </a>
     <ul class="dropdown-menu dropdown-menu-right site-header__user-menu">
       <li>

@@ -122,11 +122,15 @@
         shown += 1;
       }
     });
+    var filtered = Boolean(tokens.length || activeCategory);
     sections.forEach(function (section) {
+      if (!filtered) {
+        section.hidden = false;
+        return;
+      }
       var any = section.querySelector('.bantuan__item:not([hidden])');
       section.hidden = !any;
     });
-    var filtered = Boolean(tokens.length || activeCategory);
     if (empty) {
       empty.hidden = shown !== 0;
     }

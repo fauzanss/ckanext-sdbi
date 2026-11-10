@@ -486,6 +486,12 @@ class SDBIPlugin(plugins.SingletonPlugin):
 
     # IConfigurer
     def update_config(self, config_):
+        # Local/dev MFA bypass flag (ckanext-envvars + CKAN 2.10 may not stick undeclared keys).
+        import os
+        from ckantoolkit import asbool
+        raw = os.environ.get('CKANEXT__SECURITY__ENABLE_TOTP')
+        if raw is not None:
+            config_['ckanext.security.enable_totp'] = raw
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'sdbi')

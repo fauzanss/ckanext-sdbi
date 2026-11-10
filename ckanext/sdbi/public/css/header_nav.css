@@ -136,7 +136,7 @@ header.navbar.masthead.site-header {
 }
 
 .site-header__inner {
-  display: flex;
+  display: flex !important;
   flex-wrap: nowrap;
   align-items: center;
   gap: 8px 12px;
@@ -144,8 +144,17 @@ header.navbar.masthead.site-header {
   padding-bottom: 8px;
 }
 
+/* Bootstrap 3 .container clearfix ::before/::after become flex items and
+   can shove .site-header__tools onto a second row after login. */
+header.masthead.site-header .site-header__inner:before,
+header.masthead.site-header .site-header__inner:after {
+  display: none !important;
+  content: none !important;
+}
+
 .site-header__brand,
-.masthead hgroup.navbar-left {
+.masthead hgroup.navbar-left,
+header.masthead.site-header hgroup {
   float: none !important;
   flex: 0 0 auto;
   display: flex;
@@ -199,17 +208,27 @@ header.navbar.masthead.site-header {
   color: #fff;
 }
 
-.site-header__collapse {
+.site-header__collapse,
+header.masthead.site-header .navbar-collapse,
+header.masthead.site-header .section {
   float: none !important;
+}
+
+/* Mobile-first: collapse is a full-width drawer under the brand/tools row.
+   Bootstrap 3 forces .navbar-collapse.collapse { display:block } from 768px —
+   we override that below 992 so the masthead stays one row + hamburger. */
+.site-header__collapse {
   order: 4;
   flex: 1 1 100%;
   width: 100%;
+  min-width: 0;
 }
 
 .site-header__tools {
   order: 2;
   display: flex;
   flex: 0 0 auto;
+  flex-shrink: 0;
   align-items: center;
   gap: 4px;
   margin-left: auto;
@@ -277,11 +296,17 @@ header.navbar.masthead.site-header {
 }
 
 .site-header__search-toggle:hover,
-.site-header__search-toggle:focus,
 .site-header__search.is-open .site-header__search-toggle {
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
+}
+.site-header__search-toggle:focus {
   outline: none;
+}
+.site-header__search-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .site-header__search-panel {
@@ -529,64 +554,40 @@ header.navbar.masthead.site-header {
   color: #fff;
 }
 
-/* Wide nav needs room — hamburger earlier than BS default */
-@media (min-width: 1200px) {
-  .site-header__inner {
-    flex-wrap: nowrap;
-  }
-  .site-header__toggle {
-    display: none;
-  }
-  .site-header__collapse {
-    order: 2;
-    display: flex !important;
-    flex: 1 1 auto;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    width: auto;
-    height: auto !important;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    overflow: visible;
-  }
-  .site-header__tools {
-    order: 3;
-    margin-left: 0;
-  }
-  .site-header__nav {
-    flex: 1 1 auto;
-    width: auto;
-  }
-  .site-header__nav .nav-pills {
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-  }
-  .site-header__nav .nav-pills > li > a,
-  .site-header__menu-item {
-    padding: 8px 8px;
-    font-size: 12px;
-    white-space: nowrap;
-  }
-  .site-header__search,
-  .site-header__account {
-    flex: 0 0 auto;
-  }
-}
-
-@media (max-width: 1199px) {
-  .site-header__inner {
+/* Phone / narrow: hamburger. Defeat BS3 showing collapse from 768px. */
+@media (max-width: 991px) {
+  header.masthead.site-header .site-header__inner {
     flex-wrap: wrap;
   }
-  .site-header__collapse {
+  header.masthead.site-header .site-header__toggle {
+    display: block !important;
+    order: 3;
+  }
+  header.masthead.site-header .navbar-collapse.collapse:not(.in):not(.show) {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+  }
+  header.masthead.site-header .navbar-collapse.collapse.in,
+  header.masthead.site-header .navbar-collapse.collapse.show,
+  header.masthead.site-header .navbar-collapse.collapsing {
+    display: block !important;
+    order: 4;
+    flex: 1 1 100%;
+    width: 100% !important;
+    height: auto !important;
     margin-top: 8px;
     padding: 8px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
+    overflow: visible !important;
   }
   .site-header__nav .nav-pills {
     flex-direction: column;
     align-items: stretch;
+    flex-wrap: nowrap;
   }
   .site-header__search-panel {
     right: 0;
@@ -595,5 +596,81 @@ header.navbar.masthead.site-header {
   }
   .site-header__user-name {
     max-width: 100px;
+  }
+}
+
+/* Desktop: one masthead row (brand | nav | tools). Was 1200px — left
+   768–1199 broken because BS3 keeps collapse open while we forced wrap. */
+@media (min-width: 992px) {
+  header.masthead.site-header .navbar-collapse,
+  header.masthead.site-header .site-header__collapse,
+  header.masthead.site-header .section {
+    float: none !important;
+  }
+  header.masthead.site-header .site-header__inner {
+    flex-wrap: nowrap !important;
+  }
+  .site-header__toggle {
+    display: none !important;
+  }
+  .site-header__collapse,
+  header.masthead.site-header .navbar-collapse.collapse {
+    order: 2;
+    display: flex !important;
+    flex: 1 1 0 !important;
+    min-width: 0;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    width: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: visible !important;
+    float: none !important;
+  }
+  .site-header__tools {
+    order: 3;
+    flex: 0 0 auto !important;
+    flex-shrink: 0 !important;
+    margin-left: 4px;
+  }
+  .site-header__nav {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+  }
+  .site-header__nav .nav-pills {
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: max-content;
+    max-width: none;
+  }
+  .site-header__nav .nav-pills > li > a,
+  .site-header__menu-item {
+    padding: 8px 6px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .site-header__search,
+  .site-header__account {
+    flex: 0 0 auto;
+  }
+  .site-header__user-name {
+    max-width: 88px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .site-header__nav .nav-pills > li > a,
+  .site-header__menu-item {
+    padding: 8px 8px;
+    font-size: 12px;
   }
 }

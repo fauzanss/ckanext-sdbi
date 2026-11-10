@@ -154,3 +154,74 @@ def test_search_faq_filters_by_query():
     matches = search_faq(faq, '2fa')
     assert len(matches) == 1
     assert matches[0]['q'] == 'Apa itu 2FA?'
+
+
+def test_parse_faq_keeps_nested_children():
+    from ckanext.sdbi.lib.faq import parse_faq
+    parsed = parse_faq({
+        'categories': [{
+            'id': 'prinsip-satudata',
+            'title': 'Prinsip Satudata',
+            'children': [
+                {
+                    'id': 'metadata',
+                    'title': 'Metadata',
+                    'questions': [],
+                },
+                {
+                    'id': 'kode-referensi',
+                    'title': 'Kode Referensi',
+                    'children': [
+                        {
+                            'id': 'penduduk',
+                            'title': 'Penduduk',
+                            'questions': [
+                                {'q': 'Apa kode penduduk?', 'a': 'Kode referensi penduduk.'},
+                            ],
+                        },
+                    ],
+                },
+            ],
+        }],
+    })
+    root = parsed['categories'][0]
+    assert root['children'][0]['id'] == 'metadata'
+    assert root['children'][1]['children'][0]['questions'][0]['q'] == 'Apa kode penduduk?'
+
+
+def test_search_faq_matches_nested_children():
+    faq = {
+        'categories': [{
+            'id': 'prinsip-satudata',
+            'title': 'Prinsip Satudata',
+            'children': [{
+                'id': 'kode-referensi',
+                'title': 'Kode Referensi',
+                'children': [{
+                    'id': 'penduduk',
+                    'title': 'Penduduk',
+                    'questions': [
+                        {'q': 'Apa kode penduduk?', 'a': 'Kode referensi penduduk.'},
+                    ],
+                }],
+            }],
+        }]
+    }
+    matches = search_faq(faq, 'penduduk')
+    assert len(matches) == 1
+    assert matches[0]['category_id'] == 'penduduk'
+    assert matches[0]['q'] == 'Apa kode penduduk?'
+
+
+def test_parse_faq_rejects_excessive_nesting():
+    from ckanext.sdbi.lib.faq import MAX_CATEGORY_DEPTH, parse_faq
+
+    node = {'id': 'leaf', 'title': 'Leaf', 'questions': [{'q': 'Q', 'a': 'A'}]}
+    for index in range(MAX_CATEGORY_DEPTH + 1):
+        node = {
+            'id': 'n%s' % index,
+            'title': 'N%s' % index,
+            'children': [node],
+        }
+    with pytest.raises(FaqError):
+        parse_faq({'categories': [node]})

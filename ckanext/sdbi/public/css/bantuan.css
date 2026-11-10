@@ -139,6 +139,13 @@
 .bantuan__category-body {
   padding: 0 12px 12px;
 }
+.bantuan__category-body > .bantuan__category {
+  margin-top: 8px;
+  margin-left: 4px;
+}
+.bantuan__category-body > .bantuan__category:first-child {
+  margin-top: 0;
+}
 .bantuan__item {
   border: 1px solid #d5e0e4;
   border-radius: 6px;
