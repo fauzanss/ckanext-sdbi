@@ -5,7 +5,7 @@
   ckanext-pages / activity cannot re-inject a second account bar.
 #}
 {% block header_wrapper %}
-<link rel="stylesheet" href="/css/header_nav.css?v=30" />
+<link rel="stylesheet" href="/css/header_nav.css?v=35" />
 <header class="navbar navbar-static-top masthead site-header">
   {% block header_debug %} {% if g.debug and not g.debug_supress_header %}
   <div class="debug">Controller : {{ c.controller }}<br />Action : {{ c.action }}</div>
@@ -71,4 +71,5 @@
 </header>
 <script src="/js/header_search.js?v=1" defer></script>
 <script src="/js/header_dropdown.js?v=2" defer></script>
+<script src="/js/api_info_modal.js?v=1" defer></script>
 {% endblock %}

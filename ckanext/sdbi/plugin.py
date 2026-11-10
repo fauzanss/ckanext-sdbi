@@ -483,6 +483,7 @@ class SDBIPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IAuthFunctions)
+    plugins.implements(plugins.IResourceController, inherit=True)
 
     # IConfigurer
     def update_config(self, config_):
@@ -495,6 +496,15 @@ class SDBIPlugin(plugins.SingletonPlugin):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'sdbi')
+        # sdbi is last in ckan.plugins, so IConfigurer (reversed) runs us
+        # first and datastore later buries our ajax_snippets/api_info.html.
+        # extra_template_paths are prepended after all plugin paths.
+        tpl_dir = os.path.join(os.path.dirname(__file__), 'templates')
+        existing = [
+            p for p in (config_.get('extra_template_paths') or '').split(',')
+            if p and os.path.abspath(p) != os.path.abspath(tpl_dir)
+        ]
+        config_['extra_template_paths'] = ','.join([tpl_dir] + existing)
         # ckanext-security monkeypatches user schemas and drops image_url,
         # so profile photo uploads write to disk then get stripped on validate.
         self._restore_user_image_url_schema()
@@ -685,6 +695,27 @@ class SDBIPlugin(plugins.SingletonPlugin):
             auth[action] = _make_harvest_deny()
 
         return auth
+
+    # IResourceController — remote CSV/Excel links → DataStore table view
+    def after_resource_create(self, context, resource):
+        self._maybe_sync_remote_table(context, resource)
+
+    def after_resource_update(self, context, resource):
+        self._maybe_sync_remote_table(context, resource)
+
+    @staticmethod
+    def _maybe_sync_remote_table(context, resource):
+        try:
+            from ckanext.sdbi.lib.datastore_table import (
+                sync_remote_tabular_resource,
+            )
+            sync_remote_tabular_resource(resource, context=context)
+        except Exception:
+            import logging
+            logging.getLogger(__name__).exception(
+                'Remote tabular sync failed for resource %s',
+                (resource or {}).get('id'),
+            )
 
     # IBlueprint
     def get_blueprint(self):
