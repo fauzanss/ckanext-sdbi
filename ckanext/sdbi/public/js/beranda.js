@@ -287,6 +287,17 @@
 
     frame.addEventListener('load', function () { card.classList.add('is-loaded'); });
 
+    // Render the dashboard at its design size and scale it down to the card width.
+    var DESIGN_W = 1440;
+    function fit() {
+      var w = card.clientWidth; // inner width, excludes the white border
+      if (w) card.style.setProperty('--sdbi-map-scale', (w / DESIGN_W).toFixed(4));
+    }
+    card.classList.add('is-scaled');
+    fit();
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(card);
+    else window.addEventListener('resize', fit);
+
     function lock() {
       card.classList.add('is-locked');
       activate.hidden = false;
